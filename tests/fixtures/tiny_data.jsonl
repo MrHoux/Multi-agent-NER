@@ -1,0 +1,2 @@
+{"id":"s1","text":"John works at Acme Corp in Seattle.","gold_mentions":[{"start":0,"end":4,"ent_type":"PERSON"},{"start":14,"end":23,"ent_type":"ORG"},{"start":27,"end":34,"ent_type":"LOC"}]}
+{"id":"s2","text":"Mary visited Paris in 2024."}

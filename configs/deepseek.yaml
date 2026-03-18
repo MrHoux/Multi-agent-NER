@@ -1,0 +1,70 @@
+seed: 42
+prompts_path: configs/prompts_cot.yaml
+
+output:
+  predictions_path: outputs/predictions.deepseek.jsonl
+
+llm:
+  provider: openai_compatible
+  base_url: https://api.deepseek.com/v1
+  api_key: xxxxxxxx
+  model: deepseek-chat
+  timeout_s: 60
+  temperature: 0.0
+
+data:
+  reader_type: generic_jsonl
+  data_path: tests/fixtures/tiny_data.jsonl
+  schema_path: tests/fixtures/schema_example.json
+
+pipeline:
+  max_debate_turns: 5
+  early_stop_delta: 0.01
+  iou_align_threshold: 0.5
+  debate_l3_only: true
+  l2_threshold: 0.4
+  l3_threshold: 0.75
+  candidate:
+    enable_generic_fallback: true
+    fallback_only_when_empty: true
+    fallback_max_added: 32
+    fallback_min_token_len: 2
+  allow_expert_span_augmentation: true
+  allow_re_span_augmentation: true
+  rerun_after_span_augmentation: true
+  max_augmented_spans_per_sample: 20
+  augmentation_entity_like_only: false
+  adjudicator_singleton_require_entity_like: false
+  normalize_candidate_boundaries: false
+  boundary_left_modifiers: []
+  boundary_right_modifiers: []
+  boundary_enable_hyphen_left: true
+  boundary_max_right_expansion_steps: 1
+  enable_descriptor_expansion: false
+  descriptor_terms_from_schema: true
+  descriptor_terms: []
+  descriptor_left_modifiers: []
+  inject_high_value_candidates: false
+  lexical_injection_rules: []
+  mention_blocklist: []
+  final_min_confidence: 0.0
+
+verifier:
+  use_llm: false
+  strict_drop_invalid: true
+
+memory:
+  enabled: true
+  sqlite_path: outputs/memory.deepseek.db
+  top_k: 3
+  promote_threshold: 2
+  min_confidence: 0.7
+
+ablations:
+  w_o_rag: false
+  w_o_expert: false
+  w_o_re: false
+  w_o_debate: false
+  w_o_verifier: false
+  w_o_memory: false
+

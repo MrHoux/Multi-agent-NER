@@ -1,0 +1,452 @@
+{
+  "target": {
+    "dataset_name": "conll2003",
+    "split": "test",
+    "start_index": 0,
+    "max_samples": 3453,
+    "checkpoint_size": 100,
+    "threshold": 0.75
+  },
+  "stop_reason": "running",
+  "final_active_config": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml",
+  "node_results": [
+    {
+      "checkpoint": "chunk01",
+      "node_end_index": 99,
+      "status": "resumed",
+      "used_config": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml",
+      "optimized": false,
+      "node_f1": 0.8519362186788155,
+      "cumulative_f1": 0.8519362186788155,
+      "metrics": {
+        "micro": {
+          "precision": 0.8423423423423423,
+          "recall": 0.8617511520737328,
+          "f1": 0.8519362186788155,
+          "tp": 187,
+          "fp": 35,
+          "fn": 30
+        },
+        "macro": {
+          "f1": 0.6467349336914554
+        },
+        "per_type": {
+          "PER": {
+            "precision": 0.9459459459459459,
+            "recall": 0.9459459459459459,
+            "f1": 0.9459459459459459,
+            "tp": 105,
+            "fp": 6,
+            "fn": 6
+          },
+          "ORG": {
+            "precision": 0.125,
+            "recall": 0.5,
+            "f1": 0.2,
+            "tp": 1,
+            "fp": 7,
+            "fn": 1
+          },
+          "LOC": {
+            "precision": 0.8481012658227848,
+            "recall": 0.8170731707317073,
+            "f1": 0.8322981366459627,
+            "tp": 67,
+            "fp": 12,
+            "fn": 15
+          },
+          "MISC": {
+            "precision": 0.5833333333333334,
+            "recall": 0.6363636363636364,
+            "f1": 0.6086956521739131,
+            "tp": 14,
+            "fp": 10,
+            "fn": 8
+          }
+        },
+        "errors": {
+          "type_mismatch": 10,
+          "boundary_mismatch": 20,
+          "spurious": 5,
+          "missing": 3
+        }
+      }
+    },
+    {
+      "checkpoint": "chunk02",
+      "node_end_index": 199,
+      "status": "resumed",
+      "used_config": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml",
+      "optimized": false,
+      "node_f1": 0.8697916666666667,
+      "cumulative_f1": 0.8602673147023085,
+      "metrics": {
+        "micro": {
+          "precision": 0.8608247422680413,
+          "recall": 0.8789473684210526,
+          "f1": 0.8697916666666667,
+          "tp": 167,
+          "fp": 27,
+          "fn": 23
+        },
+        "macro": {
+          "f1": 0.7358339084426041
+        },
+        "per_type": {
+          "PER": {
+            "precision": 0.975,
+            "recall": 0.9512195121951219,
+            "f1": 0.9629629629629629,
+            "tp": 78,
+            "fp": 2,
+            "fn": 4
+          },
+          "ORG": {
+            "precision": 0.8444444444444444,
+            "recall": 0.8085106382978723,
+            "f1": 0.8260869565217391,
+            "tp": 38,
+            "fp": 7,
+            "fn": 9
+          },
+          "LOC": {
+            "precision": 0.8421052631578947,
+            "recall": 1.0,
+            "f1": 0.9142857142857143,
+            "tp": 48,
+            "fp": 9,
+            "fn": 0
+          },
+          "MISC": {
+            "precision": 0.25,
+            "recall": 0.23076923076923078,
+            "f1": 0.24000000000000002,
+            "tp": 3,
+            "fp": 9,
+            "fn": 10
+          }
+        },
+        "errors": {
+          "type_mismatch": 9,
+          "boundary_mismatch": 11,
+          "spurious": 7,
+          "missing": 4
+        }
+      }
+    },
+    {
+      "checkpoint": "chunk03",
+      "node_end_index": 299,
+      "status": "resumed",
+      "used_config": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml",
+      "optimized": false,
+      "node_f1": 0.8921933085501859,
+      "cumulative_f1": 0.8728875826598089,
+      "metrics": {
+        "micro": {
+          "precision": 0.8791208791208791,
+          "recall": 0.9056603773584906,
+          "f1": 0.8921933085501859,
+          "tp": 240,
+          "fp": 33,
+          "fn": 25
+        },
+        "macro": {
+          "f1": 0.8017517047562454
+        },
+        "per_type": {
+          "PER": {
+            "precision": 0.9390243902439024,
+            "recall": 0.9685534591194969,
+            "f1": 0.9535603715170279,
+            "tp": 154,
+            "fp": 10,
+            "fn": 5
+          },
+          "ORG": {
+            "precision": 0.6,
+            "recall": 0.9375,
+            "f1": 0.7317073170731707,
+            "tp": 15,
+            "fp": 10,
+            "fn": 1
+          },
+          "LOC": {
+            "precision": 0.8939393939393939,
+            "recall": 0.8194444444444444,
+            "f1": 0.855072463768116,
+            "tp": 59,
+            "fp": 7,
+            "fn": 13
+          },
+          "MISC": {
+            "precision": 0.6666666666666666,
+            "recall": 0.6666666666666666,
+            "f1": 0.6666666666666666,
+            "tp": 12,
+            "fp": 6,
+            "fn": 6
+          }
+        },
+        "errors": {
+          "type_mismatch": 11,
+          "boundary_mismatch": 18,
+          "spurious": 4,
+          "missing": 4
+        }
+      }
+    },
+    {
+      "checkpoint": "chunk04",
+      "node_end_index": 399,
+      "status": "resumed",
+      "used_config": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml",
+      "optimized": false,
+      "node_f1": 0.8679245283018868,
+      "cumulative_f1": 0.871824480369515,
+      "metrics": {
+        "micro": {
+          "precision": 0.8609625668449198,
+          "recall": 0.875,
+          "f1": 0.8679245283018868,
+          "tp": 161,
+          "fp": 26,
+          "fn": 23
+        },
+        "macro": {
+          "f1": 0.7778372265155167
+        },
+        "per_type": {
+          "PER": {
+            "precision": 0.9594594594594594,
+            "recall": 0.9726027397260274,
+            "f1": 0.9659863945578231,
+            "tp": 71,
+            "fp": 3,
+            "fn": 2
+          },
+          "ORG": {
+            "precision": 0.75,
+            "recall": 0.8108108108108109,
+            "f1": 0.7792207792207791,
+            "tp": 30,
+            "fp": 10,
+            "fn": 7
+          },
+          "LOC": {
+            "precision": 0.873015873015873,
+            "recall": 0.859375,
+            "f1": 0.8661417322834646,
+            "tp": 55,
+            "fp": 8,
+            "fn": 9
+          },
+          "MISC": {
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "tp": 5,
+            "fp": 5,
+            "fn": 5
+          }
+        },
+        "errors": {
+          "type_mismatch": 7,
+          "boundary_mismatch": 15,
+          "spurious": 4,
+          "missing": 5
+        }
+      }
+    },
+    {
+      "checkpoint": "chunk05",
+      "node_end_index": 499,
+      "status": "resumed",
+      "used_config": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml",
+      "optimized": false,
+      "node_f1": 0.8,
+      "cumulative_f1": 0.8621378621378621,
+      "metrics": {
+        "micro": {
+          "precision": 0.7552447552447552,
+          "recall": 0.8503937007874016,
+          "f1": 0.8,
+          "tp": 108,
+          "fp": 35,
+          "fn": 19
+        },
+        "macro": {
+          "f1": 0.6678571428571429
+        },
+        "per_type": {
+          "PER": {
+            "precision": 0.9444444444444444,
+            "recall": 1.0,
+            "f1": 0.9714285714285714,
+            "tp": 17,
+            "fp": 1,
+            "fn": 0
+          },
+          "ORG": {
+            "precision": 0.7978723404255319,
+            "recall": 0.872093023255814,
+            "f1": 0.8333333333333334,
+            "tp": 75,
+            "fp": 19,
+            "fn": 11
+          },
+          "LOC": {
+            "precision": 0.6521739130434783,
+            "recall": 0.6818181818181818,
+            "f1": 0.6666666666666666,
+            "tp": 15,
+            "fp": 8,
+            "fn": 7
+          },
+          "MISC": {
+            "precision": 0.125,
+            "recall": 0.5,
+            "f1": 0.2,
+            "tp": 1,
+            "fp": 7,
+            "fn": 1
+          }
+        },
+        "errors": {
+          "type_mismatch": 11,
+          "boundary_mismatch": 13,
+          "spurious": 11,
+          "missing": 2
+        }
+      }
+    },
+    {
+      "checkpoint": "chunk06",
+      "node_end_index": 599,
+      "status": "resumed",
+      "used_config": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml",
+      "optimized": false,
+      "node_f1": 0.8192771084337349,
+      "cumulative_f1": 0.8573967125721901,
+      "metrics": {
+        "micro": {
+          "precision": 0.7846153846153846,
+          "recall": 0.8571428571428571,
+          "f1": 0.8192771084337349,
+          "tp": 102,
+          "fp": 28,
+          "fn": 17
+        },
+        "macro": {
+          "f1": 0.7798617916054222
+        },
+        "per_type": {
+          "PER": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 9,
+            "fp": 0,
+            "fn": 0
+          },
+          "ORG": {
+            "precision": 0.8607594936708861,
+            "recall": 0.8717948717948718,
+            "f1": 0.8662420382165605,
+            "tp": 68,
+            "fp": 11,
+            "fn": 10
+          },
+          "LOC": {
+            "precision": 0.7037037037037037,
+            "recall": 0.9047619047619048,
+            "f1": 0.7916666666666667,
+            "tp": 19,
+            "fp": 8,
+            "fn": 2
+          },
+          "MISC": {
+            "precision": 0.4,
+            "recall": 0.5454545454545454,
+            "f1": 0.4615384615384615,
+            "tp": 6,
+            "fp": 9,
+            "fn": 5
+          }
+        },
+        "errors": {
+          "type_mismatch": 9,
+          "boundary_mismatch": 9,
+          "spurious": 11,
+          "missing": 3
+        }
+      }
+    },
+    {
+      "checkpoint": "chunk07",
+      "node_end_index": 699,
+      "status": "passed",
+      "used_config": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml",
+      "optimized": false,
+      "node_f1": 0.8546511627906976,
+      "cumulative_f1": 0.8570327552986513,
+      "metrics": {
+        "micro": {
+          "precision": 0.8546511627906976,
+          "recall": 0.8546511627906976,
+          "f1": 0.8546511627906976,
+          "tp": 147,
+          "fp": 25,
+          "fn": 25
+        },
+        "macro": {
+          "f1": 0.8145065455312135
+        },
+        "per_type": {
+          "PER": {
+            "precision": 0.9,
+            "recall": 0.9183673469387755,
+            "f1": 0.9090909090909091,
+            "tp": 45,
+            "fp": 5,
+            "fn": 4
+          },
+          "ORG": {
+            "precision": 0.881578947368421,
+            "recall": 0.8701298701298701,
+            "f1": 0.8758169934640522,
+            "tp": 67,
+            "fp": 9,
+            "fn": 10
+          },
+          "LOC": {
+            "precision": 0.7575757575757576,
+            "recall": 0.8620689655172413,
+            "f1": 0.8064516129032258,
+            "tp": 25,
+            "fp": 8,
+            "fn": 4
+          },
+          "MISC": {
+            "precision": 0.7692307692307693,
+            "recall": 0.5882352941176471,
+            "f1": 0.6666666666666667,
+            "tp": 10,
+            "fp": 3,
+            "fn": 7
+          }
+        },
+        "errors": {
+          "type_mismatch": 8,
+          "boundary_mismatch": 13,
+          "spurious": 4,
+          "missing": 8
+        }
+      }
+    }
+  ],
+  "full_metrics": null,
+  "data_path": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/datasets/conll2003/conll2003_test.0_3452.jsonl",
+  "chunks_dir": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/datasets/conll2003/chunks_0_3452_100",
+  "output_root": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/results/full_test_all_agents"
+}

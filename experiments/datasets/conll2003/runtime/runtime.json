@@ -1,0 +1,53 @@
+{
+  "dataset_id": "conll2003",
+  "pid": 1157,
+  "pgid": 1157,
+  "started_at": "2026-03-18 21:13:07",
+  "status": "running",
+  "command": [
+    "/home/mrhoux/miniconda3/envs/NER/bin/python",
+    "-u",
+    "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/run_conll2003_full_checkpoints.py",
+    "--dataset_name",
+    "conll2003",
+    "--split",
+    "test",
+    "--start_index",
+    "0",
+    "--max_samples",
+    "3453",
+    "--checkpoint_size",
+    "100",
+    "--threshold",
+    "0.75",
+    "--active_config",
+    "experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml",
+    "--optimization_configs",
+    "experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml",
+    "--report_path",
+    "experiments/datasets/conll2003/results/full_test_all_agents/checkpoint_report.json",
+    "--progress_path",
+    "experiments/datasets/conll2003/results/full_test_all_agents/checkpoint_progress.json",
+    "--log_path",
+    "experiments/datasets/conll2003/logs/EXECUTION_PROTOCOL_AND_LOG.md",
+    "--resume"
+  ],
+  "profile": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/dataset.eval.yaml",
+  "console_log": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/logs/console.log",
+  "report_path": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/results/full_test_all_agents/checkpoint_report.json",
+  "progress_path": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/results/full_test_all_agents/checkpoint_progress.json",
+  "execution": {
+    "dataset_name": "conll2003",
+    "split": "test",
+    "start_index": 0,
+    "max_samples": 3453,
+    "checkpoint_size": 100,
+    "threshold": 0.75,
+    "active_config": "experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml",
+    "optimization_configs": [
+      "experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml"
+    ],
+    "resume": true
+  },
+  "updated_at": "2026-03-18 21:14:35"
+}

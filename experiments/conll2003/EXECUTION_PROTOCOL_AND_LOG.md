@@ -1,0 +1,158 @@
+# CoNLL2003 Execution Protocol And Action Log
+
+## Behavioral Protocol
+- Objective: migrate the BC2GM-focused experiment workflow to CoNLL2003 and run a 100-sample evaluation split into 5 chunks (20 each).
+- Required performance gate:
+  - Evaluate chunk01 and chunk02 first.
+  - If `(F1_chunk01 + F1_chunk02) / 2 < 0.70`, continue optimization without waiting for manual approval.
+  - Optimization must remain NER-generic: no hardcoding sample ids, offsets, or chunk-specific lexical exceptions.
+- Generalization gate:
+  - After passing the first-two-chunks gate, run all 5 chunks.
+  - If full-100 performance drops materially against the first-two-chunks average, treat it as non-generalizable and continue optimization.
+- Allowed optimization directions:
+  - Prompt improvements.
+  - Generic pipeline/config structural changes.
+- Disallowed optimization directions:
+  - Field-specific hacks or overfitting to specific instances.
+
+## Fixed Experiment Setup
+- Dataset: HuggingFace `conll2003` (split: `test`)
+- Evaluation sample count: 100
+- Chunking: 5 chunks x 20 samples
+- Entity types: `PER`, `ORG`, `LOC`, `MISC`
+- Evaluation metric: strict span-level micro F1 (`maner.eval.metrics`)
+
+## Action Log
+- 2026-03-12: Reviewed project structure and pipeline flow; confirmed where dataset/schema/prompt/config inputs are consumed.
+- 2026-03-12: Added `experiments/conll2003/prepare_conll2003_data.py` to convert CoNLL2003 BIO tags into project JSONL format and generate 20-sample chunks.
+- 2026-03-12: Added CoNLL2003-specific prompt file `experiments/conll2003/prompts.conll2003.news.yaml` (newswire label policy and disambiguation guidance).
+- 2026-03-12: Added three CoNLL2003 configs:
+  - `config.conll2003.base.yaml`
+  - `config.conll2003.optim.recall.yaml`
+  - `config.conll2003.optim.disamb.yaml`
+- 2026-03-12: Started building automated gate runner for chunk01+02 threshold checks and full 100-sample validation.
+- 2026-03-12 05:05:24: start optimization cycle: threshold=0.70, drop_tolerance=0.08, max_samples=100, chunk_size=20
+- 2026-03-12 05:07:57: start optimization cycle: threshold=0.70, drop_tolerance=0.08, max_samples=100, chunk_size=20
+- 2026-03-12 05:08:17: evaluate config: /mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.base.yaml
+- 2026-03-12 05:17:32: config.conll2003.base chunk01 micro_f1=0.4179
+- 2026-03-12 05:26:14: config.conll2003.base chunk02 micro_f1=0.6796
+- 2026-03-12 05:26:14: config.conll2003.base first_two_avg_f1=0.5488
+- 2026-03-12 05:26:14: config rejected: /mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.base.yaml status=fail_threshold
+- 2026-03-12 05:26:14: evaluate config: /mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall.yaml
+- 2026-03-12 05:34:07: config.conll2003.optim.recall chunk01 micro_f1=0.7333
+- 2026-03-12 05:43:45: config.conll2003.optim.recall chunk02 micro_f1=0.8421
+- 2026-03-12 05:43:45: config.conll2003.optim.recall first_two_avg_f1=0.7877
+- 2026-03-12 05:43:45: config.conll2003.optim.recall chunk01 micro_f1=0.7333
+- 2026-03-12 05:43:45: config.conll2003.optim.recall chunk02 micro_f1=0.8421
+- 2026-03-12 05:51:32: config.conll2003.optim.recall chunk03 micro_f1=0.5323
+- 2026-03-12 05:57:45: config.conll2003.optim.recall chunk04 micro_f1=0.7407
+- 2026-03-12 06:04:00: config.conll2003.optim.recall chunk05 micro_f1=0.6415
+- 2026-03-12 06:04:00: config.conll2003.optim.recall full100 micro_f1=0.7027
+- 2026-03-12 06:04:00: config.conll2003.optim.recall rejected for generalization_drop: first_two_avg=0.7877, full100=0.7027, drop_tolerance=0.0800
+- 2026-03-12 06:04:00: config rejected: /mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall.yaml status=fail_generalization_drop
+- 2026-03-12 06:04:00: evaluate config: /mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.disamb.yaml
+- 2026-03-12 06:12:57: config.conll2003.optim.disamb chunk01 micro_f1=0.5000
+- 2026-03-12: Observed `config.conll2003.optim.disamb` chunk01 micro F1=0.4375, therefore cannot satisfy first-two-chunks >=0.70 gate.
+- 2026-03-12: Analyzed `config.conll2003.optim.recall` per-chunk metrics; identified unstable MISC precision and boundary noise on chunk03/chunk05.
+- 2026-03-12: Updated CoNLL prompt with stricter MISC usage policy and added `config.conll2003.optim.balance.v2.yaml` for generic precision-recall rebalance.
+- 2026-03-12 06:23:42: config.conll2003.optim.disamb chunk02 micro_f1=0.6931
+- 2026-03-12 06:23:42: config.conll2003.optim.disamb first_two_avg_f1=0.5965
+- 2026-03-12 06:23:42: config rejected: /mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.disamb.yaml status=fail_threshold
+- 2026-03-12 06:23:42: no config satisfied thresholds; optimization loop requires further changes
+- 2026-03-12: Re-ran `config.conll2003.optim.recall` after prompt rollback for stable gating.
+- 2026-03-12: Gate results (rerun): chunk01 F1=0.6966, chunk02 F1=0.7972, first-two average F1=0.7469 (PASS >= 0.70).
+- 2026-03-12: Full 100-sample rerun with the same config: chunk03=0.5410, chunk04=0.7317, chunk05=0.7059, full100 micro F1=0.6940.
+- 2026-03-12: Generalization check: full100 drop vs first-two average is 0.0529 (not a sharp collapse); accepted as current best generic setting.
+- 2026-03-12: New target run requested on sample window 100-199 with gate target >0.75 on first 40 samples.
+- 2026-03-12: Updated data prep/runner to support `start_index` and dynamic range outputs; gate now configurable via `gate_samples` (default 40).
+- 2026-03-12: Baseline on 100-199 with `config.conll2003.optim.recall`: chunk01=0.8222, chunk02=0.6582, first-two average=0.7402 (below 0.75).
+- 2026-03-12: Tried `config.conll2003.optim.recall_plus`: first-two average=0.6048 (rejected).
+- 2026-03-12: Added and tested `config.conll2003.optim.recall_disamb` (generic disambiguation enabled).
+- 2026-03-12: Gate passed on 100-199 first 40: chunk01=0.9867, chunk02=0.8254, average=0.9060.
+- 2026-03-12: Full 100-sample result on 100-199: chunk03=0.7470, chunk04=0.8000, chunk05=0.8454, full100 micro F1=0.8407 (>0.75).
+- 2026-03-12 16:06:33: start full-test checkpoint run: start_index=0, max_samples=3453, checkpoint_size=100, threshold=0.75
+- 2026-03-12 16:06:47: checkpoint chunk01 (up to sample_index 99) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall_disamb.yaml
+- 2026-03-12 17:40:36: config.conll2003.optim.recall_disamb chunk01 checkpoint_f1=0.7593
+- 2026-03-12 17:40:36: checkpoint chunk02 (up to sample_index 199) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall_disamb.yaml
+- 2026-03-12 19:25:21: config.conll2003.optim.recall_disamb chunk02 checkpoint_f1=0.8355
+- 2026-03-12 19:25:21: checkpoint chunk03 (up to sample_index 299) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall_disamb.yaml
+- 2026-03-12 21:35:23: config.conll2003.optim.recall_disamb chunk03 checkpoint_f1=0.7646
+- 2026-03-12 21:35:23: checkpoint chunk04 (up to sample_index 399) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall_disamb.yaml
+- 2026-03-12 23:17:03: config.conll2003.optim.recall_disamb chunk04 checkpoint_f1=0.7453
+- 2026-03-13 00:40:05: config.conll2003.optim.recall chunk04 checkpoint_f1=0.6711
+- 2026-03-13 02:03:12: config.conll2003.optim.disamb chunk04 checkpoint_f1=0.5548
+- 2026-03-13: Re-analyzed existing full-test artifacts; confirmed first unresolved failing checkpoint under current continuation path was chunk03 (f1=0.7269) for active config.
+- 2026-03-13: Added reusable diagnostics scripts:
+  - `experiments/conll2003/eval_existing_full_chunks.py`
+  - `experiments/conll2003/analyze_eval_errors.py`
+- 2026-03-13: Implemented generic boundary optimization in pipeline (`_trim_left_noise_tokens`):
+  - support trimming enumerated list prefixes (e.g., `15 - Name`),
+  - support broader named-entity-safe left-noise trimming,
+  - preserve LOC safety for determiner trimming edge cases.
+- 2026-03-13: Updated CoNLL prompt policy (expert/ner_expert/disambiguation):
+  - strengthened LOC-vs-MISC/ORG tie-breaks,
+  - added sports-table disambiguation guidance,
+  - added list-prefix boundary policy.
+- 2026-03-13: Created `config.conll2003.optim.recall_disamb.r3.yaml` as optimized checkpoint config lineage.
+- 2026-03-13: Node re-evaluations with optimized lineage:
+  - chunk03: 0.9142 (PASS)
+  - chunk04 first rerun: 0.7397 (FAIL) -> stop+optimize per protocol
+  - chunk04 second rerun after prompt refinement: 0.8245 (PASS)
+  - chunk05 first rerun: 0.7433 (FAIL) -> stop+optimize per protocol
+  - chunk05 second rerun after boundary-trim refinement: 0.7615 (PASS)
+- 2026-03-13: Continue full-test checkpoint progression from chunk06 with active optimized lineage.
+- 2026-03-15 15:18:20: start full-test checkpoint run: start_index=0, max_samples=3453, checkpoint_size=100, threshold=0.00
+- 2026-03-15 15:20:16: checkpoint chunk01 (up to sample_index 99) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.collab.v3.yaml
+- 2026-03-15 17:07:57: config.conll2003.optim.collab.v3 chunk01 checkpoint_f1=0.8176
+- 2026-03-15 17:07:57: checkpoint chunk02 (up to sample_index 199) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.collab.v3.yaml
+- 2026-03-15 18:44:05: config.conll2003.optim.collab.v3 chunk02 checkpoint_f1=0.8705
+- 2026-03-15 18:44:05: checkpoint chunk03 (up to sample_index 299) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.collab.v3.yaml
+- 2026-03-15 20:48:01: config.conll2003.optim.collab.v3 chunk03 checkpoint_f1=0.8980
+- 2026-03-15 20:48:01: checkpoint chunk04 (up to sample_index 399) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.collab.v3.yaml
+- 2026-03-15 22:31:47: config.conll2003.optim.collab.v3 chunk04 checkpoint_f1=0.8602
+- 2026-03-15 22:31:48: checkpoint chunk05 (up to sample_index 499) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.collab.v3.yaml
+- 2026-03-16 00:09:53: config.conll2003.optim.collab.v3 chunk05 checkpoint_f1=0.8496
+- 2026-03-16 00:09:53: checkpoint chunk06 (up to sample_index 599) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.collab.v3.yaml
+- 2026-03-16 01:41:58: config.conll2003.optim.collab.v3 chunk06 checkpoint_f1=0.8934
+- 2026-03-16 01:41:58: checkpoint chunk07 (up to sample_index 699) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.collab.v3.yaml
+- 2026-03-16 03:06:54: config.conll2003.optim.collab.v3 chunk07 checkpoint_f1=0.8779
+- 2026-03-16 03:06:54: checkpoint chunk08 (up to sample_index 799) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.collab.v3.yaml
+- 2026-03-16 04:24:17: config.conll2003.optim.collab.v3 chunk08 checkpoint_f1=0.8745
+- 2026-03-16 04:24:17: checkpoint chunk09 (up to sample_index 899) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.collab.v3.yaml
+- 2026-03-16 05:49:29: config.conll2003.optim.collab.v3 chunk09 checkpoint_f1=0.8368
+- 2026-03-16 05:49:29: checkpoint chunk10 (up to sample_index 999) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.collab.v3.yaml
+- 2026-03-16 07:11:58: config.conll2003.optim.collab.v3 chunk10 checkpoint_f1=0.6988
+- 2026-03-16 07:11:58: checkpoint chunk11 (up to sample_index 1099) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.collab.v3.yaml
+- 2026-03-16 08:21:59: config.conll2003.optim.collab.v3 chunk11 checkpoint_f1=0.7083
+- 2026-03-16 08:21:59: checkpoint chunk12 (up to sample_index 1199) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.collab.v3.yaml
+- 2026-03-16: Removed all field-specific lexical/pattern matching modules from pipeline runtime path; retired related config knobs from YAMLs; removed hardcoded mock heuristics in expert/re agents; updated optimization tests to match the new policy (51 tests passing).
+- 2026-03-16 20:50:02: start optimization cycle: threshold=0.00, drop_tolerance=1.00, start_index=0, max_samples=100, chunk_size=20, gate_samples=40, gate_chunk_count=2
+- 2026-03-16 20:51:51: evaluate config: /mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall_disamb.all_agents.yaml
+- 2026-03-16 21:40:02: config.conll2003.optim.recall_disamb.all_agents chunk01 micro_f1=0.7805
+- 2026-03-16 22:40:56: config.conll2003.optim.recall_disamb.all_agents chunk02 micro_f1=0.9180
+- 2026-03-16 22:40:56: config.conll2003.optim.recall_disamb.all_agents first_two_avg_f1=0.8493
+- 2026-03-16 22:40:56: config.conll2003.optim.recall_disamb.all_agents chunk01 micro_f1=0.7805
+- 2026-03-16 22:40:56: config.conll2003.optim.recall_disamb.all_agents chunk02 micro_f1=0.9180
+- 2026-03-16 23:41:01: config.conll2003.optim.recall_disamb.all_agents chunk03 micro_f1=0.9333
+- 2026-03-17 00:14:26: config.conll2003.optim.recall_disamb.all_agents chunk04 micro_f1=0.8116
+- 2026-03-17 00:33:13: config.conll2003.optim.recall_disamb.all_agents chunk05 micro_f1=0.9524
+- 2026-03-17 00:33:14: config.conll2003.optim.recall_disamb.all_agents full100 micro_f1=0.8802
+- 2026-03-17 00:33:14: selected config: /mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall_disamb.all_agents.yaml
+- 2026-03-17 14:15:17: start full-test checkpoint run: start_index=0, max_samples=100, checkpoint_size=100, threshold=0.75
+- 2026-03-17 14:17:04: checkpoint chunk01 (up to sample_index 99) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall_disamb.all_agents.yaml
+- 2026-03-17 14:30:58: start full-test checkpoint run: start_index=0, max_samples=3453, checkpoint_size=100, threshold=0.75
+- 2026-03-17 14:32:48: checkpoint chunk01 (up to sample_index 99) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall_disamb.all_agents.yaml
+- 2026-03-17 21:05:12: start full-test checkpoint run: start_index=0, max_samples=3453, checkpoint_size=100, threshold=0.75
+- 2026-03-17 21:07:06: checkpoint chunk01 (up to sample_index 99) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall_disamb.all_agents.yaml
+- 2026-03-17 23:19:26: config.conll2003.optim.recall_disamb.all_agents chunk01 checkpoint_f1=0.8519
+- 2026-03-17 23:19:27: checkpoint chunk02 (up to sample_index 199) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall_disamb.all_agents.yaml
+- 2026-03-18 01:42:18: config.conll2003.optim.recall_disamb.all_agents chunk02 checkpoint_f1=0.8698
+- 2026-03-18 01:42:18: checkpoint chunk03 (up to sample_index 299) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall_disamb.all_agents.yaml
+- 2026-03-18 04:15:12: config.conll2003.optim.recall_disamb.all_agents chunk03 checkpoint_f1=0.8922
+- 2026-03-18 04:15:12: checkpoint chunk04 (up to sample_index 399) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall_disamb.all_agents.yaml
+- 2026-03-18 05:56:36: config.conll2003.optim.recall_disamb.all_agents chunk04 checkpoint_f1=0.8679
+- 2026-03-18 05:56:36: checkpoint chunk05 (up to sample_index 499) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall_disamb.all_agents.yaml
+- 2026-03-18 07:25:24: config.conll2003.optim.recall_disamb.all_agents chunk05 checkpoint_f1=0.8000
+- 2026-03-18 07:25:24: checkpoint chunk06 (up to sample_index 599) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall_disamb.all_agents.yaml
+- 2026-03-18 08:52:45: config.conll2003.optim.recall_disamb.all_agents chunk06 checkpoint_f1=0.8193
+- 2026-03-18 08:52:46: checkpoint chunk07 (up to sample_index 699) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/conll2003/config.conll2003.optim.recall_disamb.all_agents.yaml

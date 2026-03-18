@@ -1,0 +1,12 @@
+{
+  "entity_types": [
+    {"name": "PERSON", "description": "A person name."},
+    {"name": "ORG", "description": "An organization name."},
+    {"name": "LOC", "description": "A location or geopolitical place."},
+    {"name": "DATE", "description": "A date or time expression."}
+  ],
+  "relation_constraints": [
+    {"name": "works_for", "head_types": ["PERSON"], "tail_types": ["ORG"]},
+    {"name": "located_in", "head_types": ["ORG"], "tail_types": ["LOC"]}
+  ]
+}

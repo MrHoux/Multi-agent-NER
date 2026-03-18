@@ -1,0 +1,44 @@
+{
+  "entity_types": [
+    {
+      "name": "PERSON",
+      "description": "Individual human names, aliases, and role-specific personal references."
+    },
+    {
+      "name": "ORG",
+      "description": "Organizations such as companies, institutions, teams, and government bodies."
+    },
+    {
+      "name": "LOC",
+      "description": "Geographic locations including cities, countries, regions, and landmarks."
+    },
+    {
+      "name": "DATE",
+      "description": "Temporal expressions including dates, years, and date ranges."
+    },
+    {
+      "name": "PRODUCT",
+      "description": "Named products, devices, platforms, or branded offerings."
+    }
+  ],
+  "relation_constraints": [
+    {
+      "name": "works_for",
+      "description": "Employment or affiliation relation.",
+      "head_types": ["PERSON"],
+      "tail_types": ["ORG"]
+    },
+    {
+      "name": "located_in",
+      "description": "Location containment relation.",
+      "head_types": ["ORG", "PRODUCT"],
+      "tail_types": ["LOC"]
+    },
+    {
+      "name": "launched_on",
+      "description": "Product release temporal relation.",
+      "head_types": ["PRODUCT"],
+      "tail_types": ["DATE"]
+    }
+  ]
+}

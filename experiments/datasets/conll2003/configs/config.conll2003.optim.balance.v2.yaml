@@ -1,0 +1,118 @@
+seed: 42
+prompts_path: experiments/datasets/conll2003/prompts/prompts.conll2003.news.yaml
+
+output:
+  predictions_path: experiments/datasets/conll2003/results/predictions.optim.balance.v2.jsonl
+
+llm:
+  provider: openai_compatible
+  base_url: https://api.deepseek.com/v1
+  api_key: sk-6b24b11cc240475c83bc6e105d349294
+  model: deepseek-chat
+  timeout_s: 90
+  max_retries: 3
+  retry_backoff_s: 1.0
+  temperature: 0.0
+
+data:
+  reader_type: generic_jsonl
+  data_path: datasets/conll2003/conll2003_test.100.jsonl
+  schema_path: datasets/conll2003/schema.conll2003.json
+
+pipeline:
+  sample_max_retries: 2
+  sample_retry_backoff_s: 1.0
+  sample_post_error_retries: 1
+  sample_post_error_backoff_s: 2.0
+
+  max_debate_turns: 4
+  early_stop_delta: 0.01
+  iou_align_threshold: 0.5
+  debate_l3_only: true
+  l2_threshold: 0.4
+  l3_threshold: 0.75
+
+  candidate:
+    enable_generic_fallback: true
+    fallback_only_when_empty: false
+    fallback_max_added: 34
+    fallback_min_token_len: 2
+    fallback_max_total_spans: 110
+    fallback_enable_parenthetical_alias: true
+    fallback_enable_descriptor_phrases: false
+    fallback_enable_list_context: true
+    fallback_enable_schema_profile: true
+
+  allow_expert_span_augmentation: true
+  allow_re_span_augmentation: false
+  rerun_after_span_augmentation: true
+  max_augmented_spans_per_sample: 16
+  augmentation_requires_seed_candidate: false
+  augmentation_require_schema_type_hint: true
+  augmentation_min_confidence: 0.62
+  augmentation_allow_no_seed_high_conf: false
+  augmentation_no_seed_min_confidence: 0.88
+  augmentation_no_seed_allowed_sources: ["expert"]
+  augmentation_reject_negative_rationale: true
+  augmentation_require_evidence: true
+  augmentation_require_evidence_anchor: true
+  augmentation_max_tokens: 12
+  augmentation_entity_like_only: false
+
+  mention_reject_negative_rationale: true
+  adjudicator_singleton_policy: conservative
+  adjudicator_singleton_min_confidence: 0.92
+  adjudicator_singleton_require_entity_like: false
+  final_min_confidence: 0.22
+
+  normalize_candidate_boundaries: true
+  boundary_left_modifiers: []
+  boundary_right_modifiers: []
+  boundary_enable_hyphen_left: true
+  boundary_max_right_expansion_steps: 1
+
+  enable_descriptor_expansion: false
+  descriptor_terms_from_schema: true
+  descriptor_terms: []
+  descriptor_left_modifiers: []
+
+  rescue_symbolic_parts_from_hypotheses: false
+  enable_parenthetical_alias_extraction: false
+  enable_candidate_recall_bridge: false
+  enable_candidate_superspan_promotion: false
+  enable_final_refine_pass: true
+
+  enable_low_information_filter: true
+  low_information_titlecase_confidence_threshold: 0.88
+  low_information_descriptor_confidence_threshold: 0.9
+
+
+  inject_high_value_candidates: false
+  lexical_injection_rules: []
+  mention_blocklist: []
+
+
+  enable_disambiguation_agent: true
+  disambiguation_lock_confidence: 0.92
+  disambiguation_lock_if_non_pipeline: true
+  disambiguation_allow_drop: true
+
+verifier:
+  use_llm: false
+  strict_drop_invalid: true
+
+memory:
+  enabled: false
+  sqlite_path: experiments/datasets/conll2003/results/memory.optim.balance.v2.db
+  top_k: 3
+  promote_threshold: 2
+  min_confidence: 0.7
+
+ablations:
+  w_o_rag: true
+  w_o_expert: false
+  w_o_re: true
+  w_o_debate: true
+  w_o_verifier: false
+  w_o_memory: true
+
