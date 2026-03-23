@@ -8,7 +8,9 @@ from maner.core.schema import SchemaDefinition
 from maner.core.types import (
     CandidateSet,
     Evidence,
+    ExpertConstraints,
     Relation,
+    SpanConstraint,
     UsageCost,
     is_strict_substring,
     is_valid_offsets,
@@ -28,8 +30,9 @@ class REAgent:
         schema: SchemaDefinition,
         memory_items: list[dict[str, Any]] | None = None,
         allow_span_proposals: bool = False,
-    ) -> tuple[list[Relation], UsageCost, dict[str, Any]]:
+    ) -> tuple[list[Relation], ExpertConstraints, UsageCost, dict[str, Any]]:
         memory_items = memory_items or []
+        relation_mode = "schema_bound" if schema.relation_constraints else "structure_only"
         augmentation_policy = (
             "enabled: you may propose additional recall spans via `new_spans`."
             if allow_span_proposals
@@ -40,7 +43,9 @@ class REAgent:
             text=text,
             candidate_spans=self._candidate_payload(candidate_set),
             memory_items=memory_items,
+            entity_types=schema.to_prompt_block(),
             relation_constraints=schema.relation_constraints,
+            relation_mode=relation_mode,
             augmentation_policy=augmentation_policy,
         )
 
@@ -77,6 +82,12 @@ class REAgent:
             relation_constraints=schema.relation_constraints,
         )
         valid_types = set(schema.entity_type_names)
+        structure_support = self._parse_structure_support(
+            payload=payload,
+            text=text,
+            candidate_set=candidate_set,
+            valid_types=valid_types,
+        )
         span_proposals = (
             self._parse_span_proposals(payload, text, source="re", valid_types=valid_types)
             if allow_span_proposals
@@ -91,11 +102,13 @@ class REAgent:
         )
         trace = {
             "agent": "re",
+            "relation_mode": relation_mode,
             "raw": llm_result.content,
             "parsed": payload,
             "span_proposals": span_proposals,
+            "structure_support_count": len(structure_support.per_span),
         }
-        return relations, cost, trace
+        return relations, structure_support, cost, trace
 
     def _candidate_payload(self, candidate_set: CandidateSet) -> list[dict[str, Any]]:
         return [
@@ -109,7 +122,67 @@ class REAgent:
         candidate_set: CandidateSet,
         relation_constraints: list[dict[str, Any]],
     ) -> dict[str, Any]:
-        return {"relations": [], "new_spans": []}
+        return {"relations": [], "new_spans": [], "per_span": {}}
+
+    def _parse_structure_support(
+        self,
+        payload: dict[str, Any],
+        text: str,
+        candidate_set: CandidateSet,
+        valid_types: set[str],
+    ) -> ExpertConstraints:
+        raw_per_span = payload.get("per_span", {}) or {}
+        constraints = ExpertConstraints(per_span={})
+        if not isinstance(raw_per_span, dict):
+            return constraints
+
+        for span_id, raw in raw_per_span.items():
+            if span_id not in candidate_set.spans or not isinstance(raw, dict):
+                continue
+
+            evidence: list[Evidence] = []
+            for item in raw.get("evidence", []) or []:
+                if not isinstance(item, dict):
+                    continue
+                quote = str(item.get("quote", ""))
+                start = int(item.get("start", -1))
+                end = int(item.get("end", -1))
+                if is_strict_substring(text, quote, start, end):
+                    evidence.append(Evidence(quote=quote, start=start, end=end))
+                    continue
+                aligned = align_substring_offsets(
+                    text=text,
+                    quote=quote,
+                    start_hint=start,
+                    end_hint=end,
+                )
+                if aligned is not None:
+                    aligned_start, aligned_end = aligned
+                    evidence.append(
+                        Evidence(
+                            quote=text[aligned_start:aligned_end],
+                            start=aligned_start,
+                            end=aligned_end,
+                        )
+                    )
+
+            candidate_types = _normalize_type_hints(raw.get("candidate_types", []), valid_types)
+            excluded_types = _normalize_type_hints(raw.get("excluded_types", []), valid_types)
+            confidence = float(raw.get("confidence", 0.0))
+            if not evidence:
+                confidence = min(confidence, 0.2)
+
+            if not candidate_types and not excluded_types and not evidence:
+                continue
+
+            constraints.per_span[str(span_id)] = SpanConstraint(
+                candidate_types=candidate_types,
+                excluded_types=excluded_types,
+                evidence=evidence,
+                confidence=confidence,
+                rationale=str(raw.get("rationale", "")),
+            )
+        return constraints
 
     def _parse_relations(
         self,
@@ -118,6 +191,8 @@ class REAgent:
         candidate_set: CandidateSet,
         relation_constraints: list[dict[str, Any]] | None = None,
     ) -> list[Relation]:
+        if not relation_constraints:
+            return []
         out: list[Relation] = []
         allowed_types = _allowed_relation_types(relation_constraints)
         for item in payload.get("relations", []) or []:

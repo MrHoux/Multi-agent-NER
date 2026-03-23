@@ -1,0 +1,12 @@
+- 2026-03-20 21:26:02: start optimization cycle: threshold=0.90, drop_tolerance=0.08, start_index=0, max_samples=100, kept_samples=100, chunk_size=20, gate_samples=40, gate_chunk_count=2
+- 2026-03-20 21:26:02: evaluate config: /mnt/c/Users/87569/Documents/multi-agent-CoNLL03/configs/runtime.deepseek.all_agents.yaml
+- 2026-03-20 22:03:45: runtime.deepseek.all_agents chunk01 micro_f1=0.8718
+- 2026-03-20 22:44:51: runtime.deepseek.all_agents chunk02 micro_f1=0.9573
+- 2026-03-20 22:44:51: runtime.deepseek.all_agents first_two_avg_f1=0.9145
+- 2026-03-20 22:44:51: runtime.deepseek.all_agents chunk01 micro_f1=0.8718
+- 2026-03-20 22:44:51: runtime.deepseek.all_agents chunk02 micro_f1=0.9573
+- 2026-03-20 23:14:29: runtime.deepseek.all_agents chunk03 micro_f1=0.9580
+- 2026-03-20 23:40:29: runtime.deepseek.all_agents chunk04 micro_f1=0.8986
+- 2026-03-21 00:04:30: runtime.deepseek.all_agents chunk05 micro_f1=0.9048
+- 2026-03-21 00:04:31: runtime.deepseek.all_agents full100 micro_f1=0.9271
+- 2026-03-21 00:04:31: selected config: /mnt/c/Users/87569/Documents/multi-agent-CoNLL03/configs/runtime.deepseek.all_agents.yaml

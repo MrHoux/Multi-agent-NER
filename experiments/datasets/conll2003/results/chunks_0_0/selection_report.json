@@ -1,0 +1,241 @@
+{
+  "threshold": 0.0,
+  "drop_tolerance": 1.0,
+  "start_index": 0,
+  "max_samples": 1,
+  "kept_samples": 1,
+  "chunk_size": 1,
+  "gate_samples": 1,
+  "gate_chunk_count": 1,
+  "data_path": "C:\\Users\\87569\\Documents\\multi-agent-CoNLL03\\datasets\\conll2003\\conll2003_test.0_0.jsonl",
+  "results": [
+    {
+      "config": "C:\\Users\\87569\\Documents\\multi-agent-CoNLL03\\configs\\default.yaml",
+      "status": "selected",
+      "first_two_avg_f1": 0.16666666666666669,
+      "full100_f1": 0.16666666666666669,
+      "chunk_metrics": {
+        "chunk01": {
+          "micro": {
+            "precision": 0.1,
+            "recall": 0.5,
+            "f1": 0.16666666666666669,
+            "tp": 1,
+            "fp": 9,
+            "fn": 1
+          },
+          "macro": {
+            "f1": 0.045454545454545456
+          },
+          "per_type": {
+            "PER": {
+              "precision": 0.1,
+              "recall": 1.0,
+              "f1": 0.18181818181818182,
+              "tp": 1,
+              "fp": 9,
+              "fn": 0
+            },
+            "ORG": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "LOC": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "MISC": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "errors": {
+            "type_mismatch": 1,
+            "boundary_mismatch": 2,
+            "spurious": 6,
+            "missing": 0
+          }
+        }
+      },
+      "full_metrics": {
+        "micro": {
+          "precision": 0.1,
+          "recall": 0.5,
+          "f1": 0.16666666666666669,
+          "tp": 1,
+          "fp": 9,
+          "fn": 1
+        },
+        "macro": {
+          "f1": 0.045454545454545456
+        },
+        "per_type": {
+          "PER": {
+            "precision": 0.1,
+            "recall": 1.0,
+            "f1": 0.18181818181818182,
+            "tp": 1,
+            "fp": 9,
+            "fn": 0
+          },
+          "ORG": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "LOC": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MISC": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "errors": {
+          "type_mismatch": 1,
+          "boundary_mismatch": 2,
+          "spurious": 6,
+          "missing": 0
+        }
+      }
+    }
+  ],
+  "selected": {
+    "config": "C:\\Users\\87569\\Documents\\multi-agent-CoNLL03\\configs\\default.yaml",
+    "status": "selected",
+    "first_two_avg_f1": 0.16666666666666669,
+    "full100_f1": 0.16666666666666669,
+    "chunk_metrics": {
+      "chunk01": {
+        "micro": {
+          "precision": 0.1,
+          "recall": 0.5,
+          "f1": 0.16666666666666669,
+          "tp": 1,
+          "fp": 9,
+          "fn": 1
+        },
+        "macro": {
+          "f1": 0.045454545454545456
+        },
+        "per_type": {
+          "PER": {
+            "precision": 0.1,
+            "recall": 1.0,
+            "f1": 0.18181818181818182,
+            "tp": 1,
+            "fp": 9,
+            "fn": 0
+          },
+          "ORG": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "LOC": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MISC": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "errors": {
+          "type_mismatch": 1,
+          "boundary_mismatch": 2,
+          "spurious": 6,
+          "missing": 0
+        }
+      }
+    },
+    "full_metrics": {
+      "micro": {
+        "precision": 0.1,
+        "recall": 0.5,
+        "f1": 0.16666666666666669,
+        "tp": 1,
+        "fp": 9,
+        "fn": 1
+      },
+      "macro": {
+        "f1": 0.045454545454545456
+      },
+      "per_type": {
+        "PER": {
+          "precision": 0.1,
+          "recall": 1.0,
+          "f1": 0.18181818181818182,
+          "tp": 1,
+          "fp": 9,
+          "fn": 0
+        },
+        "ORG": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "LOC": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "MISC": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "errors": {
+        "type_mismatch": 1,
+        "boundary_mismatch": 2,
+        "spurious": 6,
+        "missing": 0
+      }
+    }
+  }
+}

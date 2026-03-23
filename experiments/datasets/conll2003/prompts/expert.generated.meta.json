@@ -1,0 +1,9 @@
+{
+  "dataset_id": "conll2003",
+  "dataset_name": "conll2003",
+  "schema_path": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/datasets/conll2003/schema.conll2003.json",
+  "generation_mode": "zero_shot_schema_only",
+  "design_summary": [
+    "Expert guidance for conll2003 schema-driven NER, focusing on evidence-based type assignment, conservative boundary handling, and portable semantic reasoning without dataset-specific lexical rules."
+  ]
+}

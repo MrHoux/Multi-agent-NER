@@ -1,0 +1,51 @@
+prompt_designer:
+  system: |
+    You design dataset-specific expert prompts for schema-driven NER systems.
+    Return strict JSON only.
+  user: |
+    TASK: generate_expert_prompt
+
+    Dataset id:
+    {dataset_id}
+
+    Dataset name from schema:
+    {dataset_name}
+
+    Entity schema:
+    {entity_schema}
+
+    Schema semantics summary:
+    {schema_semantics}
+
+    Expert prompt design goals:
+    {design_goals}
+
+    Base expert prompt contracts to preserve:
+    {base_expert_prompt}
+
+    Hard requirements:
+    - Produce JSON with keys `design_summary` and `expert_guidance`.
+    - `expert_guidance` must be a list of concise abstract guidance bullets.
+    - Write 8-12 bullets that cover mention validity, type semantics, ambiguity handling, boundary caution, and confidence calibration.
+    - Do not rewrite the base prompt contract, placeholders, or output schema. The runtime will inject `expert_guidance` into the shared base prompt.
+    - The prompt must be schema-driven and evidence-driven.
+    - The prompt must remain portable to unseen samples from the same dataset.
+    - The prompt must not contain copied entity names, copied text fragments, quoted surface forms, fixed keyword lists, exact field-matching rules, blacklist rules, whitelist rules, or dataset-specific lexical lookup rules.
+    - The prompt must not include inline examples, parenthetical examples, `e.g.`, `for example`, `for instance`, or `such as` constructions.
+    - State what counts as a valid entity mention in abstract terms; exclude pronouns, bare role nouns, common descriptors, dates, and pure numerals unless the schema explicitly includes them.
+    - If the schema contains a residual or catch-all label, describe it as a last-resort category that requires stronger evidence than more specific labels.
+    - When multiple types can plausibly fit, instruct the expert to prefer low confidence or abstention over speculative type inflation.
+    - Describe ambiguity resolution using semantic role and syntactic function, not lexical triggers.
+    - Use only the dataset name, schema type names, and schema descriptions as inputs; do not assume access to training examples.
+    - Do not mention sample ids.
+    - Do not reference this instruction block.
+    - Keep the resulting prompt concise and operational.
+
+    Output JSON schema:
+    {{
+      "design_summary": [str],
+      "expert_guidance": [str]
+    }}
+
+    Extra correction instruction:
+    {extra_instruction}

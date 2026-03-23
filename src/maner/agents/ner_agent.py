@@ -26,6 +26,51 @@ class NERAgent:
         self.llm_client = llm_client
         self.prompt_manager = prompt_manager
 
+    def run_direct(
+        self,
+        text: str,
+        schema: SchemaDefinition,
+    ) -> tuple[NERHypothesis, UsageCost, dict[str, Any]]:
+        system, user = self.prompt_manager.render(
+            "ner_direct_agent",
+            text=text,
+            entity_types=schema.to_prompt_block(),
+        )
+
+        context = None
+        if self.llm_client.provider == "mock":
+            context = {
+                "mock_result": self._heuristic_direct(
+                    text=text,
+                    schema=schema,
+                )
+            }
+
+        llm_result = self.llm_client.chat_json(
+            system_prompt=system,
+            user_prompt=user,
+            task="ner_direct_agent",
+            context=context,
+        )
+        payload = llm_result.parsed_json
+        if payload.get("mock") and "result" in payload:
+            payload = payload["result"]
+
+        hyp = self._parse_direct_mentions(
+            payload=payload,
+            text=text,
+            valid_types=set(schema.entity_type_names),
+        )
+        cost = UsageCost(
+            calls=llm_result.usage.calls,
+            prompt_tokens=llm_result.usage.prompt_tokens,
+            completion_tokens=llm_result.usage.completion_tokens,
+            total_tokens=llm_result.usage.total_tokens,
+            latency_ms=llm_result.usage.latency_ms or [],
+        )
+        trace = {"agent": "ner_direct", "raw": llm_result.content, "parsed": payload}
+        return hyp, cost, trace
+
     def run_with_expert(
         self,
         text: str,
@@ -153,6 +198,7 @@ class NERAgent:
                     {"quote": e.quote, "start": e.start, "end": e.end} for e in c.evidence
                 ],
                 "confidence": c.confidence,
+                "rationale": c.rationale,
             }
         return data
 
@@ -207,6 +253,33 @@ class NERAgent:
                 }
             )
         return {"mentions": mentions}
+
+    def _heuristic_direct(
+        self,
+        text: str,
+        schema: SchemaDefinition,
+    ) -> dict[str, Any]:
+        valid = set(schema.entity_type_names)
+        if "PER" in valid:
+            from maner.agents.candidate_agent import CandidateAgent
+
+            # Reuse mock candidate spans as a rough direct seed in tests.
+            cset = CandidateAgent(self.llm_client, self.prompt_manager).run(text, schema)[0]
+            mentions = []
+            for span_id, span in cset.spans.items():
+                if not span.text[:1].isupper():
+                    continue
+                mentions.append(
+                    {
+                        "text": span.text,
+                        "start": span.start,
+                        "end": span.end,
+                        "ent_type": next(iter(valid)),
+                        "confidence": 0.6,
+                    }
+                )
+            return {"mentions": mentions}
+        return {"mentions": []}
 
     def _heuristic_from_relations(
         self,
@@ -327,3 +400,57 @@ class NERAgent:
                 )
 
         return NERHypothesis(mentions=mentions, source=source)  # type: ignore[arg-type]
+
+    def _parse_direct_mentions(
+        self,
+        payload: dict[str, Any],
+        text: str,
+        valid_types: set[str],
+    ) -> NERHypothesis:
+        mentions: list[Mention] = []
+        seen: set[tuple[int, int, str]] = set()
+        for idx, item in enumerate(payload.get("mentions", []) or [], start=1):
+            if not isinstance(item, dict):
+                continue
+            ent_type = str(item.get("ent_type", "")).strip()
+            if ent_type not in valid_types:
+                continue
+            quote = str(item.get("text", ""))
+            start = int(item.get("start", -1))
+            end = int(item.get("end", -1))
+            if not is_strict_substring(text, quote, start, end):
+                aligned = align_substring_offsets(
+                    text=text,
+                    quote=quote,
+                    start_hint=start,
+                    end_hint=end,
+                )
+                if aligned is None:
+                    continue
+                start, end = aligned
+                quote = text[start:end]
+            if start >= end:
+                continue
+            key = (start, end, ent_type)
+            if key in seen:
+                continue
+            seen.add(key)
+            span_id = f"seed_{idx:04d}"
+            confidence = float(item.get("confidence", 0.0))
+            evidence = [Evidence(quote=quote, start=start, end=end)]
+            mentions.append(
+                Mention(
+                    span_id=span_id,
+                    span=Span(
+                        text=quote,
+                        start=start,
+                        end=end,
+                        provenance={"op": "DIRECT_SEED"},
+                    ),
+                    ent_type=ent_type,
+                    confidence=confidence,
+                    evidence=evidence,
+                    rationale=f"direct_seed:{item.get('rationale', '')}".strip(":"),
+                )
+            )
+        return NERHypothesis(mentions=mentions, source="direct")

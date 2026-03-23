@@ -14,6 +14,7 @@ class EntityTypeDef:
 @dataclass
 class SchemaDefinition:
     entity_types: list[EntityTypeDef]
+    dataset_name: str = ""
     relation_constraints: list[dict] = field(default_factory=list)
 
     @property
@@ -46,4 +47,10 @@ def load_schema(schema_path: str | Path) -> SchemaDefinition:
     if not isinstance(relation_constraints, list):
         raise ValueError("schema.json field 'relation_constraints' must be a list if provided.")
 
-    return SchemaDefinition(entity_types=entity_types, relation_constraints=relation_constraints)
+    dataset_name = str(raw.get("dataset_name") or raw.get("dataset_id") or "").strip()
+
+    return SchemaDefinition(
+        dataset_name=dataset_name,
+        entity_types=entity_types,
+        relation_constraints=relation_constraints,
+    )

@@ -1,0 +1,6 @@
+Predictions written to /mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/results/chunk04_opt_attempt01/runtime.deepseek.all_agents/pred.chunk01.jsonl
+[run] /home/mrhoux/miniconda3/envs/NER/bin/python -m maner.cli.run_pipeline --config /mnt/c/Users/87569/Documents/multi-agent-CoNLL03/configs/runtime.deepseek.all_agents.yaml --set data.data_path=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/datasets/conll2003/chunks_300_399_100/conll2003_test.chunk01.jsonl --set data.schema_path=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/datasets/conll2003/schema.conll2003.json --set data.reader_type=generic_jsonl --set output.predictions_path=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/results/chunk04_opt_attempt01/runtime.deepseek.all_agents/pred.chunk01.jsonl --set prompts_path=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/prompts/expert.generated.yaml --set memory.sqlite_path=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/results/chunk04_opt_attempt01/memory.runtime.deepseek.all_agents.db
+{
+  "stop_reason": "completed",
+  "report_path": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/results/chunk04_opt_attempt01/checkpoint_report.json"
+}

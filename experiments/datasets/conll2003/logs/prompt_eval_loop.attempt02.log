@@ -1,0 +1,12 @@
+- 2026-03-19 03:38:21: start optimization cycle: threshold=0.00, drop_tolerance=1.00, start_index=0, max_samples=100, chunk_size=20, gate_samples=40, gate_chunk_count=2
+- 2026-03-19 03:38:35: evaluate config: /mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml
+- 2026-03-19 04:08:23: config.conll2003.optim.recall_disamb.all_agents chunk01 micro_f1=0.6905
+- 2026-03-19 04:43:52: config.conll2003.optim.recall_disamb.all_agents chunk02 micro_f1=0.8346
+- 2026-03-19 04:43:52: config.conll2003.optim.recall_disamb.all_agents first_two_avg_f1=0.7626
+- 2026-03-19 04:43:53: config.conll2003.optim.recall_disamb.all_agents chunk01 micro_f1=0.6905
+- 2026-03-19 04:43:53: config.conll2003.optim.recall_disamb.all_agents chunk02 micro_f1=0.8346
+- 2026-03-19 05:11:17: config.conll2003.optim.recall_disamb.all_agents chunk03 micro_f1=0.9587
+- 2026-03-19 05:35:20: config.conll2003.optim.recall_disamb.all_agents chunk04 micro_f1=0.8108
+- 2026-03-19 05:56:09: config.conll2003.optim.recall_disamb.all_agents chunk05 micro_f1=0.7907
+- 2026-03-19 05:56:10: config.conll2003.optim.recall_disamb.all_agents full100 micro_f1=0.8330
+- 2026-03-19 05:56:10: selected config: /mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml

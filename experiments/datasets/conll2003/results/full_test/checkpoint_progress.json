@@ -1,0 +1,17 @@
+{
+  "target": {
+    "dataset_name": "conll2003",
+    "split": "test",
+    "start_index": 0,
+    "max_samples": 0,
+    "checkpoint_size": 100,
+    "threshold": 0.4
+  },
+  "stop_reason": "running",
+  "final_active_config": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/configs/runtime.deepseek.all_agents.yaml",
+  "node_results": [],
+  "full_metrics": null,
+  "data_path": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/datasets/conll2003/conll2003_test.0_all.jsonl",
+  "chunks_dir": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/datasets/conll2003/chunks_0_all_100",
+  "output_root": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/results/full_test"
+}

@@ -8,21 +8,24 @@ This folder adapts the project from BC2GM-focused runs to CoNLL2003 newswire NER
   - Converts BIO tags to span-level JSONL (`id`, `text`, `gold_mentions`).
   - Writes CoNLL2003 schema with `PER/ORG/LOC/MISC`.
   - Splits 100 samples into 5 chunks (`20 x 5`).
-- `experiments/datasets/conll2003/prompts/prompts.conll2003.news.yaml`:
-  - Prompt set with explicit CoNLL2003 label policy.
-- `experiments/datasets/conll2003/configs/`:
-  - All CoNLL2003 configs are centralized here.
+- `configs/prompts_cot.yaml`:
+  - Shared generic prompt set used by all non-expert agents.
+- `configs/runtime.deepseek.all_agents.yaml`:
+  - Shared dataset-agnostic runtime config used by the generic runners.
+- `experiments/datasets/conll2003/prompts/expert.generated.yaml`:
+  - Dataset-specific `expert_agent` overlay generated from a training slice.
+- `experiments/datasets/conll2003/prompts/expert.generated.meta.json`:
+  - Prompt design summary and generation metadata.
 - `experiments/datasets/conll2003/results/`:
   - All CoNLL2003 evaluation outputs.
 - `experiments/datasets/conll2003/logs/`:
   - Console/protocol logs.
 - `experiments/datasets/conll2003/dataset.eval.yaml`:
-  - Unified profile used by the dataset entrypoint.
-- `run_conll2003_100_chunked.py`:
-  - Automated threshold loop:
-    - first two chunks must average `>= 0.70`
-    - then run all 5 chunks and reject if full-100 drops materially
-    - otherwise select the config.
+  - Auto-generated profile used by the generic dataset entrypoint.
+- `experiments/run_dataset_100_chunked.py`:
+  - Generic chunked evaluation runner for any dataset in standard JSONL format.
+- `experiments/run_dataset_full_checkpoints.py`:
+  - Generic full-test checkpoint runner for any dataset in standard JSONL format.
 - `EXECUTION_PROTOCOL_AND_LOG.md`:
   - Behavior protocol and action trace log.
 
@@ -30,38 +33,34 @@ This folder adapts the project from BC2GM-focused runs to CoNLL2003 newswire NER
 Unified entrypoint:
 ```bash
 python experiments/run_dataset_eval.py start \
-  --profile experiments/datasets/conll2003/dataset.eval.yaml \
+  --dataset-id conll2003 \
   --background
 ```
 
 Check accuracy/progress at any time:
 ```bash
 python experiments/run_dataset_eval.py status \
-  --profile experiments/datasets/conll2003/dataset.eval.yaml
+  --dataset-id conll2003
 ```
 
 Real-time console log:
 ```bash
 python experiments/run_dataset_eval.py logs \
-  --profile experiments/datasets/conll2003/dataset.eval.yaml \
+  --dataset-id conll2003 \
   --follow
 ```
 
 Pause/Resume:
 ```bash
-python experiments/run_dataset_eval.py pause  --profile experiments/datasets/conll2003/dataset.eval.yaml
-python experiments/run_dataset_eval.py resume --profile experiments/datasets/conll2003/dataset.eval.yaml
+python experiments/run_dataset_eval.py pause  --dataset-id conll2003
+python experiments/run_dataset_eval.py resume --dataset-id conll2003
 ```
 
-Legacy direct scripts:
+Windowed chunked evaluation:
 ```bash
-python experiments/conll2003/run_conll2003_100_chunked.py
-```
-
-Run a specific 100-sample window, e.g. `100-199`, with first-40 gate target `>0.75`:
-```bash
-python experiments/conll2003/run_conll2003_100_chunked.py \
-  --start_index 100 \
+python experiments/run_dataset_eval.py chunked-eval \
+  --dataset-id conll2003 \
+  --start-index 100 \
   --max_samples 100 \
   --gate_samples 40 \
   --threshold 0.75
@@ -69,13 +68,11 @@ python experiments/conll2003/run_conll2003_100_chunked.py \
 
 Run full test with 100-sample checkpoints, optimize on failing node:
 ```bash
-python experiments/conll2003/run_conll2003_full_checkpoints.py \
-  --start_index 0 \
-  --max_samples 3453 \
-  --checkpoint_size 100 \
-  --threshold 0.75
+python experiments/run_dataset_eval.py start \
+  --dataset-id conll2003 \
+  --background
 ```
 
 Results:
 - Selection report: `experiments/datasets/conll2003/results/chunks_<start>_<end>/selection_report.json`
-- Full-test checkpoints/report: `experiments/datasets/conll2003/results/full_test_all_agents/`
+- Full-test checkpoints/report: `experiments/datasets/conll2003/results/full_test/`

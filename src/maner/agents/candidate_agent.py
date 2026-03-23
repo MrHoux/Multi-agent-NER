@@ -7,7 +7,7 @@ from typing import Any
 from maner.core.alignment import align_substring_offsets
 from maner.core.prompting import PromptManager
 from maner.core.schema import SchemaDefinition
-from maner.core.types import CandidateSet, Span, UsageCost, is_valid_offsets
+from maner.core.types import CandidateSet, Mention, Span, UsageCost, is_valid_offsets
 from maner.llm.client import LLMClient
 
 
@@ -33,12 +33,27 @@ class CandidateAgent:
         self.settings = settings or {}
 
     def run(
-        self, text: str, schema: SchemaDefinition
+        self,
+        text: str,
+        schema: SchemaDefinition,
+        seed_mentions: list[Mention] | None = None,
     ) -> tuple[CandidateSet, UsageCost, dict[str, Any]]:
+        seed_mentions = seed_mentions or []
         system, user = self.prompt_manager.render(
             "candidate_agent",
             text=text,
             entity_types=schema.to_prompt_block(),
+            seed_mentions=[
+                {
+                    "span_id": mention.span_id,
+                    "text": mention.span.text,
+                    "start": mention.span.start,
+                    "end": mention.span.end,
+                    "ent_type": mention.ent_type,
+                    "confidence": mention.confidence,
+                }
+                for mention in seed_mentions
+            ],
         )
 
         context = None
@@ -63,6 +78,7 @@ class CandidateAgent:
             "raw": llm_result.content,
             "parsed": payload,
             "num_spans": len(candidate_set.spans),
+            "seed_mentions": len(seed_mentions),
             "fallback_added": fallback_added,
             "fallback_mode": "generic",
         }

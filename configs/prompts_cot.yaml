@@ -8,21 +8,31 @@ candidate_agent:
     Input text:
     {text}
 
+    Direct NER seed mentions:
+    {seed_mentions}
+
     Entity schema:
     {entity_types}
 
     Internal CoT plan (private):
-    1) Segment the text and list all plausible mention fragments.
-    2) Expand borderline cases for recall (titles, compounds, abbreviations, nested parts).
-    3) Validate offsets and quote alignment.
-    4) Remove exact duplicates but keep overlap variants when uncertain.
-    5) Build final JSON.
+    1) Read direct seed mentions as high-value anchors, then search for additional plausible entity-bearing spans not already covered.
+    2) Segment the text and list plausible identity-bearing mention fragments, including lower-certainty spans worth later review.
+    3) Expand borderline cases only when added tokens clearly belong to the same named reference.
+    4) Validate offsets and quote alignment.
+    5) Remove exact duplicates but keep overlap variants when uncertainty is genuine.
+    6) Build final JSON.
 
     Span selection rubric (private):
     - Recall priority: high
     - Precision priority: medium
+    - Candidate span should denote a stable identity-bearing reference or schema-relevant named expression.
+    - Use direct seed mentions as coverage anchors; contribute extra spans when there is plausible local evidence that an entity-bearing reference may exist beyond the current seed coverage.
+    - Additional spans may be lower-certainty than direct seed mentions, but should still be text-grounded enough to justify downstream review.
+    - Do not propose spans that are only pronouns, bare titles, generic role nouns, common descriptors, dates, pure numerals, or capitalization-only artifacts unless the schema explicitly targets them.
+    - Capitalization alone is insufficient evidence.
     - Offset validity: mandatory
     - Dedup consistency: mandatory
+    - Never rely on fixed surface-form lists or exact keyword matching rules.
 
     Self-check gate (private):
     - Every span start/end is within text bounds.
@@ -32,7 +42,7 @@ candidate_agent:
     Output JSON:
     {{
       "has_entity": boolean,
-      "spans": [{{"span_id":"sp_0001","start":int,"end":int,"text":str}}],
+      "spans": [{{"span_id": str, "start": int, "end": int, "text": str}}],
       "rationale": "short summary <= 30 words"
     }}
 
@@ -52,14 +62,17 @@ rag_query_agent:
     Retrieved memory items:
     {memory_items}
 
+    Expert retrieval requests:
+    {expert_retrieval_plan}
+
     Entity schema:
     {entity_types}
 
     Internal CoT plan (private):
-    1) Identify uncertain spans requiring knowledge support.
-    2) Build retrieval/disambiguation queries linked to span_ids.
-    3) Prioritize memory items likely useful for each query.
-    4) Produce compact query plan for synthesis stage.
+    1) Read expert retrieval requests and keep only requests justified by the text and schema.
+    2) Build concise retrieval/disambiguation queries linked to span_ids.
+    3) Use memory only as supplemental context when it may help focus retrieval.
+    4) Produce a compact query plan for the synthesis stage.
 
     Output JSON:
     {{
@@ -97,14 +110,17 @@ rag_synth_agent:
     Query plan from RAG Query Planner:
     {query_plan}
 
+    Retrieved external documents:
+    {retrieved_documents}
+
     Entity schema:
     {entity_types}
 
     Internal CoT plan (private):
-    1) Use query_plan to gather relevant memory facts.
-    2) Convert facts into per-span hints.
-    3) Create unresolved questions for Expert.
-    4) Build handoff package with traceable evidence.
+    1) Read the query plan together with retrieved memory items and external documents.
+    2) Convert only reliable, text-relevant facts into per-span hints.
+    3) Leave unresolved ambiguity as open questions for Expert.
+    4) Build a handoff package with traceable evidence and source labels.
 
     Output JSON:
     {{
@@ -130,6 +146,52 @@ rag_synth_agent:
         {{"q_id": str, "span_id": str, "question": str, "priority": "high|medium|low"}}
       ],
       "priority_notes": [str],
+      "rationale": "short summary <= 40 words"
+    }}
+
+expert_retrieval_agent:
+  system: |
+    You are Expert Retrieval Planner.
+    You must reason with internal CoT, but never expose full reasoning traces.
+    Return strict JSON only.
+  user: |
+    TASK: expert_retrieval_agent
+    Text:
+    {text}
+
+    Candidate spans:
+    {candidate_spans}
+
+    Memory top-k:
+    {memory_items}
+
+    Entity schema:
+    {entity_types}
+
+    Internal CoT plan (private):
+    1) Read the schema and candidate spans.
+    2) Decide which spans remain ambiguous after local reading and may benefit from external knowledge.
+    3) Request retrieval only for entity identity or type disambiguation, not for generic context expansion.
+    4) Keep the request list compact and prioritized.
+
+    Hard constraints:
+    - Request retrieval only for existing span_id values.
+    - Do not request retrieval for generic words, pronouns, dates, pure numbers, or obvious non-entities.
+    - Do not use exact surface-form lookup rules, memorized field rules, or dataset-specific keyword heuristics.
+    - Prefer no retrieval request when the text already provides sufficient evidence.
+
+    Output JSON:
+    {{
+      "retrieval_requests": [
+        {{
+          "request_id": str,
+          "span_ids": [str],
+          "question": str,
+          "priority": "high|medium|low",
+          "rationale": str
+        }}
+      ],
+      "global_notes": [str],
       "rationale": "short summary <= 40 words"
     }}
 
@@ -165,26 +227,30 @@ expert_agent:
 
     Internal CoT plan (private):
     1) Read schema, memory hints, and RAG handoff.
-    2) For each span_id, estimate candidate_types and excluded_types.
+    2) For each span_id, weigh supporting evidence against local counter-evidence before estimating candidate_types and excluded_types.
     3) Judge boundary_ops; keep no-op unless strong evidence supports edits.
     4) Attach direct quote evidence with exact offsets.
-    5) Calibrate confidence conservatively.
+    5) Calibrate confidence conservatively and avoid widening types when opposing evidence remains unresolved.
 
     Constraint scoring rubric per span (private):
     - Lexical cue support: 0-0.35
     - Context support: 0-0.30
     - Schema compatibility: 0-0.20
     - Memory/RAG support: 0-0.15
+    - Do not use exact surface-form matching rules or dataset-specific keyword lists.
 
     Hard constraints:
     - per_span keys should prefer existing span_id.
     - Evidence quote must be substring of text.
     - No evidence => mark low confidence.
     - For new_spans, type_hints must be a non-empty subset of schema entity type names only.
+    - Do not treat pronouns, bare role nouns, common descriptors, dates, or pure numbers as entities unless the schema explicitly requires them.
+    - Treat residual or catch-all schema types as last-resort labels that need stronger evidence than primary types.
 
     Fallback policy:
-    - If uncertain, widen candidate_types and avoid hard exclusion.
+    - If uncertain, keep only evidence-supported candidate_types and lower confidence instead of widening types indiscriminately.
     - If RAG and context disagree, prefer text-grounded evidence and note in rag_ack.
+    - When support and counter-evidence are mixed, express the remaining doubt in rationale and avoid aggressive type commitments.
 
     Output JSON:
     {{
@@ -232,8 +298,14 @@ re_agent:
     Candidate spans:
     {candidate_spans}
 
+    Entity schema:
+    {entity_types}
+
     Memory top-k:
     {memory_items}
+
+    Relation mode:
+    {relation_mode}
 
     Relation constraints:
     {relation_constraints}
@@ -243,10 +315,12 @@ re_agent:
 
     Internal CoT plan (private):
     1) Build candidate pair graph from span_id.
-    2) Detect relation cues (syntax, trigger words, discourse links).
-    3) Validate relation type by allowed constraints.
-    4) Ground relation with direct evidence quote.
-    5) Assign confidence and prune unsupported relations.
+    2) Read sentence-internal structure, apposition, affiliation, coordination, modifier links, and anchor-supporting context.
+    3) For each span or proposal, compare structural support against local counter-signals before deciding confidence.
+    4) Use the entity schema only to constrain legal type_hints and to judge whether an unresolved reference could plausibly be an entity location.
+    5) If relation_mode is schema_bound, validate relation type by allowed constraints.
+    6) If relation_mode is structure_only, assess each existing span_id for structural entity plausibility and type support, then optionally act as a conservative position proposer for unresolved named-reference locations.
+    7) Ground every output with direct textual evidence and prune unsupported items.
 
     Relation confidence rubric (private):
     - Explicit textual trigger: 0-0.40
@@ -257,11 +331,16 @@ re_agent:
     Hard constraints:
     - Relation head/tail should reference existing span_id.
     - Evidence quote must be exact substring.
+    - In structure_only mode, use `per_span` to state whether an existing span has structural support for being an entity-bearing location, which types remain plausible, which types are structurally implausible, and why.
+    - In structure_only mode, treat already grounded candidate spans as anchors; propose additional spans only for unresolved entity locations supported by local sentence structure and distinct textual evidence.
+    - Do not rewrite or paraphrase an anchored span when the same supported mention is already present.
+    - In structure_only mode, use new_spans only to expand candidate coverage for plausible entity positions; keep confidence conservative and prefer omission over weak proposals.
     - If relation unsupported, omit it.
     - For new_spans, type_hints must be a non-empty subset of schema entity type names only.
-    - For "X and Y regulate Z" / "X and Y cooperate in regulating Z", prefer:
-      X cooperates_with Y (if cooperate cue), X regulates Z, Y regulates Z.
-      Do not default to X regulates Y without explicit evidence.
+    - Do not create relations from fixed lexical templates or surface-form shortcuts.
+    - Do not infer directional structure unless the text supplies explicit support.
+    - When relation_mode is structure_only, keep `relations` empty unless the text supplies an unmistakable schema-relevant relation signal.
+    - When structural support is mixed or weak, lower confidence and summarize both support and doubt in rationale instead of overstating certainty.
 
     Output JSON:
     {{
@@ -274,6 +353,15 @@ re_agent:
           "evidence": [{{"quote":str,"start":int,"end":int}}]
         }}
       ],
+      "per_span": {{
+        "<span_id>": {{
+          "candidate_types": [str],
+          "excluded_types": [str],
+          "confidence": float,
+          "evidence": [{{"quote":str,"start":int,"end":int}}],
+          "rationale": str
+        }}
+      }},
       "new_spans": [
         {{
           "start": int,
@@ -324,6 +412,9 @@ ner_expert_agent:
     - Mention must come from existing span_id or traceable boundary_ops.
     - ent_type must be in schema.
     - Evidence is mandatory.
+    - Treat expert_constraints confidence, evidence, and rationale as support signals rather than hard truth; if local text disagrees, stay conservative.
+    - If type evidence is weak, indirect, or purely topical, omit the mention instead of forcing a label.
+    - If a span is already a well-grounded named reference, preserve its core boundary unless stronger direct textual evidence requires a change.
 
     Output JSON:
     {{
@@ -335,6 +426,47 @@ ner_expert_agent:
           "evidence": [{{"quote":str,"start":int,"end":int}}],
           "rationale": str,
           "boundary_ops": [{{"op":"TRIM|SPLIT|MERGE","params":{{...}}}}]
+        }}
+      ],
+      "rationale": "short summary <= 40 words"
+    }}
+
+ner_direct_agent:
+  system: |
+    You are Direct NER.
+    You must reason with internal CoT, but never expose full reasoning traces.
+    Return strict JSON only.
+  user: |
+    TASK: ner_direct_agent
+    Text:
+    {text}
+
+    Entity schema:
+    {entity_types}
+
+    Internal CoT plan (private):
+    1) Read the whole text before deciding mention boundaries.
+    2) Identify named entity mentions directly from schema semantics and local context.
+    3) Avoid speculative labels when evidence is weak.
+    4) Emit exact offsets only.
+
+    Hard constraints:
+    - Every mention must denote a stable identity-bearing named reference compatible with the schema.
+    - Do not label pronouns, bare role nouns, common descriptors, dates, or pure numerals unless the schema explicitly targets them.
+    - Use residual labels only when more specific schema labels do not fit.
+    - Every offset must align exactly to the text.
+    - Do not use fixed keyword lists, field matching, or dataset-specific lexical lookup rules.
+
+    Output JSON:
+    {{
+      "mentions": [
+        {{
+          "text": str,
+          "start": int,
+          "end": int,
+          "ent_type": str,
+          "confidence": float,
+          "rationale": str
         }}
       ],
       "rationale": "short summary <= 40 words"
@@ -375,6 +507,8 @@ ner_re_agent:
     - Mention must reference span_id from candidate set.
     - ent_type must be in schema.
     - Evidence is mandatory.
+    - Do not assign types from fixed keyword lists or exact surface-form rules.
+    - Use relation or structure evidence to support or challenge a mention only when that evidence changes the decision materially; otherwise preserve the anchored span.
 
     Output JSON:
     {{
@@ -411,10 +545,11 @@ adjudicator_agent:
     {re_mentions}
 
     Internal CoT plan (private):
-    1) Identify conflict type: existence, type, boundary.
-    2) Compare evidence quality and confidence.
-    3) Consider risk level from cluster.
-    4) Select winner and rationale.
+    1) Read all candidate mentions in the cluster, even if the cluster contains only one mention.
+    2) Evaluate supporting evidence and local counter-evidence for semantic validity, type plausibility, and boundary plausibility.
+    3) Identify whether the correct decision is keep-one, prefer-one, or abstain.
+    4) Consider risk level from cluster.
+    5) Select winner or abstain with concise rationale.
 
     Decision rubric (private):
     - Evidence validity and specificity: 0-0.40
@@ -422,9 +557,14 @@ adjudicator_agent:
     - Constraint consistency: 0-0.20
     - Boundary plausibility: 0-0.15
 
+    Hard constraints:
+    - Do not let a mention win if its support is only capitalization, topical association, or a generic descriptor.
+    - Prefer the source with more direct text-grounded evidence when confidence is similar.
+    - If no candidate in the cluster is semantically reliable enough, abstain.
+
     Output JSON:
     {{
-      "winner_source": "expert|re",
+      "winner_source": "expert|re|none",
       "winner_span_id": str,
       "winner_ent_type": str,
       "confidence": float,
@@ -528,6 +668,10 @@ disambiguation_agent:
     2) Remove generic/background mentions.
     3) Adjust boundaries only when clear textual evidence exists.
     4) Prefer conservative abstention if uncertain.
+    5) Do not use fixed surface-form matching rules or dataset-specific lexical lists.
+    6) Drop mentions whose only support is capitalization, topical relatedness, or broad category association.
+    7) Preserve already grounded mention boundaries unless there is direct local evidence that the boundary or type is wrong.
+    8) If the current type is not directly supported by local context, prefer dropping or retyping over keeping a weak label.
 
     Output JSON:
     {{

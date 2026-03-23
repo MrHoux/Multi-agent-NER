@@ -8,12 +8,27 @@ from maner.core.prompting import PromptManager
 from maner.core.schema import SchemaDefinition
 from maner.core.types import CandidateSet, UsageCost, is_strict_substring
 from maner.llm.client import LLMClient
+from maner.retrieval import NullRetriever, WikipediaRetriever
 
 
 class RAGAgent:
-    def __init__(self, llm_client: LLMClient, prompt_manager: PromptManager):
+    def __init__(
+        self,
+        llm_client: LLMClient,
+        prompt_manager: PromptManager,
+        settings: dict[str, Any] | None = None,
+        retriever: Any | None = None,
+    ):
         self.llm_client = llm_client
         self.prompt_manager = prompt_manager
+        self.settings = dict(settings or {})
+        self.max_open_questions = int(self.settings.get("max_open_questions", 20))
+        if retriever is not None:
+            self.retriever = retriever
+        elif self.llm_client.provider == "mock":
+            self.retriever = NullRetriever()
+        else:
+            self.retriever = WikipediaRetriever(self.settings)
 
     def run(
         self,
@@ -21,14 +36,18 @@ class RAGAgent:
         candidate_set: CandidateSet,
         schema: SchemaDefinition,
         memory_items: list[dict[str, Any]] | None = None,
+        expert_retrieval_plan: dict[str, Any] | None = None,
     ) -> tuple[dict[str, Any], UsageCost, dict[str, Any]]:
         memory_items = memory_items or []
-        query_plan, query_cost, query_trace = self._run_query_stage(
+        expert_retrieval_plan = expert_retrieval_plan or {}
+        query_plan, query_cost, query_trace = self._plan_queries(
             text=text,
             candidate_set=candidate_set,
             schema=schema,
             memory_items=memory_items,
+            expert_retrieval_plan=expert_retrieval_plan,
         )
+        retrieved_documents, retrieval_trace = self.retriever.retrieve(query_plan)
 
         synth_payload, synth_cost, synth_trace = self._run_synth_stage(
             text=text,
@@ -36,6 +55,7 @@ class RAGAgent:
             schema=schema,
             memory_items=memory_items,
             query_plan=query_plan,
+            retrieved_documents=retrieved_documents,
         )
 
         handoff = self._parse_handoff(synth_payload, text, candidate_set, schema)
@@ -49,10 +69,34 @@ class RAGAgent:
         trace = {
             "agent": "rag",
             "query_stage": query_trace,
+            "retrieval": retrieval_trace,
             "synth_stage": synth_trace,
             "query_plan": query_plan,
         }
         return handoff, cost, trace
+
+    def _plan_queries(
+        self,
+        text: str,
+        candidate_set: CandidateSet,
+        schema: SchemaDefinition,
+        memory_items: list[dict[str, Any]],
+        expert_retrieval_plan: dict[str, Any],
+    ) -> tuple[dict[str, Any], UsageCost, dict[str, Any]]:
+        retrieval_requests = expert_retrieval_plan.get("retrieval_requests", []) or []
+        if retrieval_requests:
+            query_plan = self._build_query_plan_from_expert_requests(
+                candidate_set=candidate_set,
+                expert_retrieval_plan=expert_retrieval_plan,
+            )
+            return query_plan, UsageCost(), {"mode": "expert_guided", "parsed": query_plan}
+        return self._run_query_stage(
+            text=text,
+            candidate_set=candidate_set,
+            schema=schema,
+            memory_items=memory_items,
+            expert_retrieval_plan=expert_retrieval_plan,
+        )
 
     def _run_query_stage(
         self,
@@ -60,12 +104,14 @@ class RAGAgent:
         candidate_set: CandidateSet,
         schema: SchemaDefinition,
         memory_items: list[dict[str, Any]],
+        expert_retrieval_plan: dict[str, Any],
     ) -> tuple[dict[str, Any], UsageCost, dict[str, Any]]:
         system, user = self.prompt_manager.render(
             "rag_query_agent",
             text=text,
             candidate_spans=self._candidate_prompt_payload(candidate_set),
             memory_items=memory_items,
+            expert_retrieval_plan=expert_retrieval_plan,
             entity_types=schema.to_prompt_block(),
         )
 
@@ -76,6 +122,7 @@ class RAGAgent:
                     text=text,
                     candidate_set=candidate_set,
                     memory_items=memory_items,
+                    expert_retrieval_plan=expert_retrieval_plan,
                 )
             }
 
@@ -97,7 +144,7 @@ class RAGAgent:
             total_tokens=llm_result.usage.total_tokens,
             latency_ms=llm_result.usage.latency_ms or [],
         )
-        trace = {"raw": llm_result.content, "parsed": payload}
+        trace = {"mode": "llm", "raw": llm_result.content, "parsed": payload}
         return query_plan, cost, trace
 
     def _run_synth_stage(
@@ -107,6 +154,7 @@ class RAGAgent:
         schema: SchemaDefinition,
         memory_items: list[dict[str, Any]],
         query_plan: dict[str, Any],
+        retrieved_documents: list[dict[str, Any]],
     ) -> tuple[dict[str, Any], UsageCost, dict[str, Any]]:
         system, user = self.prompt_manager.render(
             "rag_synth_agent",
@@ -114,6 +162,7 @@ class RAGAgent:
             candidate_spans=self._candidate_prompt_payload(candidate_set),
             memory_items=memory_items,
             query_plan=query_plan,
+            retrieved_documents=retrieved_documents,
             entity_types=schema.to_prompt_block(),
         )
 
@@ -126,6 +175,7 @@ class RAGAgent:
                     schema=schema,
                     memory_items=memory_items,
                     query_plan=query_plan,
+                    retrieved_documents=retrieved_documents,
                 )
             }
 
@@ -160,6 +210,47 @@ class RAGAgent:
             for sid, span in candidate_set.spans.items()
         ]
 
+    def _build_query_plan_from_expert_requests(
+        self,
+        candidate_set: CandidateSet,
+        expert_retrieval_plan: dict[str, Any],
+    ) -> dict[str, Any]:
+        candidate_queries: list[dict[str, Any]] = []
+        for idx, item in enumerate(expert_retrieval_plan.get("retrieval_requests", []) or [], start=1):
+            if not isinstance(item, dict):
+                continue
+            span_ids = [
+                str(span_id)
+                for span_id in item.get("span_ids", []) or []
+                if str(span_id) in candidate_set.spans
+            ]
+            if not span_ids:
+                continue
+            span_texts = [candidate_set.spans[span_id].text for span_id in span_ids[:2]]
+            question = str(item.get("question", "")).strip()
+            if not question:
+                continue
+            query_text = question
+            if span_texts:
+                query_text = f"{question} Context mention: {' / '.join(span_texts)}."
+            candidate_queries.append(
+                {
+                    "q_id": str(item.get("request_id", f"rq_{idx:03d}")),
+                    "span_ids": span_ids,
+                    "query": query_text,
+                    "focus": "typing",
+                    "priority": str(item.get("priority", "medium")),
+                }
+            )
+
+        return {
+            "query_plan_id": "rag_query_plan_expert_guided",
+            "candidate_queries": candidate_queries[: max(1, self.max_open_questions)],
+            "selected_memory_ids": [],
+            "priority_notes": [str(x) for x in expert_retrieval_plan.get("global_notes", []) or []],
+            "rationale": str(expert_retrieval_plan.get("rationale", "")),
+        }
+
     def _heuristic_handoff(
         self,
         text: str,
@@ -167,6 +258,7 @@ class RAGAgent:
         schema: SchemaDefinition,
         memory_items: list[dict[str, Any]],
         query_plan: dict[str, Any],
+        retrieved_documents: list[dict[str, Any]],
     ) -> dict[str, Any]:
         valid_types = set(schema.entity_type_names)
         retrieved_facts: list[dict[str, Any]] = []
@@ -181,7 +273,7 @@ class RAGAgent:
 
             retrieved_facts.append(
                 {
-                    "fact_id": f"fact_{idx:03d}",
+                    "fact_id": f"fact_mem_{idx:03d}",
                     "source": "memory",
                     "content": str(item.get("value", {})),
                     "linked_span_ids": linked_span_ids,
@@ -204,6 +296,18 @@ class RAGAgent:
                     "sources": ["memory"],
                 }
 
+        for idx, doc in enumerate(retrieved_documents, start=1):
+            linked = [sid for sid in doc.get("linked_span_ids", []) if sid in candidate_set.spans]
+            retrieved_facts.append(
+                {
+                    "fact_id": f"fact_wiki_{idx:03d}",
+                    "source": "wikipedia",
+                    "content": str(doc.get("summary", "")),
+                    "linked_span_ids": linked,
+                    "relevance": float(doc.get("relevance", 0.0)),
+                }
+            )
+
         open_questions: list[dict[str, Any]] = []
         raw_queries = query_plan.get("candidate_queries", []) or []
         for idx, q in enumerate(raw_queries, start=1):
@@ -212,42 +316,22 @@ class RAGAgent:
             q_span_ids = [sid for sid in q.get("span_ids", []) if sid in candidate_set.spans]
             if not q_span_ids:
                 continue
-            sid = q_span_ids[0]
-            span = candidate_set.spans[sid]
             open_questions.append(
                 {
                     "q_id": str(q.get("q_id", f"q_{idx:03d}")),
-                    "span_id": sid,
-                    "question": str(
-                        q.get(
-                            "query",
-                            f"Disambiguate entity type for span '{span.text}'",
-                        )
-                    ),
+                    "span_id": q_span_ids[0],
+                    "question": str(q.get("query", "")),
                     "priority": str(q.get("priority", "medium")),
                 }
             )
-
-        if not open_questions:
-            for sid, span in candidate_set.spans.items():
-                if sid in per_span_hints:
-                    continue
-                open_questions.append(
-                    {
-                        "q_id": f"q_{sid}",
-                        "span_id": sid,
-                        "question": f"Disambiguate entity type for span '{span.text}'",
-                        "priority": "medium",
-                    }
-                )
 
         return {
             "handoff_id": "rag_handoff_001",
             "retrieved_facts": retrieved_facts,
             "per_span_hints": per_span_hints,
-            "open_questions": open_questions[:20],
+            "open_questions": open_questions[: self.max_open_questions],
             "priority_notes": ["Prefer evidence-grounded hints", "Do not force unsupported labels"],
-            "rationale": "memory-backed query synthesis",
+            "rationale": "memory and wikipedia evidence synthesis",
         }
 
     def _heuristic_query_plan(
@@ -255,7 +339,11 @@ class RAGAgent:
         text: str,
         candidate_set: CandidateSet,
         memory_items: list[dict[str, Any]],
+        expert_retrieval_plan: dict[str, Any],
     ) -> dict[str, Any]:
+        if expert_retrieval_plan.get("retrieval_requests"):
+            return self._build_query_plan_from_expert_requests(candidate_set, expert_retrieval_plan)
+
         candidate_queries = []
         selected_memory_ids: list[str] = []
         lower_text = text.lower()
@@ -265,7 +353,7 @@ class RAGAgent:
                 {
                     "q_id": f"rq_{idx:03d}",
                     "span_ids": [sid],
-                    "query": f"Identify likely entity type for span '{span.text}' in context.",
+                    "query": "Clarify the identity or entity type of this mention using external reference knowledge only when local context is insufficient.",
                     "focus": "typing",
                     "priority": priority,
                 }
@@ -413,7 +501,7 @@ class RAGAgent:
             "handoff_id": handoff_id,
             "retrieved_facts": retrieved_facts,
             "per_span_hints": per_span_hints,
-            "open_questions": open_questions,
+            "open_questions": open_questions[: self.max_open_questions],
             "priority_notes": list(payload.get("priority_notes", []) or []),
             "rationale": str(payload.get("rationale", "")),
         }

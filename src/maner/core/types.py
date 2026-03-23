@@ -48,6 +48,7 @@ class SpanConstraint:
     boundary_ops: list[BoundaryOp] = field(default_factory=list)
     evidence: list[Evidence] = field(default_factory=list)
     confidence: float = 0.0
+    rationale: str = ""
 
 
 @dataclass
@@ -69,7 +70,7 @@ class Relation:
 @dataclass
 class NERHypothesis:
     mentions: list[Mention]
-    source: Literal["expert", "re"]
+    source: Literal["expert", "re", "direct"]
 
 
 @dataclass

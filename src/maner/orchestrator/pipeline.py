@@ -29,6 +29,7 @@ from maner.core.types import (
     Span,
     UsageCost,
     is_valid_offsets,
+    span_iou,
     to_dict,
 )
 from maner.llm.client import LLMClient
@@ -40,7 +41,7 @@ from maner.orchestrator.triage import triage_conflicts
 class PipelineRunner:
     def __init__(self, config: dict[str, Any]):
         self.config = config
-        self.prompts = PromptManager(config.get("prompts_path", "configs/prompts_cot.yaml"))
+        self.prompts = PromptManager(self._prompt_sources(config))
         self.llm = LLMClient(config.get("llm", {}))
 
         data_cfg = config.get("data", {})
@@ -54,13 +55,17 @@ class PipelineRunner:
         self.pipeline_cfg = config.get("pipeline", {})
         self.memory_cfg = config.get("memory", {})
         self.verifier_cfg = config.get("verifier", {})
+        self.progress_logging = bool(self.pipeline_cfg.get("progress_logging", False))
+        self.progress_agent_trace = bool(
+            self.pipeline_cfg.get("progress_agent_trace", False)
+        )
 
         self.candidate_agent = CandidateAgent(
             self.llm,
             self.prompts,
             settings=self.pipeline_cfg.get("candidate", {}),
         )
-        self.rag_agent = RAGAgent(self.llm, self.prompts)
+        self.rag_agent = RAGAgent(self.llm, self.prompts, settings=config.get("rag", {}))
         self.expert_agent = ExpertAgent(self.llm, self.prompts)
         self.re_agent = REAgent(self.llm, self.prompts)
         self.ner_agent = NERAgent(self.llm, self.prompts)
@@ -86,9 +91,48 @@ class PipelineRunner:
         if memory_enabled:
             self.memory_store = MemoryStore(self.memory_cfg.get("sqlite_path", "outputs/memory.db"))
 
+    def _prompt_sources(self, config: dict[str, Any]) -> list[Path]:
+        repo_root = Path(__file__).resolve().parents[3]
+        sources = [repo_root / "configs" / "prompts_cot.yaml"]
+
+        configured = config.get("prompts_path")
+        if configured:
+            if isinstance(configured, list):
+                sources.extend(_resolve_prompt_path(repo_root, item) for item in configured)
+            else:
+                sources.append(_resolve_prompt_path(repo_root, configured))
+
+        overlays = config.get("prompt_overlays", [])
+        if isinstance(overlays, list):
+            sources.extend(_resolve_prompt_path(repo_root, item) for item in overlays)
+
+        deduped: list[Path] = []
+        seen: set[Path] = set()
+        for path in sources:
+            resolved = path.resolve()
+            if resolved in seen:
+                continue
+            seen.add(resolved)
+            deduped.append(resolved)
+        return deduped
+
     def close(self) -> None:
         if self.memory_store is not None:
             self.memory_store.close()
+
+    def _progress(self, event: str, **fields: Any) -> None:
+        if not self.progress_logging:
+            return
+        parts = [f"{key}={fields[key]}" for key in sorted(fields)]
+        message = f"[pipeline] {event}"
+        if parts:
+            message += " " + " ".join(parts)
+        print(message, flush=True)
+
+    def _agent_progress(self, agent: str, stage: str, **fields: Any) -> None:
+        if not self.progress_agent_trace:
+            return
+        self._progress(f"{agent}_{stage}", **fields)
 
     def run(self) -> list[dict[str, Any]]:
         outputs: list[dict[str, Any]] = []
@@ -101,15 +145,38 @@ class PipelineRunner:
         sample_post_error_backoff_s = float(
             self.pipeline_cfg.get("sample_post_error_backoff_s", 5.0)
         )
-        for sample in self.reader.iter_samples():
+        for idx, sample in enumerate(self.reader.iter_samples(), start=1):
+            sample_started = time.time()
+            self._progress(
+                "sample_start",
+                idx=idx,
+                sample_id=sample.sample_id,
+                chars=len(sample.text),
+            )
             attempts = max(0, sample_max_retries) + 1
             for attempt in range(attempts):
                 try:
-                    outputs.append(self._run_sample(sample.sample_id, sample.text))
+                    result = self._run_sample(sample.sample_id, sample.text)
+                    outputs.append(result)
+                    self._progress(
+                        "sample_done",
+                        idx=idx,
+                        sample_id=sample.sample_id,
+                        mentions=len(result.get("mentions", [])),
+                        calls=result.get("costs", {}).get("calls", 0),
+                        wall_s=round(time.time() - sample_started, 3),
+                    )
                     break
                 except Exception as exc:
                     is_last_attempt = attempt >= attempts - 1
                     if (not is_last_attempt) and _is_retryable_pipeline_exception(exc):
+                        self._progress(
+                            "sample_retry",
+                            idx=idx,
+                            sample_id=sample.sample_id,
+                            attempt=attempt + 1,
+                            error=exc.__class__.__name__,
+                        )
                         sleep_s = sample_retry_backoff_s * (2**attempt)
                         if sleep_s > 0:
                             time.sleep(sleep_s)
@@ -127,9 +194,24 @@ class PipelineRunner:
                                 exc = post_exc
                     if recovered is not None:
                         outputs.append(recovered)
+                        self._progress(
+                            "sample_recovered",
+                            idx=idx,
+                            sample_id=sample.sample_id,
+                            mentions=len(recovered.get("mentions", [])),
+                            calls=recovered.get("costs", {}).get("calls", 0),
+                            wall_s=round(time.time() - sample_started, 3),
+                        )
                         break
                     if not continue_on_error:
                         raise
+                    self._progress(
+                        "sample_failed",
+                        idx=idx,
+                        sample_id=sample.sample_id,
+                        error=exc.__class__.__name__,
+                        wall_s=round(time.time() - sample_started, 3),
+                    )
                     outputs.append(
                         {
                             "id": sample.sample_id,
@@ -162,9 +244,38 @@ class PipelineRunner:
         communications: list[dict[str, Any]] = []
         traces["communications"] = communications
 
-        candidate_set, cost, trace = self.candidate_agent.run(text, self.schema)
+        direct_seed_enabled = bool(self.pipeline_cfg.get("enable_direct_seed_ner", True))
+        direct_seed_hyp = NERHypothesis(mentions=[], source="direct")
+        if direct_seed_enabled:
+            self._agent_progress("ner_direct_agent", "start", sample_id=sample_id)
+            direct_seed_hyp, cost, trace = self.ner_agent.run_direct(text, self.schema)
+            _accumulate_cost(total_cost, cost)
+            traces["ner_direct"] = trace
+            self._agent_progress(
+                "ner_direct_agent",
+                "done",
+                sample_id=sample_id,
+                llm_calls=cost.calls,
+                mentions=len(direct_seed_hyp.mentions),
+            )
+        else:
+            traces["ner_direct"] = {"disabled": True}
+
+        self._agent_progress("candidate_agent", "start", sample_id=sample_id)
+        candidate_set, cost, trace = self.candidate_agent.run(
+            text,
+            self.schema,
+            seed_mentions=direct_seed_hyp.mentions,
+        )
         _accumulate_cost(total_cost, cost)
         traces["candidate"] = trace
+        self._agent_progress(
+            "candidate_agent",
+            "done",
+            sample_id=sample_id,
+            spans=len(candidate_set.spans),
+            llm_calls=cost.calls,
+        )
         communications.append(
             {
                 "from": "candidate_agent",
@@ -173,6 +284,30 @@ class PipelineRunner:
                 "span_count": len(candidate_set.spans),
             }
         )
+        if direct_seed_enabled and direct_seed_hyp.mentions:
+            added_from_seed = _merge_candidate_set_with_mentions(candidate_set, direct_seed_hyp.mentions)
+            traces["direct_seed_candidate_merge"] = {
+                "enabled": True,
+                "seed_mentions": len(direct_seed_hyp.mentions),
+                "added_span_ids": added_from_seed,
+                "added_count": len(added_from_seed),
+            }
+            communications.append(
+                {
+                    "from": "ner_direct_agent",
+                    "to": "candidate_agent",
+                    "message_type": "seed_mentions",
+                    "mention_count": len(direct_seed_hyp.mentions),
+                    "added_span_count": len(added_from_seed),
+                }
+            )
+        else:
+            traces["direct_seed_candidate_merge"] = {
+                "enabled": direct_seed_enabled,
+                "seed_mentions": len(direct_seed_hyp.mentions),
+                "added_span_ids": [],
+                "added_count": 0,
+            }
 
         normalize_candidate_boundaries = bool(
             self.pipeline_cfg.get("normalize_candidate_boundaries", False)
@@ -269,19 +404,54 @@ class PipelineRunner:
 
         y_exp = NERHypothesis(mentions=[], source="expert")
         y_re = NERHypothesis(mentions=[], source="re")
+        expert_retrieval_plan: dict[str, Any] = {}
         rag_handoff: dict[str, Any] = {}
         constraints = ExpertConstraints()
         relations: list[Relation] = []
+        re_structure_support = ExpertConstraints()
 
         if use_rag and use_expert and candidate_set.spans:
-            rag_handoff, cost, trace = self.rag_agent.run(
+            self._agent_progress("expert_retrieval_agent", "start", sample_id=sample_id)
+            expert_retrieval_plan, cost, trace = self.expert_agent.plan_retrieval(
                 text=text,
                 candidate_set=candidate_set,
                 schema=self.schema,
                 memory_items=memory_items,
             )
             _accumulate_cost(total_cost, cost)
+            traces["expert_retrieval"] = trace
+            self._agent_progress(
+                "expert_retrieval_agent",
+                "done",
+                sample_id=sample_id,
+                llm_calls=cost.calls,
+                retrieval_requests=len(expert_retrieval_plan.get("retrieval_requests", []) or []),
+            )
+            communications.append(
+                {
+                    "from": "expert_agent",
+                    "to": "rag_agent",
+                    "message_type": "retrieval_requests",
+                    "request_count": len(expert_retrieval_plan.get("retrieval_requests", []) or []),
+                }
+            )
+            self._agent_progress("rag_agent", "start", sample_id=sample_id)
+            rag_handoff, cost, trace = self.rag_agent.run(
+                text=text,
+                candidate_set=candidate_set,
+                schema=self.schema,
+                memory_items=memory_items,
+                expert_retrieval_plan=expert_retrieval_plan,
+            )
+            _accumulate_cost(total_cost, cost)
             traces["rag"] = trace
+            self._agent_progress(
+                "rag_agent",
+                "done",
+                sample_id=sample_id,
+                llm_calls=cost.calls,
+                hinted_spans=len((rag_handoff.get("per_span_hints", {}) or {})),
+            )
             hinted = rag_handoff.get("per_span_hints", {}) or {}
             hinted_count = len(hinted) if isinstance(hinted, dict) else 0
             communications.append(
@@ -295,14 +465,20 @@ class PipelineRunner:
                 }
             )
         elif use_rag and use_expert and not candidate_set.spans:
+            traces["expert_retrieval"] = {
+                "skipped": True,
+                "reason": "no_candidate_spans",
+            }
             traces["rag"] = {
                 "skipped": True,
                 "reason": "no_candidate_spans",
             }
         else:
+            traces["expert_retrieval"] = {"disabled": True}
             traces["rag"] = {"disabled": True}
 
         if use_expert:
+            self._agent_progress("expert_agent", "start", sample_id=sample_id)
             constraints, cost, trace = self.expert_agent.run(
                 text=text,
                 candidate_set=candidate_set,
@@ -313,6 +489,13 @@ class PipelineRunner:
             )
             _accumulate_cost(total_cost, cost)
             traces["expert"] = trace
+            self._agent_progress(
+                "expert_agent",
+                "done",
+                sample_id=sample_id,
+                llm_calls=cost.calls,
+                constrained_spans=len(constraints.per_span),
+            )
             communications.append(
                 {
                     "from": "expert_agent",
@@ -330,8 +513,10 @@ class PipelineRunner:
         else:
             traces["expert"] = {"disabled": True}
 
+        relation_schema_present = bool(self.schema.relation_constraints)
         if use_re:
-            relations, cost, trace = self.re_agent.run(
+            self._agent_progress("re_agent", "start", sample_id=sample_id)
+            relations, re_structure_support, cost, trace = self.re_agent.run(
                 text,
                 candidate_set,
                 self.schema,
@@ -340,6 +525,13 @@ class PipelineRunner:
             )
             _accumulate_cost(total_cost, cost)
             traces["re"] = trace
+            self._agent_progress(
+                "re_agent",
+                "done",
+                sample_id=sample_id,
+                llm_calls=cost.calls,
+                relations=len(relations),
+            )
             communications.append(
                 {
                     "from": "re_agent",
@@ -347,17 +539,77 @@ class PipelineRunner:
                     "message_type": "relations_and_proposals",
                     "relations": len(relations),
                     "span_proposals": len(trace.get("span_proposals", []) or []),
+                    "structure_supported_spans": len(re_structure_support.per_span),
                 }
             )
         else:
             traces["re"] = {"disabled": True}
 
+        if (
+            use_re
+            and not relation_schema_present
+            and bool(self.pipeline_cfg.get("re_structure_support_enabled", True))
+            and re_structure_support.per_span
+        ):
+            constraints, re_support_merge_trace = _merge_structure_support_constraints(
+                base=constraints,
+                support=re_structure_support,
+                confidence_scale=float(
+                    self.pipeline_cfg.get("re_structure_support_confidence_scale", 0.85)
+                ),
+                min_exclusion_confidence=float(
+                    self.pipeline_cfg.get(
+                        "re_structure_support_min_exclusion_confidence",
+                        0.9,
+                    )
+                ),
+            )
+            traces["re_structure_support_merge"] = re_support_merge_trace
+        else:
+            traces["re_structure_support_merge"] = {
+                "enabled": bool(self.pipeline_cfg.get("re_structure_support_enabled", True)),
+                "applied_span_count": 0,
+                "source_span_count": len(re_structure_support.per_span),
+                "reason": "re_off"
+                if not use_re
+                else (
+                    "schema_bound_mode"
+                    if relation_schema_present
+                    else "no_structure_support"
+                ),
+            }
+
+        pre_augmentation_candidate_set = _copy_candidate_set(candidate_set)
+        base_constraints_for_ner = constraints
+        rerun_constraints_for_added = ExpertConstraints()
         augmentation_enabled = bool(allow_expert_span_aug or allow_re_span_aug)
         proposals: list[dict[str, Any]] = []
         if allow_expert_span_aug and use_expert:
             proposals.extend(traces["expert"].get("span_proposals", []))
         if allow_re_span_aug and use_re:
             proposals.extend(traces["re"].get("span_proposals", []))
+        if proposals:
+            raw_source_min_confidence = self.pipeline_cfg.get(
+                "augmentation_source_min_confidence",
+                {},
+            )
+            if isinstance(raw_source_min_confidence, dict):
+                augmentation_source_min_confidence = {
+                    str(k).lower(): float(v)
+                    for k, v in raw_source_min_confidence.items()
+                }
+            else:
+                augmentation_source_min_confidence = {}
+            raw_reject_overlap_sources = self.pipeline_cfg.get(
+                "augmentation_reject_overlap_sources",
+                [],
+            )
+            if isinstance(raw_reject_overlap_sources, list):
+                augmentation_reject_overlap_sources = {
+                    str(x).lower() for x in raw_reject_overlap_sources
+                }
+            else:
+                augmentation_reject_overlap_sources = set()
             proposals = _filter_span_proposals(
                 proposals=proposals,
                 valid_types=set(self.schema.entity_type_names),
@@ -368,6 +620,11 @@ class PipelineRunner:
                 require_evidence_anchor=augmentation_require_evidence_anchor,
                 max_tokens=augmentation_max_tokens,
                 entity_like_only=augmentation_entity_like_only,
+                source_min_confidence=augmentation_source_min_confidence,
+                reject_overlap_sources=augmentation_reject_overlap_sources,
+                existing_spans=[
+                    (span.start, span.end) for span in candidate_set.spans.values()
+                ],
             )
 
         if augmentation_enabled:
@@ -438,18 +695,29 @@ class PipelineRunner:
             }
 
         if added_ids and rerun_after_aug:
+            added_id_set = set(added_ids)
             if use_rag and use_expert:
-                rag_handoff, cost, trace = self.rag_agent.run(
+                expert_retrieval_plan, cost, trace = self.expert_agent.plan_retrieval(
                     text=text,
                     candidate_set=candidate_set,
                     schema=self.schema,
                     memory_items=memory_items,
                 )
                 _accumulate_cost(total_cost, cost)
+                traces["expert_retrieval_rerun"] = trace
+                rag_handoff, cost, trace = self.rag_agent.run(
+                    text=text,
+                    candidate_set=candidate_set,
+                    schema=self.schema,
+                    memory_items=memory_items,
+                    expert_retrieval_plan=expert_retrieval_plan,
+                )
+                _accumulate_cost(total_cost, cost)
                 traces["rag_rerun"] = trace
 
             if use_expert:
-                constraints, cost, trace = self.expert_agent.run(
+                base_constraint_count = len(constraints.per_span)
+                rerun_constraints, cost, trace = self.expert_agent.run(
                     text=text,
                     candidate_set=candidate_set,
                     schema=self.schema,
@@ -459,9 +727,23 @@ class PipelineRunner:
                 )
                 _accumulate_cost(total_cost, cost)
                 traces["expert_rerun"] = trace
+                rerun_constraints_for_added = rerun_constraints
+                constraints, applied_span_ids = _overlay_constraints_for_span_ids(
+                    constraints,
+                    rerun_constraints,
+                    added_id_set,
+                )
+                traces["expert_rerun_merge"] = {
+                    "mode": "added_span_only",
+                    "base_constrained_spans": base_constraint_count,
+                    "rerun_constrained_spans": len(rerun_constraints.per_span),
+                    "applied_span_ids": sorted(applied_span_ids),
+                    "applied_count": len(applied_span_ids),
+                }
 
             if use_re:
-                relations, cost, trace = self.re_agent.run(
+                base_relation_count = len(relations)
+                rerun_relations, rerun_structure_support, cost, trace = self.re_agent.run(
                     text,
                     candidate_set,
                     self.schema,
@@ -470,6 +752,57 @@ class PipelineRunner:
                 )
                 _accumulate_cost(total_cost, cost)
                 traces["re_rerun"] = trace
+                relations, applied_relation_count = _overlay_relations_for_span_ids(
+                    relations,
+                    rerun_relations,
+                    added_id_set,
+                )
+                traces["re_rerun_merge"] = {
+                    "mode": "added_span_only",
+                    "base_relations": base_relation_count,
+                    "rerun_relations": len(rerun_relations),
+                    "applied_relation_count": applied_relation_count,
+                }
+                if (
+                    not relation_schema_present
+                    and bool(self.pipeline_cfg.get("re_structure_support_enabled", True))
+                    and rerun_structure_support.per_span
+                ):
+                    rerun_structure_support_subset = _subset_constraints(
+                        rerun_structure_support,
+                        added_id_set,
+                    )
+                    constraints, re_rerun_support_merge_trace = _merge_structure_support_constraints(
+                        base=constraints,
+                        support=rerun_structure_support_subset,
+                        confidence_scale=float(
+                            self.pipeline_cfg.get(
+                                "re_structure_support_confidence_scale",
+                                0.85,
+                            )
+                        ),
+                        min_exclusion_confidence=float(
+                            self.pipeline_cfg.get(
+                                "re_structure_support_min_exclusion_confidence",
+                                0.9,
+                            )
+                        ),
+                    )
+                    traces["re_structure_support_rerun_merge"] = {
+                        **re_rerun_support_merge_trace,
+                        "mode": "added_span_only",
+                    }
+                else:
+                    traces["re_structure_support_rerun_merge"] = {
+                        "enabled": bool(
+                            self.pipeline_cfg.get("re_structure_support_enabled", True)
+                        ),
+                        "applied_span_count": 0,
+                        "source_span_count": len(rerun_structure_support.per_span),
+                        "reason": "schema_bound_mode"
+                        if relation_schema_present
+                        else "no_structure_support",
+                    }
 
         if not candidate_set.spans:
             traces["short_circuit"] = {
@@ -503,20 +836,81 @@ class PipelineRunner:
         traces["short_circuit"] = {"enabled": False}
 
         if use_expert:
-            y_exp, cost, trace = self.ner_agent.run_with_expert(
-                text, candidate_set, self.schema, constraints
+            localize_augmented_ner = bool(
+                self.pipeline_cfg.get("localize_augmented_ner_inference", True)
             )
-            _accumulate_cost(total_cost, cost)
-            traces["ner_expert"] = trace
+            should_localize_augmented_ner = bool(
+                localize_augmented_ner and added_ids and rerun_after_aug
+            )
+            self._agent_progress("ner_agent_expert", "start", sample_id=sample_id)
+            if should_localize_augmented_ner:
+                added_id_set = set(added_ids)
+                base_candidate_subset = pre_augmentation_candidate_set
+                added_candidate_subset = _subset_candidate_set(candidate_set, added_id_set)
+                added_constraint_subset = _subset_constraints(
+                    rerun_constraints_for_added,
+                    added_id_set,
+                )
+
+                y_exp_base, cost_base, trace_base = self.ner_agent.run_with_expert(
+                    text,
+                    base_candidate_subset,
+                    self.schema,
+                    base_constraints_for_ner,
+                )
+                _accumulate_cost(total_cost, cost_base)
+                y_exp_added, cost_added, trace_added = self.ner_agent.run_with_expert(
+                    text,
+                    added_candidate_subset,
+                    self.schema,
+                    added_constraint_subset,
+                )
+                _accumulate_cost(total_cost, cost_added)
+                y_exp = NERHypothesis(
+                    mentions=_merge_mentions(y_exp_base.mentions + y_exp_added.mentions),
+                    source="expert",
+                )
+                traces["ner_expert"] = {
+                    "localized_augmented_inference": True,
+                    "base_trace": trace_base,
+                    "added_trace": trace_added,
+                    "base_mentions": len(y_exp_base.mentions),
+                    "added_mentions": len(y_exp_added.mentions),
+                    "output_mentions": len(y_exp.mentions),
+                    "added_span_ids": sorted(added_id_set),
+                }
+                llm_calls = cost_base.calls + cost_added.calls
+            else:
+                y_exp, cost, trace = self.ner_agent.run_with_expert(
+                    text, candidate_set, self.schema, constraints
+                )
+                _accumulate_cost(total_cost, cost)
+                traces["ner_expert"] = trace
+                llm_calls = cost.calls
+            self._agent_progress(
+                "ner_agent_expert",
+                "done",
+                sample_id=sample_id,
+                llm_calls=llm_calls,
+                mentions=len(y_exp.mentions),
+            )
         else:
             traces["ner_expert"] = {"disabled": True}
 
-        if use_re:
+        if use_re and relation_schema_present:
+            self._agent_progress("ner_agent_re", "start", sample_id=sample_id)
             y_re, cost, trace = self.ner_agent.run_with_re(
                 text, candidate_set, self.schema, relations
             )
             _accumulate_cost(total_cost, cost)
             traces["ner_re"] = trace
+            self._agent_progress(
+                "ner_agent_re",
+                "done",
+                sample_id=sample_id,
+                llm_calls=cost.calls,
+                mentions=len(y_re.mentions),
+            )
             if bool(self.pipeline_cfg.get("re_collab_filter_enabled", False)):
                 y_re, re_filter_trace = _filter_re_hypothesis_for_collaboration(
                     text=text,
@@ -553,8 +947,14 @@ class PipelineRunner:
                     "dropped_re_only_cap": 0,
                 }
         else:
-            traces["ner_re"] = {"disabled": True}
-            traces["re_collab_filter"] = {"enabled": False, "reason": "re_off"}
+            traces["ner_re"] = {
+                "disabled": True,
+                "reason": "re_off" if not use_re else "structure_only_mode",
+            }
+            traces["re_collab_filter"] = {
+                "enabled": False,
+                "reason": "re_off" if not use_re else "structure_only_mode",
+            }
 
         mention_reject_negative_rationale = bool(
             self.pipeline_cfg.get("mention_reject_negative_rationale", False)
@@ -574,67 +974,141 @@ class PipelineRunner:
 
         final_mentions: list[Mention]
         cluster_count = 0
+        re_contributes_ner = use_re and relation_schema_present and bool(y_re.mentions)
+        adjudication_mentions: list[Mention] = []
 
-        if use_expert and use_re:
+        if use_expert:
+            adjudication_mentions.extend(y_exp.mentions)
+        if re_contributes_ner:
+            adjudication_mentions.extend(y_re.mentions)
+
+        if adjudication_mentions:
             iou_threshold = float(self.pipeline_cfg.get("iou_align_threshold", 0.5))
-            clusters, conflict_trace = build_conflict_clusters(
-                y_exp, y_re, iou_threshold=iou_threshold
-            )
+            if use_expert and re_contributes_ner:
+                clusters, conflict_trace = build_conflict_clusters(
+                    y_exp, y_re, iou_threshold=iou_threshold
+                )
+                scored = triage_conflicts(
+                    clusters,
+                    y_exp.mentions,
+                    y_re.mentions,
+                    l2_threshold=float(self.pipeline_cfg.get("l2_threshold", 0.4)),
+                    l3_threshold=float(self.pipeline_cfg.get("l3_threshold", 0.75)),
+                )
+                clusters = apply_risk_levels(clusters, scored)
+            else:
+                clusters = []
+                conflict_trace = {"mode": "semantic_review_only", "alignment_pairs": []}
+
+            clusters = _ensure_singleton_adjudication_clusters(clusters, adjudication_mentions)
             cluster_count = len(clusters)
-            scored = triage_conflicts(
-                clusters,
-                y_exp.mentions,
-                y_re.mentions,
-                l2_threshold=float(self.pipeline_cfg.get("l2_threshold", 0.4)),
-                l3_threshold=float(self.pipeline_cfg.get("l3_threshold", 0.75)),
-            )
-            clusters = apply_risk_levels(clusters, scored)
 
             traces["conflict"] = {
                 "clusters": [to_dict(c) for c in clusters],
                 "trace": conflict_trace,
             }
 
-            base = _merge_mentions(y_exp.mentions + y_re.mentions)
-            if clusters:
-                decision, cost, adj_trace = self.adjudicator.run(
-                    text=text,
-                    clusters=clusters,
-                    y_exp=y_exp,
-                    y_re=y_re,
-                    debate_protocol=self.debate_protocol,
-                    enable_debate=not bool(self.ablations.get("w_o_debate", False)),
-                    l3_only=bool(self.pipeline_cfg.get("debate_l3_only", True)),
-                    singleton_policy=str(
-                        self.pipeline_cfg.get("adjudicator_singleton_policy", "legacy")
-                    ),
-                    singleton_min_confidence=float(
-                        self.pipeline_cfg.get("adjudicator_singleton_min_confidence", 0.0)
-                    ),
-                    singleton_require_entity_like=bool(
-                        self.pipeline_cfg.get("adjudicator_singleton_require_entity_like", False)
-                    ),
-                )
-                _accumulate_cost(total_cost, cost)
-                traces["adjudicator"] = adj_trace
-                cluster_span_ids = {sid for c in clusters for sid in c.span_ids}
-                base = [m for m in base if m.span_id not in cluster_span_ids]
-                final_mentions = _merge_mentions(base + decision.final_mentions)
-            else:
-                final_mentions = base
-                traces["adjudicator"] = {"clusters": [], "decision": "no_conflict"}
+            decision, cost, adj_trace = self.adjudicator.run(
+                text=text,
+                clusters=clusters,
+                y_exp=y_exp,
+                y_re=y_re if re_contributes_ner else NERHypothesis(mentions=[], source="re"),
+                debate_protocol=self.debate_protocol,
+                enable_debate=not bool(self.ablations.get("w_o_debate", False)),
+                l3_only=bool(self.pipeline_cfg.get("debate_l3_only", True)),
+                review_all_mentions=bool(
+                    self.pipeline_cfg.get("adjudicator_review_all_mentions", True)
+                ),
+                singleton_policy=str(
+                    self.pipeline_cfg.get("adjudicator_singleton_policy", "legacy")
+                ),
+                singleton_min_confidence=float(
+                    self.pipeline_cfg.get("adjudicator_singleton_min_confidence", 0.0)
+                ),
+                singleton_require_entity_like=bool(
+                    self.pipeline_cfg.get("adjudicator_singleton_require_entity_like", False)
+                ),
+            )
+            _accumulate_cost(total_cost, cost)
+            traces["adjudicator"] = adj_trace
+            final_mentions = _merge_mentions(decision.final_mentions)
         elif use_expert:
             final_mentions = _merge_mentions(y_exp.mentions)
-            traces["conflict"] = {"disabled": True, "reason": "re_off"}
-            traces["adjudicator"] = {"disabled": True, "reason": "single_line"}
+            traces["conflict"] = {
+                "disabled": True,
+                "reason": "re_off"
+                if not use_re
+                else ("structure_only_mode" if not relation_schema_present else "re_empty"),
+            }
+            traces["adjudicator"] = {
+                "clusters": [],
+                "decision": "no_mentions_after_semantic_review",
+            }
         elif use_re:
             final_mentions = _merge_mentions(y_re.mentions)
-            traces["conflict"] = {"disabled": True, "reason": "expert_off"}
-            traces["adjudicator"] = {"disabled": True, "reason": "single_line"}
+            traces["conflict"] = {
+                "disabled": True,
+                "reason": "expert_off" if relation_schema_present else "structure_only_mode",
+            }
+            traces["adjudicator"] = {
+                "clusters": [],
+                "decision": "no_mentions_after_semantic_review",
+            }
         else:
             final_mentions = []
             traces["conflict"] = {"disabled": True, "reason": "both_off"}
             traces["adjudicator"] = {"disabled": True, "reason": "both_off"}
+
+        if direct_seed_enabled and direct_seed_hyp.mentions:
+            final_mentions, direct_seed_trace = _merge_with_direct_seed_mentions(
+                direct_mentions=direct_seed_hyp.mentions,
+                candidate_mentions=final_mentions,
+                min_additional_confidence=float(
+                    self.pipeline_cfg.get("direct_seed_additional_min_confidence", 0.92)
+                ),
+                protected_confidence=float(
+                    self.pipeline_cfg.get("direct_seed_protected_confidence", 0.0)
+                ),
+                same_type_policy=str(
+                    self.pipeline_cfg.get(
+                        "direct_seed_same_type_policy",
+                        "prefer_direct_boundary",
+                    )
+                ),
+                allow_cross_type_override=bool(
+                    self.pipeline_cfg.get("direct_seed_allow_cross_type_override", False)
+                ),
+                cross_type_override_margin=float(
+                    self.pipeline_cfg.get("direct_seed_cross_type_override_margin", 0.05)
+                ),
+                cross_type_override_min_confidence=float(
+                    self.pipeline_cfg.get(
+                        "direct_seed_cross_type_override_min_confidence",
+                        0.75,
+                    )
+                ),
+                cross_type_override_require_evidence=bool(
+                    self.pipeline_cfg.get(
+                        "direct_seed_cross_type_override_require_evidence",
+                        True,
+                    )
+                ),
+            )
+        else:
+            direct_seed_trace = {
+                "enabled": direct_seed_enabled,
+                "kept_direct": 0,
+                "merged_same_type": 0,
+                "exact_match_merged": 0,
+                "preserved_direct_boundary": 0,
+                "cross_type_overridden": 0,
+                "dropped_conflicting": 0,
+                "added_non_overlapping": 0,
+                "skipped_low_confidence": 0,
+                "same_type_policy": "disabled",
+                "allow_cross_type_override": False,
+            }
+        traces["direct_seed_guard"] = direct_seed_trace
 
         rescue_enabled = bool(
             self.pipeline_cfg.get("rescue_symbolic_parts_from_hypotheses", False)
@@ -851,6 +1325,60 @@ class PipelineRunner:
             expert_boundary_trace = {"enabled": False, "calibrated_count": 0, "calibrated_span_ids": []}
         traces["expert_evidence_boundary_calibration"] = expert_boundary_trace
 
+        reapply_direct_seed = bool(
+            self.pipeline_cfg.get("reapply_direct_seed_after_postprocess", True)
+        )
+        if reapply_direct_seed and direct_seed_enabled and direct_seed_hyp.mentions:
+            final_mentions, direct_seed_post_trace = _merge_with_direct_seed_mentions(
+                direct_mentions=direct_seed_hyp.mentions,
+                candidate_mentions=final_mentions,
+                min_additional_confidence=float(
+                    self.pipeline_cfg.get("direct_seed_additional_min_confidence", 0.92)
+                ),
+                protected_confidence=float(
+                    self.pipeline_cfg.get("direct_seed_protected_confidence", 0.0)
+                ),
+                same_type_policy=str(
+                    self.pipeline_cfg.get(
+                        "direct_seed_same_type_policy",
+                        "prefer_direct_boundary",
+                    )
+                ),
+                allow_cross_type_override=bool(
+                    self.pipeline_cfg.get("direct_seed_allow_cross_type_override", False)
+                ),
+                cross_type_override_margin=float(
+                    self.pipeline_cfg.get("direct_seed_cross_type_override_margin", 0.05)
+                ),
+                cross_type_override_min_confidence=float(
+                    self.pipeline_cfg.get(
+                        "direct_seed_cross_type_override_min_confidence",
+                        0.75,
+                    )
+                ),
+                cross_type_override_require_evidence=bool(
+                    self.pipeline_cfg.get(
+                        "direct_seed_cross_type_override_require_evidence",
+                        True,
+                    )
+                ),
+            )
+        else:
+            direct_seed_post_trace = {
+                "enabled": reapply_direct_seed and direct_seed_enabled,
+                "kept_direct": 0,
+                "merged_same_type": 0,
+                "exact_match_merged": 0,
+                "preserved_direct_boundary": 0,
+                "cross_type_overridden": 0,
+                "dropped_conflicting": 0,
+                "added_non_overlapping": 0,
+                "skipped_low_confidence": 0,
+                "same_type_policy": "disabled",
+                "allow_cross_type_override": False,
+            }
+        traces["direct_seed_guard_postprocess"] = direct_seed_post_trace
+
         disambiguation_enabled = bool(
             self.pipeline_cfg.get("enable_disambiguation_agent", False)
         )
@@ -859,31 +1387,88 @@ class PipelineRunner:
             lock_non_pipeline = bool(
                 self.pipeline_cfg.get("disambiguation_lock_if_non_pipeline", True)
             )
+            lock_direct_anchor = bool(
+                self.pipeline_cfg.get("disambiguation_lock_if_direct_anchor", True)
+            )
+            protect_direct_anchor_from_drop = bool(
+                self.pipeline_cfg.get("disambiguation_protect_direct_anchor_from_drop", True)
+            )
+            direct_anchor_iou = float(
+                self.pipeline_cfg.get("disambiguation_direct_anchor_iou", 0.8)
+            )
+            direct_anchor_min_conf = float(
+                self.pipeline_cfg.get(
+                    "disambiguation_direct_anchor_min_confidence",
+                    0.9,
+                )
+            )
             pipeline_tags = (
                 "pipeline:",
                 "candidate_recall_bridge",
             )
             locked_mentions: list[Mention] = []
+            protected_review_mentions: list[Mention] = []
             review_mentions: list[Mention] = []
             for m in final_mentions:
                 rationale_l = (m.rationale or "").lower()
                 from_pipeline = any(tag in rationale_l for tag in pipeline_tags)
+                anchored_by_direct = False
+                if lock_direct_anchor and direct_seed_hyp.mentions:
+                    anchored_by_direct = any(
+                        direct.ent_type == m.ent_type
+                        and direct.confidence >= direct_anchor_min_conf
+                        and span_iou(direct.span, m.span) >= direct_anchor_iou
+                        for direct in direct_seed_hyp.mentions
+                    )
+                if anchored_by_direct:
+                    locked_mentions.append(m)
+                    continue
                 if m.confidence >= lock_conf and (not lock_non_pipeline or not from_pipeline):
                     locked_mentions.append(m)
                 else:
-                    review_mentions.append(m)
+                    anchored_for_protection = False
+                    if direct_seed_hyp.mentions:
+                        anchored_for_protection = any(
+                            direct.ent_type == m.ent_type
+                            and direct.confidence >= direct_anchor_min_conf
+                            and span_iou(direct.span, m.span) >= direct_anchor_iou
+                            for direct in direct_seed_hyp.mentions
+                        )
+                    if anchored_for_protection and protect_direct_anchor_from_drop:
+                        protected_review_mentions.append(m)
+                    else:
+                        review_mentions.append(m)
 
+            self._agent_progress("disambiguation_agent", "start", sample_id=sample_id)
+            protected_mentions, protected_trace, protected_cost = self.disambiguation_agent.run(
+                text=text,
+                mentions=protected_review_mentions,
+                schema=self.schema,
+                allow_drop=False,
+            )
             reviewed_mentions, disamb_trace, disamb_cost = self.disambiguation_agent.run(
                 text=text,
                 mentions=review_mentions,
                 schema=self.schema,
                 allow_drop=bool(self.pipeline_cfg.get("disambiguation_allow_drop", False)),
             )
-            final_mentions = locked_mentions + reviewed_mentions
+            final_mentions = locked_mentions + protected_mentions + reviewed_mentions
+            _accumulate_cost(total_cost, protected_cost)
             _accumulate_cost(total_cost, disamb_cost)
             disamb_trace["locked_count"] = len(locked_mentions)
-            disamb_trace["review_count"] = len(review_mentions)
+            disamb_trace["protected_review_count"] = len(protected_review_mentions)
+            disamb_trace["review_count"] = len(review_mentions) + len(protected_review_mentions)
+            disamb_trace["protected_review_output_count"] = len(protected_mentions)
+            disamb_trace["protected_review_dropped"] = int(protected_trace.get("dropped", 0) or 0)
+            disamb_trace["protected_review_adjusted"] = int(protected_trace.get("adjusted", 0) or 0)
             traces["disambiguation_agent"] = disamb_trace
+            self._agent_progress(
+                "disambiguation_agent",
+                "done",
+                sample_id=sample_id,
+                llm_calls=protected_cost.calls + disamb_cost.calls,
+                mentions=len(final_mentions),
+            )
             communications.append(
                 {
                     "from": "disambiguation_agent",
@@ -1104,6 +1689,306 @@ def _merge_mentions(mentions: list[Mention]) -> list[Mention]:
         if prev is None or m.confidence > prev.confidence:
             best[m.span_id] = m
     return list(best.values())
+
+
+def _merge_candidate_set_with_mentions(
+    candidate_set: CandidateSet,
+    mentions: list[Mention],
+) -> list[str]:
+    by_offsets = {(span.start, span.end): sid for sid, span in candidate_set.spans.items()}
+    next_idx = _next_aug_index(candidate_set.spans.keys())
+    added_ids: list[str] = []
+    for mention in mentions:
+        key = (mention.span.start, mention.span.end)
+        if key in by_offsets:
+            continue
+        span_id = f"sp_seed_{next_idx:04d}"
+        while span_id in candidate_set.spans:
+            next_idx += 1
+            span_id = f"sp_seed_{next_idx:04d}"
+        candidate_set.spans[span_id] = Span(
+            text=mention.span.text,
+            start=mention.span.start,
+            end=mention.span.end,
+            provenance={"source": "direct_seed", "mention_span_id": mention.span_id},
+        )
+        by_offsets[key] = span_id
+        added_ids.append(span_id)
+        next_idx += 1
+    candidate_set.has_entity = bool(candidate_set.spans)
+    return added_ids
+
+
+def _copy_candidate_set(candidate_set: CandidateSet) -> CandidateSet:
+    return CandidateSet(
+        has_entity=candidate_set.has_entity,
+        spans=dict(candidate_set.spans),
+    )
+
+
+def _subset_candidate_set(candidate_set: CandidateSet, span_ids: set[str]) -> CandidateSet:
+    spans = {sid: span for sid, span in candidate_set.spans.items() if sid in span_ids}
+    return CandidateSet(has_entity=bool(spans), spans=spans)
+
+
+def _overlay_constraints_for_span_ids(
+    base: ExpertConstraints,
+    overlay: ExpertConstraints,
+    span_ids: set[str],
+) -> tuple[ExpertConstraints, list[str]]:
+    if not span_ids:
+        return base, []
+    merged = ExpertConstraints(
+        terminology=list(base.terminology),
+        triggers=list(base.triggers),
+        per_span=dict(base.per_span),
+    )
+    applied: list[str] = []
+    for span_id in span_ids:
+        if span_id not in overlay.per_span:
+            continue
+        merged.per_span[span_id] = overlay.per_span[span_id]
+        applied.append(span_id)
+    return merged, applied
+
+
+def _subset_constraints(constraints: ExpertConstraints, span_ids: set[str]) -> ExpertConstraints:
+    return ExpertConstraints(
+        terminology=list(constraints.terminology),
+        triggers=list(constraints.triggers),
+        per_span={sid: val for sid, val in constraints.per_span.items() if sid in span_ids},
+    )
+
+
+def _merge_structure_support_constraints(
+    base: ExpertConstraints,
+    support: ExpertConstraints,
+    confidence_scale: float = 0.85,
+    min_exclusion_confidence: float = 0.9,
+) -> tuple[ExpertConstraints, dict[str, Any]]:
+    merged = ExpertConstraints(
+        terminology=list(base.terminology),
+        triggers=list(base.triggers),
+        per_span=dict(base.per_span),
+    )
+    applied_span_count = 0
+    added_new_spans = 0
+    enriched_existing_spans = 0
+
+    for span_id, support_constraint in support.per_span.items():
+        scaled_confidence = max(0.0, min(1.0, float(support_constraint.confidence) * float(confidence_scale)))
+        if span_id not in merged.per_span:
+            merged.per_span[span_id] = SpanConstraint(
+                candidate_types=list(support_constraint.candidate_types),
+                excluded_types=list(support_constraint.excluded_types)
+                if scaled_confidence >= float(min_exclusion_confidence)
+                else [],
+                boundary_ops=[],
+                evidence=list(support_constraint.evidence),
+                confidence=scaled_confidence,
+                rationale=str(support_constraint.rationale),
+            )
+            added_new_spans += 1
+            applied_span_count += 1
+            continue
+
+        base_constraint = merged.per_span[span_id]
+        candidate_types = list(base_constraint.candidate_types)
+        if not candidate_types:
+            candidate_types = list(support_constraint.candidate_types)
+
+        excluded_types = list(base_constraint.excluded_types)
+        if scaled_confidence >= float(min_exclusion_confidence):
+            for item in support_constraint.excluded_types:
+                if item not in excluded_types:
+                    excluded_types.append(item)
+
+        evidence = list(base_constraint.evidence)
+        seen_evidence = {(ev.quote, ev.start, ev.end) for ev in evidence}
+        for ev in support_constraint.evidence:
+            key = (ev.quote, ev.start, ev.end)
+            if key in seen_evidence:
+                continue
+            evidence.append(ev)
+            seen_evidence.add(key)
+
+        rationale_parts = [part for part in [base_constraint.rationale, support_constraint.rationale] if part]
+        merged.per_span[span_id] = SpanConstraint(
+            candidate_types=candidate_types,
+            excluded_types=excluded_types,
+            boundary_ops=list(base_constraint.boundary_ops),
+            evidence=evidence,
+            confidence=max(float(base_constraint.confidence), scaled_confidence),
+            rationale=" | ".join(rationale_parts),
+        )
+        enriched_existing_spans += 1
+        applied_span_count += 1
+
+    return merged, {
+        "enabled": True,
+        "source_span_count": len(support.per_span),
+        "applied_span_count": applied_span_count,
+        "added_new_spans": added_new_spans,
+        "enriched_existing_spans": enriched_existing_spans,
+        "confidence_scale": float(confidence_scale),
+        "min_exclusion_confidence": float(min_exclusion_confidence),
+    }
+
+
+def _ensure_singleton_adjudication_clusters(
+    clusters: list[ConflictCluster],
+    mentions: list[Mention],
+) -> list[ConflictCluster]:
+    merged = list(clusters)
+    covered_span_ids = {span_id for cluster in merged for span_id in cluster.span_ids}
+    next_idx = len(merged) + 1
+    for mention in mentions:
+        if mention.span_id in covered_span_ids:
+            continue
+        merged.append(
+            ConflictCluster(
+                cluster_id=f"cluster_{next_idx:04d}",
+                span_ids=[mention.span_id],
+                conflicts=["semantic_review"],
+                risk_level="L1",
+                score=0.0,
+            )
+        )
+        covered_span_ids.add(mention.span_id)
+        next_idx += 1
+    return merged
+
+
+def _overlay_relations_for_span_ids(
+    base: list[Relation],
+    overlay: list[Relation],
+    span_ids: set[str],
+) -> tuple[list[Relation], int]:
+    if not span_ids:
+        return base, 0
+    merged: dict[tuple[str, str, str], Relation] = {
+        (rel.head_span_id, rel.rel_type, rel.tail_span_id): rel for rel in base
+    }
+    applied = 0
+    for rel in overlay:
+        if rel.head_span_id not in span_ids and rel.tail_span_id not in span_ids:
+            continue
+        merged[(rel.head_span_id, rel.rel_type, rel.tail_span_id)] = rel
+        applied += 1
+    return list(merged.values()), applied
+
+
+def _merge_with_direct_seed_mentions(
+    direct_mentions: list[Mention],
+    candidate_mentions: list[Mention],
+    min_additional_confidence: float,
+    protected_confidence: float = 0.0,
+    same_type_policy: str = "prefer_direct_boundary",
+    allow_cross_type_override: bool = False,
+    cross_type_override_margin: float = 0.05,
+    cross_type_override_min_confidence: float = 0.75,
+    cross_type_override_require_evidence: bool = True,
+) -> tuple[list[Mention], dict[str, Any]]:
+    final: list[Mention] = []
+    used_candidate_ids: set[str] = set()
+    merged_same_type = 0
+    dropped_conflicting = 0
+    skipped_low_confidence = 0
+    added_non_overlapping = 0
+    exact_match_merged = 0
+    preserved_direct_boundary = 0
+    cross_type_overridden = 0
+
+    for direct in direct_mentions:
+        overlaps = [
+            cand
+            for cand in candidate_mentions
+            if span_iou(direct.span, cand.span) > 0.0
+        ]
+        same_type = [cand for cand in overlaps if cand.ent_type == direct.ent_type]
+        if same_type:
+            exact_same = [
+                cand
+                for cand in same_type
+                if cand.span.start == direct.span.start and cand.span.end == direct.span.end
+            ]
+            if exact_same:
+                best = max(exact_same + [direct], key=lambda m: m.confidence)
+                final.append(best)
+                for item in exact_same:
+                    used_candidate_ids.add(item.span_id)
+                merged_same_type += 1
+                exact_match_merged += 1
+                continue
+            if same_type_policy == "prefer_direct_boundary":
+                final.append(direct)
+                for item in same_type:
+                    used_candidate_ids.add(item.span_id)
+                    dropped_conflicting += 1
+                merged_same_type += 1
+                preserved_direct_boundary += 1
+                continue
+        if allow_cross_type_override:
+            cross_type = [cand for cand in overlaps if cand.ent_type != direct.ent_type]
+            eligible_cross_type = [
+                cand
+                for cand in cross_type
+                if cand.confidence >= cross_type_override_min_confidence
+                and cand.confidence >= (direct.confidence + cross_type_override_margin)
+                and (not cross_type_override_require_evidence or bool(cand.evidence))
+            ]
+            if direct.confidence < protected_confidence and eligible_cross_type:
+                best_cross = max(
+                    eligible_cross_type,
+                    key=lambda m: (
+                        m.confidence,
+                        len(m.evidence),
+                        m.span.end - m.span.start,
+                    ),
+                )
+                final.append(best_cross)
+                used_candidate_ids.add(best_cross.span_id)
+                for item in overlaps:
+                    if item.span_id != best_cross.span_id:
+                        used_candidate_ids.add(item.span_id)
+                        dropped_conflicting += 1
+                cross_type_overridden += 1
+                continue
+        final.append(direct)
+        if direct.confidence >= protected_confidence:
+            for item in overlaps:
+                used_candidate_ids.add(item.span_id)
+                dropped_conflicting += 1
+
+    for cand in candidate_mentions:
+        if cand.span_id in used_candidate_ids:
+            continue
+        if any(span_iou(cand.span, direct.span) > 0.0 for direct in direct_mentions):
+            if cand.confidence < min_additional_confidence:
+                skipped_low_confidence += 1
+                continue
+            dropped_conflicting += 1
+            continue
+        if cand.confidence < min_additional_confidence:
+            skipped_low_confidence += 1
+            continue
+        final.append(cand)
+        added_non_overlapping += 1
+
+    trace = {
+        "enabled": True,
+        "kept_direct": len(direct_mentions),
+        "merged_same_type": merged_same_type,
+        "exact_match_merged": exact_match_merged,
+        "preserved_direct_boundary": preserved_direct_boundary,
+        "cross_type_overridden": cross_type_overridden,
+        "dropped_conflicting": dropped_conflicting,
+        "added_non_overlapping": added_non_overlapping,
+        "skipped_low_confidence": skipped_low_confidence,
+        "same_type_policy": same_type_policy,
+        "allow_cross_type_override": allow_cross_type_override,
+    }
+    return _merge_mentions(final), trace
 
 
 def _postprocess_final_mentions(
@@ -2099,6 +2984,13 @@ def _looks_slash_part_entity_like(part: str) -> bool:
     if has_upper or has_digit:
         return True
     return False
+
+
+def _resolve_prompt_path(repo_root: Path, raw_path: Any) -> Path:
+    path = Path(str(raw_path))
+    if not path.is_absolute():
+        path = repo_root / path
+    return path
 
 
 def _rescue_symbolic_parts_from_hypotheses(
@@ -3363,18 +4255,38 @@ def _filter_span_proposals(
     require_evidence_anchor: bool = False,
     max_tokens: int = 0,
     entity_like_only: bool = False,
+    source_min_confidence: dict[str, float] | None = None,
+    reject_overlap_sources: set[str] | None = None,
+    existing_spans: list[tuple[int, int]] | None = None,
 ) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
+    source_min_confidence = source_min_confidence or {}
+    reject_overlap_sources = reject_overlap_sources or set()
+    existing_spans = existing_spans or []
     for p in proposals:
+        source = str(p.get("source", "")).strip().lower()
         conf = float(p.get("confidence", 0.0))
-        if conf < min_confidence:
+        effective_min_confidence = max(
+            float(min_confidence),
+            float(source_min_confidence.get(source, min_confidence)),
+        )
+        if conf < effective_min_confidence:
             continue
         if reject_negative_rationale and _has_negative_entity_rationale(
             str(p.get("rationale", ""))
         ):
             continue
         span_text = str(p.get("text", ""))
+        start = int(p.get("start", -1))
+        end = int(p.get("end", -1))
         if max_tokens > 0 and len([t for t in span_text.split() if t]) > max_tokens:
+            continue
+        if (
+            source in reject_overlap_sources
+            and start >= 0
+            and end > start
+            and any(_span_offsets_overlap(start, end, ex_start, ex_end) for ex_start, ex_end in existing_spans)
+        ):
             continue
         evidence_items = p.get("evidence", []) or []
         if require_evidence and not evidence_items:

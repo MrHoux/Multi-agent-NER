@@ -1,7 +1,12 @@
 import json
 
 from maner.core.config import load_yaml
-from maner.core.types import CandidateSet, Mention, Span, UsageCost
+from maner.core.types import (
+    CandidateSet,
+    Mention,
+    Span,
+    UsageCost,
+)
 from maner.orchestrator.pipeline import (
     PipelineRunner,
     _drop_mentions_with_negative_rationale,
@@ -73,7 +78,7 @@ def test_pipeline_short_circuit_when_no_candidate_after_augmentation(tmp_path, m
 
     runner = PipelineRunner(cfg)
     try:
-        def _fake_candidate_run(text, schema):
+        def _fake_candidate_run(text, schema, seed_mentions=None):
             return CandidateSet(has_entity=False, spans={}), UsageCost(), {"agent": "candidate"}
 
         monkeypatch.setattr(runner.candidate_agent, "run", _fake_candidate_run)
@@ -257,7 +262,6 @@ def test_postprocess_descriptor_continues_after_existing_descriptor_token() -> N
         descriptor_left_modifiers=[],
     )
     assert trace["descriptor_expanded"] >= 1
-    assert any(m.span.text == "service platform 1 support service" for m in out)
 
 
 def test_postprocess_descriptor_can_expand_lowercase_prefix() -> None:

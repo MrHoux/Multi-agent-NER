@@ -1,7 +1,8 @@
+import json
 from pathlib import Path
 
 from maner.core.config import load_yaml
-from maner.core.types import ExpertConstraints, UsageCost
+from maner.core.types import CandidateSet, ExpertConstraints, Mention, NERHypothesis, Span, UsageCost
 from maner.orchestrator.pipeline import PipelineRunner, write_predictions
 
 
@@ -51,10 +52,10 @@ def test_pipeline_span_augmentation_from_expert_trace(tmp_path, monkeypatch) -> 
                             "start": 11,
                             "end": 13,
                             "text": text[11:13],
-                            "confidence": 0.8,
+                            "confidence": 0.9,
                             "evidence": [{"quote": text[11:13], "start": 11, "end": 13}],
                             "rationale": "test_new_span",
-                            "type_hints": [],
+                            "type_hints": ["PERSON"],
                         }
                     ],
                 },
@@ -69,3 +70,4 @@ def test_pipeline_span_augmentation_from_expert_trace(tmp_path, monkeypatch) -> 
     aug_trace = records[0]["traces"]["span_augmentation"]
     assert aug_trace["enabled"] is True
     assert aug_trace["added_count"] >= 1
+

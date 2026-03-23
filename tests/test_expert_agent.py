@@ -28,6 +28,26 @@ def test_expert_agent_constraints_with_evidence() -> None:
             assert is_strict_substring(text, ev.quote, ev.start, ev.end)
 
 
+def test_expert_agent_plans_retrieval_for_existing_spans() -> None:
+    text = "John works at Acme Corp in Seattle."
+    llm = LLMClient({"provider": "mock"})
+    prompts = PromptManager("configs/prompts_cot.yaml")
+    schema = load_schema("tests/fixtures/schema_example.json")
+
+    cset, _, _ = CandidateAgent(llm, prompts).run(text, schema)
+    plan, cost, _ = ExpertAgent(llm, prompts).plan_retrieval(
+        text=text,
+        candidate_set=cset,
+        schema=schema,
+        memory_items=[],
+    )
+
+    assert cost.calls == 1
+    for item in plan.get("retrieval_requests", []):
+        assert set(item.get("span_ids", [])).issubset(set(cset.spans.keys()))
+        assert isinstance(item.get("question", ""), str)
+
+
 def test_expert_agent_accepts_rag_handoff() -> None:
     text = "John works at Acme Corp in Seattle."
     llm = LLMClient({"provider": "mock"})

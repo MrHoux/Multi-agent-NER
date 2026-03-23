@@ -1,0 +1,121 @@
+expert_retrieval_agent:
+  system: 'You are Expert Retrieval Planner.
+
+    You must reason with internal CoT, but never expose full reasoning traces.
+
+    Return strict JSON only.'
+  user: "TASK: expert_retrieval_agent\nText:\n{text}\n\nCandidate spans:\n{candidate_spans}\n\
+    \nMemory top-k:\n{memory_items}\n\nEntity schema:\n{entity_types}\n\nInternal\
+    \ CoT plan (private):\n1) Read the schema and candidate spans.\n2) Decide which\
+    \ spans remain ambiguous after local reading and may benefit from external knowledge.\n\
+    3) Request retrieval only for entity identity or type disambiguation, not for\
+    \ generic context expansion.\n4) Keep the request list compact and prioritized.\n\
+    \nHard constraints:\n- Request retrieval only for existing span_id values.\n-\
+    \ Do not request retrieval for generic words, pronouns, dates, pure numbers, or\
+    \ obvious non-entities.\n- Do not use exact surface-form lookup rules, memorized\
+    \ field rules, or dataset-specific keyword heuristics.\n- Prefer no retrieval\
+    \ request when the text already provides sufficient evidence.\n\nOutput JSON:\n\
+    {{\n  \"retrieval_requests\": [\n    {{\n      \"request_id\": str,\n      \"\
+    span_ids\": [str],\n      \"question\": str,\n      \"priority\": \"high|medium|low\"\
+    ,\n      \"rationale\": str\n    }}\n  ],\n  \"global_notes\": [str],\n  \"rationale\"\
+    : \"short summary <= 40 words\"\n}}\n\nDataset-specific expert guidance (mandatory):\n\
+    - Treat entity mentions as identity-bearing references grounded in the text; do\
+    \ not label pronouns, bare role nouns, common descriptors, dates, or pure numerals\
+    \ unless the schema explicitly targets them.\n- Prefer low confidence or abstention\
+    \ when evidence does not support a stable named-entity interpretation.\n- Resolve\
+    \ person, organization, and location ambiguity from referential function in context:\
+    \ individual human actor, organized collective actor, or geographic place.\n-\
+    \ Use residual or catch-all labels only as a last resort after excluding more\
+    \ specific schema types, and require strong text-grounded evidence that the mention\
+    \ denotes a named category rather than a generic modifier.\n- Treat schema type\
+    \ descriptions as the sole semantic authority for entity classification, ignoring\
+    \ any external knowledge or memorized patterns.\n- Identify entity mentions based\
+    \ on proper named references in the text, excluding pronouns, generic role nouns,\
+    \ common descriptors, dates, and pure numerals unless they are explicitly part\
+    \ of a named entity.\n- For PER entities, require explicit textual evidence of\
+    \ personal identity.\n- For ORG entities, look for indicators of formal collective\
+    \ structure or institutional naming, prioritizing explicit mentions over contextual\
+    \ hints.\n- For LOC entities, rely on geographic naming conventions or place-specific\
+    \ references, distinguishing from organizational locations when ambiguous.\n-\
+    \ Reserve MISC as a last-resort label, applying it only when strong evidence confirms\
+    \ a named entity that definitively excludes PER, ORG, and LOC categories.\n- Resolve\
+    \ type ambiguities by analyzing the semantic role and syntactic function of the\
+    \ mention in context, not through lexical matching or memorized examples.\n- Adjust\
+    \ entity boundaries conservatively, only when the text provides clear evidence\
+    \ for trimming, splitting, or merging spans.\n- Calibrate confidence scores based\
+    \ on direct textual evidence, lowering confidence when evidence is weak or conflicting\
+    \ rather than expanding candidate types.\n- Prefer abstention or low-confidence\
+    \ assignments over speculative labeling when schema compatibility is uncertain.\n\
+    - Use retrieved knowledge as hints for disambiguation, but prioritize text-grounded\
+    \ evidence in case of disagreements.\n- Maintain portability by avoiding any dataset-specific\
+    \ heuristics, focusing solely on schema semantics and local context."
+expert_agent:
+  system: 'You are ExpertAgent.
+
+    You must reason with internal CoT, but never expose full reasoning traces.
+
+    Return strict JSON only.'
+  user: "TASK: expert_agent\nText:\n{text}\n\nCandidate spans:\n{candidate_spans}\n\
+    \nMemory top-k:\n{memory_items}\n\nRAG handoff package:\n{rag_handoff}\n\nEntity\
+    \ schema:\n{entity_types}\n\nSpan augmentation policy:\n{augmentation_policy}\n\
+    \nDataset-specific expert guidance (mandatory):\n- Treat entity mentions as identity-bearing\
+    \ references grounded in the text; do not label pronouns, bare role nouns, common\
+    \ descriptors, dates, or pure numerals unless the schema explicitly targets them.\n\
+    - Prefer low confidence or abstention when evidence does not support a stable\
+    \ named-entity interpretation.\n- Resolve person, organization, and location ambiguity\
+    \ from referential function in context: individual human actor, organized collective\
+    \ actor, or geographic place.\n- Use residual or catch-all labels only as a last\
+    \ resort after excluding more specific schema types, and require strong text-grounded\
+    \ evidence that the mention denotes a named category rather than a generic modifier.\n\
+    - Treat schema type descriptions as the sole semantic authority for entity classification,\
+    \ ignoring any external knowledge or memorized patterns.\n- Identify entity mentions\
+    \ based on proper named references in the text, excluding pronouns, generic role\
+    \ nouns, common descriptors, dates, and pure numerals unless they are explicitly\
+    \ part of a named entity.\n- For PER entities, require explicit textual evidence\
+    \ of personal identity.\n- For ORG entities, look for indicators of formal collective\
+    \ structure or institutional naming, prioritizing explicit mentions over contextual\
+    \ hints.\n- For LOC entities, rely on geographic naming conventions or place-specific\
+    \ references, distinguishing from organizational locations when ambiguous.\n-\
+    \ Reserve MISC as a last-resort label, applying it only when strong evidence confirms\
+    \ a named entity that definitively excludes PER, ORG, and LOC categories.\n- Resolve\
+    \ type ambiguities by analyzing the semantic role and syntactic function of the\
+    \ mention in context, not through lexical matching or memorized examples.\n- Adjust\
+    \ entity boundaries conservatively, only when the text provides clear evidence\
+    \ for trimming, splitting, or merging spans.\n- Calibrate confidence scores based\
+    \ on direct textual evidence, lowering confidence when evidence is weak or conflicting\
+    \ rather than expanding candidate types.\n- Prefer abstention or low-confidence\
+    \ assignments over speculative labeling when schema compatibility is uncertain.\n\
+    - Use retrieved knowledge as hints for disambiguation, but prioritize text-grounded\
+    \ evidence in case of disagreements.\n- Maintain portability by avoiding any dataset-specific\
+    \ heuristics, focusing solely on schema semantics and local context.\n\nCollaboration\
+    \ protocol with RAG (mandatory):\n- Use RAG retrieved_facts only as hints, not\
+    \ as hard truth.\n- Resolve RAG open_questions in your per-span constraints.\n\
+    - Output rag_ack to state what was used and how disagreements were handled.\n\n\
+    Internal CoT plan (private):\n1) Read schema, memory hints, and RAG handoff.\n\
+    2) For each span_id, estimate candidate_types and excluded_types.\n3) Judge boundary_ops;\
+    \ keep no-op unless strong evidence supports edits.\n4) Attach direct quote evidence\
+    \ with exact offsets.\n5) Calibrate confidence conservatively.\n\nConstraint scoring\
+    \ rubric per span (private):\n- Lexical cue support: 0-0.35\n- Context support:\
+    \ 0-0.30\n- Schema compatibility: 0-0.20\n- Memory/RAG support: 0-0.15\n- Do not\
+    \ use exact surface-form matching rules or dataset-specific keyword lists.\n\n\
+    Hard constraints:\n- per_span keys should prefer existing span_id.\n- Evidence\
+    \ quote must be substring of text.\n- No evidence => mark low confidence.\n- For\
+    \ new_spans, type_hints must be a non-empty subset of schema entity type names\
+    \ only.\n- Do not treat pronouns, bare role nouns, common descriptors, dates,\
+    \ or pure numbers as entities unless the schema explicitly requires them.\n- Treat\
+    \ residual or catch-all schema types as last-resort labels that need stronger\
+    \ evidence than primary types.\n\nFallback policy:\n- If uncertain, keep only\
+    \ evidence-supported candidate_types and lower confidence instead of widening\
+    \ types indiscriminately.\n- If RAG and context disagree, prefer text-grounded\
+    \ evidence and note in rag_ack.\n\nOutput JSON:\n{{\n  \"terminology\": [str],\n\
+    \  \"triggers\": [str],\n  \"per_span\": {{\n    \"<span_id>\": {{\n      \"candidate_types\"\
+    : [str],\n      \"excluded_types\": [str],\n      \"boundary_ops\": [{{\"op\"\
+    :\"TRIM|SPLIT|MERGE\",\"params\":{{...}}}}],\n      \"evidence\": [{{\"quote\"\
+    :str,\"start\":int,\"end\":int}}],\n      \"confidence\": float\n    }}\n  }},\n\
+    \  \"rag_ack\": {{\n    \"handoff_id\": str,\n    \"used_fact_ids\": [str],\n\
+    \    \"answered_questions\": [{{\"q_id\": str, \"answer\": str}}],\n    \"notes\"\
+    : str\n  }},\n  \"new_spans\": [\n    {{\n      \"start\": int,\n      \"end\"\
+    : int,\n      \"text\": str,\n      \"type_hints\": [str],\n      \"confidence\"\
+    : float,\n      \"evidence\": [{{\"quote\": str, \"start\": int, \"end\": int}}],\n\
+    \      \"rationale\": str\n    }}\n  ],\n  \"rationale\": \"short summary <= 40\
+    \ words\"\n}}"

@@ -32,16 +32,23 @@ pipeline:
   allow_expert_span_augmentation: false
   allow_re_span_augmentation: false
   rerun_after_span_augmentation: true
+  localize_augmented_ner_inference: true
   max_augmented_spans_per_sample: 20
-  augmentation_requires_seed_candidate: false
-  augmentation_require_schema_type_hint: false
-  augmentation_min_confidence: 0.0
+  augmentation_requires_seed_candidate: true
+  augmentation_require_schema_type_hint: true
+  augmentation_min_confidence: 0.72
+  augmentation_source_min_confidence:
+    re: 0.90
+  augmentation_reject_overlap_sources: ["re"]
   augmentation_allow_no_seed_high_conf: false
-  augmentation_no_seed_min_confidence: 0.9
+  augmentation_no_seed_min_confidence: 0.85
   augmentation_no_seed_allowed_sources: ["expert"]
   augmentation_reject_negative_rationale: false
+  augmentation_require_evidence: true
+  augmentation_require_evidence_anchor: true
   augmentation_entity_like_only: false
   adjudicator_singleton_require_entity_like: false
+  adjudicator_review_all_mentions: true
   normalize_candidate_boundaries: false
   boundary_left_modifiers: []
   boundary_right_modifiers: []
@@ -54,7 +61,27 @@ pipeline:
   inject_high_value_candidates: false
   lexical_injection_rules: []
   mention_blocklist: []
-  final_min_confidence: 0.0
+  final_min_confidence: 0.22
+  enable_direct_seed_ner: true
+  direct_seed_additional_min_confidence: 0.94
+  direct_seed_protected_confidence: 0.92
+  direct_seed_same_type_policy: prefer_direct_boundary
+  direct_seed_allow_cross_type_override: true
+  direct_seed_cross_type_override_margin: 0.06
+  direct_seed_cross_type_override_min_confidence: 0.82
+  direct_seed_cross_type_override_require_evidence: true
+  reapply_direct_seed_after_postprocess: true
+  re_structure_support_enabled: true
+  re_structure_support_confidence_scale: 0.85
+  re_structure_support_min_exclusion_confidence: 0.9
+  enable_disambiguation_agent: true
+  disambiguation_lock_confidence: 1.1
+  disambiguation_lock_if_non_pipeline: false
+  disambiguation_lock_if_direct_anchor: false
+  disambiguation_protect_direct_anchor_from_drop: false
+  disambiguation_direct_anchor_iou: 0.8
+  disambiguation_direct_anchor_min_confidence: 0.97
+  disambiguation_allow_drop: true
 
 verifier:
   use_llm: false
@@ -63,9 +90,24 @@ verifier:
 memory:
   enabled: true
   sqlite_path: outputs/memory.db
-  top_k: 3
-  promote_threshold: 2
-  min_confidence: 0.7
+  top_k: 2
+  promote_threshold: 3
+  min_confidence: 0.82
+  retrieval_include_candidate: false
+  retrieval_min_seen_count: 2
+  retrieval_min_confidence: 0.82
+
+rag:
+  max_open_questions: 20
+  wikipedia:
+    enabled: true
+    language: en
+    max_requests_per_sample: 6
+    max_results_per_request: 2
+    summary_chars: 420
+    timeout_s: 12
+    max_retries: 1
+    retry_backoff_s: 0.75
 
 ablations:
   w_o_rag: false

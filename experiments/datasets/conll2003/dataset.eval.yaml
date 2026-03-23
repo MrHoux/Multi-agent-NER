@@ -1,20 +1,39 @@
 dataset_id: conll2003
-runner_script: experiments/conll2003/run_conll2003_full_checkpoints.py
-
+runner_script: experiments/run_dataset_full_checkpoints.py
 paths:
   configs_dir: experiments/datasets/conll2003/configs
-  results_dir: experiments/datasets/conll2003/results/full_test_all_agents
+  results_dir: experiments/datasets/conll2003/results/full_test
   logs_dir: experiments/datasets/conll2003/logs
   runtime_dir: experiments/datasets/conll2003/runtime
-
+data:
+  dataset_dir: datasets/conll2003
+  schema_path: datasets/conll2003/schema.conll2003.json
+  reader_type: generic_jsonl
+  source_manifest_path: datasets/conll2003/dataset.source.yaml
+  split_paths:
+    train: datasets/conll2003/conll2003_train.promptgen.40.jsonl
+    dev: datasets/conll2003/conll2003_dev.jsonl
+    test: datasets/conll2003/conll2003_test.0_3452.jsonl
 execution:
   dataset_name: conll2003
   split: test
+  source_data_path: datasets/conll2003/conll2003_test.0_3452.jsonl
+  schema_path: datasets/conll2003/schema.conll2003.json
+  reader_type: generic_jsonl
   start_index: 0
-  max_samples: 3453
+  max_samples: 0
   checkpoint_size: 100
   threshold: 0.75
-  active_config: experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml
+  active_config: configs/runtime.deepseek.all_agents.yaml
   optimization_configs:
-    - experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml
+  - configs/runtime.deepseek.all_agents.yaml
   resume: true
+prompt_generation:
+  enabled: true
+  llm_config_path: configs/runtime.deepseek.all_agents.yaml
+  schema_path: datasets/conll2003/schema.conll2003.json
+  output_prompt_path: experiments/datasets/conll2003/prompts/expert.generated.yaml
+  metadata_path: experiments/datasets/conll2003/prompts/expert.generated.meta.json
+  template_path: configs/expert_prompt_generator.yaml
+bootstrap:
+  manifest_path: datasets/conll2003/dataset.source.yaml

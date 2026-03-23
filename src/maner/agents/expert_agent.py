@@ -23,6 +23,53 @@ class ExpertAgent:
         self.llm_client = llm_client
         self.prompt_manager = prompt_manager
 
+    def plan_retrieval(
+        self,
+        text: str,
+        candidate_set: CandidateSet,
+        schema: SchemaDefinition,
+        memory_items: list[dict[str, Any]] | None = None,
+    ) -> tuple[dict[str, Any], UsageCost, dict[str, Any]]:
+        memory_items = memory_items or []
+        system, user = self.prompt_manager.render(
+            "expert_retrieval_agent",
+            text=text,
+            candidate_spans=self._candidate_prompt_payload(candidate_set),
+            memory_items=memory_items,
+            entity_types=schema.to_prompt_block(),
+        )
+
+        context = None
+        if self.llm_client.provider == "mock":
+            context = {
+                "mock_result": self._heuristic_retrieval_plan(
+                    text=text,
+                    candidate_set=candidate_set,
+                    entity_types=schema.entity_type_names,
+                )
+            }
+
+        llm_result = self.llm_client.chat_json(
+            system_prompt=system,
+            user_prompt=user,
+            task="expert_retrieval_agent",
+            context=context,
+        )
+        payload = llm_result.parsed_json
+        if payload.get("mock") and "result" in payload:
+            payload = payload["result"]
+
+        retrieval_plan = self._parse_retrieval_plan(payload, candidate_set)
+        cost = UsageCost(
+            calls=llm_result.usage.calls,
+            prompt_tokens=llm_result.usage.prompt_tokens,
+            completion_tokens=llm_result.usage.completion_tokens,
+            total_tokens=llm_result.usage.total_tokens,
+            latency_ms=llm_result.usage.latency_ms or [],
+        )
+        trace = {"agent": "expert_retrieval", "raw": llm_result.content, "parsed": payload}
+        return retrieval_plan, cost, trace
+
     def run(
         self,
         text: str,
@@ -179,6 +226,36 @@ class ExpertAgent:
             },
         }
 
+    def _heuristic_retrieval_plan(
+        self,
+        text: str,
+        candidate_set: CandidateSet,
+        entity_types: list[str],
+    ) -> dict[str, Any]:
+        requests: list[dict[str, Any]] = []
+        for idx, (span_id, span) in enumerate(candidate_set.spans.items(), start=1):
+            span_text = span.text.strip()
+            if not span_text:
+                continue
+            if len(span_text) < 3 and " " not in span_text:
+                continue
+            requests.append(
+                {
+                    "request_id": f"ret_{idx:03d}",
+                    "span_ids": [span_id],
+                    "question": "Use external reference knowledge only to clarify entity identity or type when local context is insufficient.",
+                    "priority": "high" if span_text[:1].isupper() else "medium",
+                    "rationale": "possible_type_ambiguity",
+                }
+            )
+        return {
+            "retrieval_requests": requests[:8],
+            "global_notes": [
+                "Request external evidence only for spans whose identity or type remains ambiguous after reading the text."
+            ],
+            "rationale": "mock retrieval planning",
+        }
+
     def _parse_constraints(
         self,
         payload: dict[str, Any],
@@ -237,9 +314,44 @@ class ExpertAgent:
                 boundary_ops=ops,
                 evidence=evidence,
                 confidence=confidence,
+                rationale=str(raw.get("rationale", "") if isinstance(raw, dict) else ""),
             )
 
         return constraints
+
+    def _parse_retrieval_plan(
+        self,
+        payload: dict[str, Any],
+        candidate_set: CandidateSet,
+    ) -> dict[str, Any]:
+        requests: list[dict[str, Any]] = []
+        for idx, item in enumerate(payload.get("retrieval_requests", []) or [], start=1):
+            if not isinstance(item, dict):
+                continue
+            span_ids = [
+                str(span_id)
+                for span_id in item.get("span_ids", []) or []
+                if str(span_id) in candidate_set.spans
+            ]
+            if not span_ids:
+                continue
+            question = str(item.get("question", "")).strip()
+            if not question:
+                continue
+            requests.append(
+                {
+                    "request_id": str(item.get("request_id", f"ret_{idx:03d}")),
+                    "span_ids": span_ids,
+                    "question": question,
+                    "priority": str(item.get("priority", "medium")),
+                    "rationale": str(item.get("rationale", "")),
+                }
+            )
+        return {
+            "retrieval_requests": requests[:10],
+            "global_notes": [str(x) for x in payload.get("global_notes", []) or []],
+            "rationale": str(payload.get("rationale", "")),
+        }
 
     def _parse_span_proposals(
         self,

@@ -1,8 +1,2 @@
-- 2026-03-18 21:10:59: start full-test checkpoint run: start_index=0, max_samples=3453, checkpoint_size=100, threshold=0.75
-- 2026-03-18 21:11:14: resume enabled: skipping 6 completed checkpoints
-- 2026-03-18 21:11:14: checkpoint chunk07 (up to sample_index 699) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml
-- 2026-03-18 21:13:08: start full-test checkpoint run: start_index=0, max_samples=3453, checkpoint_size=100, threshold=0.75
-- 2026-03-18 21:13:22: resume enabled: skipping 6 completed checkpoints
-- 2026-03-18 21:13:22: checkpoint chunk07 (up to sample_index 699) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml
-- 2026-03-18 23:53:46: config.conll2003.optim.recall_disamb.all_agents chunk07 checkpoint_f1=0.8547
-- 2026-03-18 23:53:46: checkpoint chunk08 (up to sample_index 799) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/experiments/datasets/conll2003/configs/config.conll2003.optim.recall_disamb.all_agents.yaml
+- 2026-03-23 19:53:23: start full-test checkpoint run: start_index=0, max_samples=0, kept_samples=3453, checkpoint_size=100, threshold=0.40
+- 2026-03-23 19:53:23: checkpoint chunk01 (up to sample_index 99) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/configs/runtime.deepseek.all_agents.yaml

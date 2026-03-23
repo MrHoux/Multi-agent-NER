@@ -1,0 +1,665 @@
+{
+  "threshold": 0.81,
+  "drop_tolerance": 1.0,
+  "start_index": 0,
+  "max_samples": 100,
+  "kept_samples": 100,
+  "chunk_size": 20,
+  "gate_samples": 40,
+  "gate_chunk_count": 2,
+  "data_path": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/datasets/conll2003/conll2003_test.0_99.jsonl",
+  "results": [
+    {
+      "config": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/configs/runtime.deepseek.all_agents.yaml",
+      "status": "selected",
+      "first_two_avg_f1": 0.8128902765388046,
+      "full100_f1": 0.8714285714285713,
+      "chunk_metrics": {
+        "chunk01": {
+          "micro": {
+            "precision": 0.7714285714285715,
+            "recall": 0.6585365853658537,
+            "f1": 0.7105263157894737,
+            "tp": 27,
+            "fp": 8,
+            "fn": 14
+          },
+          "macro": {
+            "f1": 0.6285867502681297
+          },
+          "per_type": {
+            "PER": {
+              "precision": 0.9090909090909091,
+              "recall": 0.8333333333333334,
+              "f1": 0.8695652173913043,
+              "tp": 10,
+              "fp": 1,
+              "fn": 2
+            },
+            "ORG": {
+              "precision": 0.25,
+              "recall": 1.0,
+              "f1": 0.4,
+              "tp": 1,
+              "fp": 3,
+              "fn": 0
+            },
+            "LOC": {
+              "precision": 0.8,
+              "recall": 0.75,
+              "f1": 0.7741935483870969,
+              "tp": 12,
+              "fp": 3,
+              "fn": 4
+            },
+            "MISC": {
+              "precision": 0.8,
+              "recall": 0.3333333333333333,
+              "f1": 0.47058823529411764,
+              "tp": 4,
+              "fp": 1,
+              "fn": 8
+            }
+          },
+          "errors": {
+            "type_mismatch": 4,
+            "boundary_mismatch": 4,
+            "spurious": 0,
+            "missing": 6
+          }
+        },
+        "chunk02": {
+          "micro": {
+            "precision": 0.9310344827586207,
+            "recall": 0.9,
+            "f1": 0.9152542372881356,
+            "tp": 54,
+            "fp": 4,
+            "fn": 6
+          },
+          "macro": {
+            "f1": 0.6288838612368024
+          },
+          "per_type": {
+            "PER": {
+              "precision": 0.9696969696969697,
+              "recall": 0.9142857142857143,
+              "f1": 0.9411764705882354,
+              "tp": 32,
+              "fp": 1,
+              "fn": 3
+            },
+            "ORG": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "LOC": {
+              "precision": 1.0,
+              "recall": 0.95,
+              "f1": 0.9743589743589743,
+              "tp": 19,
+              "fp": 0,
+              "fn": 1
+            },
+            "MISC": {
+              "precision": 0.5,
+              "recall": 0.75,
+              "f1": 0.6,
+              "tp": 3,
+              "fp": 3,
+              "fn": 1
+            }
+          },
+          "errors": {
+            "type_mismatch": 0,
+            "boundary_mismatch": 2,
+            "spurious": 2,
+            "missing": 4
+          }
+        },
+        "chunk03": {
+          "micro": {
+            "precision": 0.9491525423728814,
+            "recall": 0.9333333333333333,
+            "f1": 0.9411764705882353,
+            "tp": 56,
+            "fp": 3,
+            "fn": 4
+          },
+          "macro": {
+            "f1": 0.5849267872523687
+          },
+          "per_type": {
+            "PER": {
+              "precision": 0.9767441860465116,
+              "recall": 0.9767441860465116,
+              "f1": 0.9767441860465116,
+              "tp": 42,
+              "fp": 1,
+              "fn": 1
+            },
+            "ORG": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 1,
+              "fn": 0
+            },
+            "LOC": {
+              "precision": 1.0,
+              "recall": 0.9285714285714286,
+              "f1": 0.962962962962963,
+              "tp": 13,
+              "fp": 0,
+              "fn": 1
+            },
+            "MISC": {
+              "precision": 0.5,
+              "recall": 0.3333333333333333,
+              "f1": 0.4,
+              "tp": 1,
+              "fp": 1,
+              "fn": 2
+            }
+          },
+          "errors": {
+            "type_mismatch": 1,
+            "boundary_mismatch": 2,
+            "spurious": 0,
+            "missing": 2
+          }
+        },
+        "chunk04": {
+          "micro": {
+            "precision": 0.875,
+            "recall": 0.8,
+            "f1": 0.8358208955223881,
+            "tp": 28,
+            "fp": 4,
+            "fn": 7
+          },
+          "macro": {
+            "f1": 0.568010752688172
+          },
+          "per_type": {
+            "PER": {
+              "precision": 0.9333333333333333,
+              "recall": 0.9333333333333333,
+              "f1": 0.9333333333333333,
+              "tp": 14,
+              "fp": 1,
+              "fn": 1
+            },
+            "ORG": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 2,
+              "fn": 0
+            },
+            "LOC": {
+              "precision": 1.0,
+              "recall": 0.7222222222222222,
+              "f1": 0.8387096774193548,
+              "tp": 13,
+              "fp": 0,
+              "fn": 5
+            },
+            "MISC": {
+              "precision": 0.5,
+              "recall": 0.5,
+              "f1": 0.5,
+              "tp": 1,
+              "fp": 1,
+              "fn": 1
+            }
+          },
+          "errors": {
+            "type_mismatch": 2,
+            "boundary_mismatch": 2,
+            "spurious": 0,
+            "missing": 3
+          }
+        },
+        "chunk05": {
+          "micro": {
+            "precision": 0.9473684210526315,
+            "recall": 0.8571428571428571,
+            "f1": 0.9,
+            "tp": 18,
+            "fp": 1,
+            "fn": 3
+          },
+          "macro": {
+            "f1": 0.4594155844155844
+          },
+          "per_type": {
+            "PER": {
+              "precision": 1.0,
+              "recall": 0.8333333333333334,
+              "f1": 0.9090909090909091,
+              "tp": 5,
+              "fp": 0,
+              "fn": 1
+            },
+            "ORG": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "LOC": {
+              "precision": 0.9285714285714286,
+              "recall": 0.9285714285714286,
+              "f1": 0.9285714285714286,
+              "tp": 13,
+              "fp": 1,
+              "fn": 1
+            },
+            "MISC": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "errors": {
+            "type_mismatch": 1,
+            "boundary_mismatch": 0,
+            "spurious": 0,
+            "missing": 2
+          }
+        }
+      },
+      "full_metrics": {
+        "micro": {
+          "precision": 0.9014778325123153,
+          "recall": 0.8433179723502304,
+          "f1": 0.8714285714285713,
+          "tp": 183,
+          "fp": 20,
+          "fn": 34
+        },
+        "macro": {
+          "f1": 0.6377746836462432
+        },
+        "per_type": {
+          "PER": {
+            "precision": 0.9626168224299065,
+            "recall": 0.9279279279279279,
+            "f1": 0.944954128440367,
+            "tp": 103,
+            "fp": 4,
+            "fn": 8
+          },
+          "ORG": {
+            "precision": 0.14285714285714285,
+            "recall": 0.5,
+            "f1": 0.22222222222222224,
+            "tp": 1,
+            "fp": 6,
+            "fn": 1
+          },
+          "LOC": {
+            "precision": 0.9459459459459459,
+            "recall": 0.8536585365853658,
+            "f1": 0.8974358974358975,
+            "tp": 70,
+            "fp": 4,
+            "fn": 12
+          },
+          "MISC": {
+            "precision": 0.6,
+            "recall": 0.4090909090909091,
+            "f1": 0.4864864864864865,
+            "tp": 9,
+            "fp": 6,
+            "fn": 13
+          }
+        },
+        "errors": {
+          "type_mismatch": 8,
+          "boundary_mismatch": 10,
+          "spurious": 2,
+          "missing": 17
+        }
+      }
+    }
+  ],
+  "selected": {
+    "config": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/configs/runtime.deepseek.all_agents.yaml",
+    "status": "selected",
+    "first_two_avg_f1": 0.8128902765388046,
+    "full100_f1": 0.8714285714285713,
+    "chunk_metrics": {
+      "chunk01": {
+        "micro": {
+          "precision": 0.7714285714285715,
+          "recall": 0.6585365853658537,
+          "f1": 0.7105263157894737,
+          "tp": 27,
+          "fp": 8,
+          "fn": 14
+        },
+        "macro": {
+          "f1": 0.6285867502681297
+        },
+        "per_type": {
+          "PER": {
+            "precision": 0.9090909090909091,
+            "recall": 0.8333333333333334,
+            "f1": 0.8695652173913043,
+            "tp": 10,
+            "fp": 1,
+            "fn": 2
+          },
+          "ORG": {
+            "precision": 0.25,
+            "recall": 1.0,
+            "f1": 0.4,
+            "tp": 1,
+            "fp": 3,
+            "fn": 0
+          },
+          "LOC": {
+            "precision": 0.8,
+            "recall": 0.75,
+            "f1": 0.7741935483870969,
+            "tp": 12,
+            "fp": 3,
+            "fn": 4
+          },
+          "MISC": {
+            "precision": 0.8,
+            "recall": 0.3333333333333333,
+            "f1": 0.47058823529411764,
+            "tp": 4,
+            "fp": 1,
+            "fn": 8
+          }
+        },
+        "errors": {
+          "type_mismatch": 4,
+          "boundary_mismatch": 4,
+          "spurious": 0,
+          "missing": 6
+        }
+      },
+      "chunk02": {
+        "micro": {
+          "precision": 0.9310344827586207,
+          "recall": 0.9,
+          "f1": 0.9152542372881356,
+          "tp": 54,
+          "fp": 4,
+          "fn": 6
+        },
+        "macro": {
+          "f1": 0.6288838612368024
+        },
+        "per_type": {
+          "PER": {
+            "precision": 0.9696969696969697,
+            "recall": 0.9142857142857143,
+            "f1": 0.9411764705882354,
+            "tp": 32,
+            "fp": 1,
+            "fn": 3
+          },
+          "ORG": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "LOC": {
+            "precision": 1.0,
+            "recall": 0.95,
+            "f1": 0.9743589743589743,
+            "tp": 19,
+            "fp": 0,
+            "fn": 1
+          },
+          "MISC": {
+            "precision": 0.5,
+            "recall": 0.75,
+            "f1": 0.6,
+            "tp": 3,
+            "fp": 3,
+            "fn": 1
+          }
+        },
+        "errors": {
+          "type_mismatch": 0,
+          "boundary_mismatch": 2,
+          "spurious": 2,
+          "missing": 4
+        }
+      },
+      "chunk03": {
+        "micro": {
+          "precision": 0.9491525423728814,
+          "recall": 0.9333333333333333,
+          "f1": 0.9411764705882353,
+          "tp": 56,
+          "fp": 3,
+          "fn": 4
+        },
+        "macro": {
+          "f1": 0.5849267872523687
+        },
+        "per_type": {
+          "PER": {
+            "precision": 0.9767441860465116,
+            "recall": 0.9767441860465116,
+            "f1": 0.9767441860465116,
+            "tp": 42,
+            "fp": 1,
+            "fn": 1
+          },
+          "ORG": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 1,
+            "fn": 0
+          },
+          "LOC": {
+            "precision": 1.0,
+            "recall": 0.9285714285714286,
+            "f1": 0.962962962962963,
+            "tp": 13,
+            "fp": 0,
+            "fn": 1
+          },
+          "MISC": {
+            "precision": 0.5,
+            "recall": 0.3333333333333333,
+            "f1": 0.4,
+            "tp": 1,
+            "fp": 1,
+            "fn": 2
+          }
+        },
+        "errors": {
+          "type_mismatch": 1,
+          "boundary_mismatch": 2,
+          "spurious": 0,
+          "missing": 2
+        }
+      },
+      "chunk04": {
+        "micro": {
+          "precision": 0.875,
+          "recall": 0.8,
+          "f1": 0.8358208955223881,
+          "tp": 28,
+          "fp": 4,
+          "fn": 7
+        },
+        "macro": {
+          "f1": 0.568010752688172
+        },
+        "per_type": {
+          "PER": {
+            "precision": 0.9333333333333333,
+            "recall": 0.9333333333333333,
+            "f1": 0.9333333333333333,
+            "tp": 14,
+            "fp": 1,
+            "fn": 1
+          },
+          "ORG": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 2,
+            "fn": 0
+          },
+          "LOC": {
+            "precision": 1.0,
+            "recall": 0.7222222222222222,
+            "f1": 0.8387096774193548,
+            "tp": 13,
+            "fp": 0,
+            "fn": 5
+          },
+          "MISC": {
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "tp": 1,
+            "fp": 1,
+            "fn": 1
+          }
+        },
+        "errors": {
+          "type_mismatch": 2,
+          "boundary_mismatch": 2,
+          "spurious": 0,
+          "missing": 3
+        }
+      },
+      "chunk05": {
+        "micro": {
+          "precision": 0.9473684210526315,
+          "recall": 0.8571428571428571,
+          "f1": 0.9,
+          "tp": 18,
+          "fp": 1,
+          "fn": 3
+        },
+        "macro": {
+          "f1": 0.4594155844155844
+        },
+        "per_type": {
+          "PER": {
+            "precision": 1.0,
+            "recall": 0.8333333333333334,
+            "f1": 0.9090909090909091,
+            "tp": 5,
+            "fp": 0,
+            "fn": 1
+          },
+          "ORG": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "LOC": {
+            "precision": 0.9285714285714286,
+            "recall": 0.9285714285714286,
+            "f1": 0.9285714285714286,
+            "tp": 13,
+            "fp": 1,
+            "fn": 1
+          },
+          "MISC": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        },
+        "errors": {
+          "type_mismatch": 1,
+          "boundary_mismatch": 0,
+          "spurious": 0,
+          "missing": 2
+        }
+      }
+    },
+    "full_metrics": {
+      "micro": {
+        "precision": 0.9014778325123153,
+        "recall": 0.8433179723502304,
+        "f1": 0.8714285714285713,
+        "tp": 183,
+        "fp": 20,
+        "fn": 34
+      },
+      "macro": {
+        "f1": 0.6377746836462432
+      },
+      "per_type": {
+        "PER": {
+          "precision": 0.9626168224299065,
+          "recall": 0.9279279279279279,
+          "f1": 0.944954128440367,
+          "tp": 103,
+          "fp": 4,
+          "fn": 8
+        },
+        "ORG": {
+          "precision": 0.14285714285714285,
+          "recall": 0.5,
+          "f1": 0.22222222222222224,
+          "tp": 1,
+          "fp": 6,
+          "fn": 1
+        },
+        "LOC": {
+          "precision": 0.9459459459459459,
+          "recall": 0.8536585365853658,
+          "f1": 0.8974358974358975,
+          "tp": 70,
+          "fp": 4,
+          "fn": 12
+        },
+        "MISC": {
+          "precision": 0.6,
+          "recall": 0.4090909090909091,
+          "f1": 0.4864864864864865,
+          "tp": 9,
+          "fp": 6,
+          "fn": 13
+        }
+      },
+      "errors": {
+        "type_mismatch": 8,
+        "boundary_mismatch": 10,
+        "spurious": 2,
+        "missing": 17
+      }
+    }
+  }
+}

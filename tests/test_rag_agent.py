@@ -44,3 +44,55 @@ def test_rag_agent_handoff_structure_and_evidence() -> None:
             assert is_strict_substring(text, ev["quote"], ev["start"], ev["end"])
         assert isinstance(hint.get("sources", []), list)
         assert len(hint.get("sources", [])) >= 1
+
+
+class _FakeRetriever:
+    def retrieve(self, query_plan):
+        return (
+            [
+                {
+                    "doc_id": "wiki_01_01",
+                    "query_id": "ret_001",
+                    "query": "identity check",
+                    "source": "wikipedia",
+                    "title": "John",
+                    "url": "https://example.org",
+                    "summary": "Reference summary.",
+                    "linked_span_ids": [query_plan["candidate_queries"][0]["span_ids"][0]],
+                    "relevance": 0.9,
+                }
+            ],
+            {"enabled": True, "source": "wikipedia", "queries_attempted": 1, "docs_returned": 1},
+        )
+
+
+def test_rag_agent_uses_expert_guided_retrieval_without_query_llm() -> None:
+    text = "John works at Acme Corp in Seattle."
+    llm = LLMClient({"provider": "mock"})
+    prompts = PromptManager("configs/prompts_cot.yaml")
+    schema = load_schema("tests/fixtures/schema_example.json")
+
+    cset, _, _ = CandidateAgent(llm, prompts).run(text, schema)
+    first_span_id = next(iter(cset.spans.keys()))
+    handoff, cost, trace = RAGAgent(llm, prompts, retriever=_FakeRetriever()).run(
+        text=text,
+        candidate_set=cset,
+        schema=schema,
+        memory_items=[],
+        expert_retrieval_plan={
+            "retrieval_requests": [
+                {
+                    "request_id": "ret_001",
+                    "span_ids": [first_span_id],
+                    "question": "Clarify entity identity.",
+                    "priority": "high",
+                    "rationale": "ambiguity",
+                }
+            ]
+        },
+    )
+
+    assert cost.calls == 1
+    assert trace["query_stage"]["mode"] == "expert_guided"
+    assert trace["retrieval"]["docs_returned"] == 1
+    assert isinstance(handoff.get("retrieved_facts", []), list)
