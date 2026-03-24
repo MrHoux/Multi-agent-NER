@@ -21,12 +21,14 @@ from maner.core.prompting import PromptManager
 from maner.core.schema import load_schema
 from maner.core.types import (
     CandidateSet,
+    ConflictCluster,
     Evidence,
     ExpertConstraints,
     Mention,
     NERHypothesis,
     Relation,
     Span,
+    SpanConstraint,
     UsageCost,
     is_valid_offsets,
     span_iou,

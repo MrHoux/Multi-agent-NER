@@ -9,7 +9,256 @@
   },
   "stop_reason": "running",
   "final_active_config": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/configs/runtime.deepseek.all_agents.yaml",
-  "node_results": [],
+  "node_results": [
+    {
+      "checkpoint": "chunk01",
+      "node_end_index": 99,
+      "status": "passed",
+      "used_config": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/configs/runtime.deepseek.all_agents.yaml",
+      "optimized": false,
+      "node_f1": 0.9419953596287702,
+      "cumulative_f1": 0.9419953596287702,
+      "metrics": {
+        "micro": {
+          "precision": 0.9485981308411215,
+          "recall": 0.9354838709677419,
+          "f1": 0.9419953596287702,
+          "tp": 203,
+          "fp": 11,
+          "fn": 14
+        },
+        "macro": {
+          "f1": 0.7255582831802344
+        },
+        "per_type": {
+          "PER": {
+            "precision": 1.0,
+            "recall": 0.9819819819819819,
+            "f1": 0.9909090909090909,
+            "tp": 109,
+            "fp": 0,
+            "fn": 2
+          },
+          "ORG": {
+            "precision": 0.2,
+            "recall": 0.5,
+            "f1": 0.28571428571428575,
+            "tp": 1,
+            "fp": 4,
+            "fn": 1
+          },
+          "LOC": {
+            "precision": 0.975609756097561,
+            "recall": 0.975609756097561,
+            "f1": 0.975609756097561,
+            "tp": 80,
+            "fp": 2,
+            "fn": 2
+          },
+          "MISC": {
+            "precision": 0.7222222222222222,
+            "recall": 0.5909090909090909,
+            "f1": 0.65,
+            "tp": 13,
+            "fp": 5,
+            "fn": 9
+          }
+        },
+        "errors": {
+          "type_mismatch": 6,
+          "boundary_mismatch": 1,
+          "spurious": 4,
+          "missing": 7
+        }
+      }
+    },
+    {
+      "checkpoint": "chunk02",
+      "node_end_index": 199,
+      "status": "passed",
+      "used_config": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/configs/runtime.deepseek.all_agents.yaml",
+      "optimized": false,
+      "node_f1": 0.8539944903581268,
+      "cumulative_f1": 0.9017632241813602,
+      "metrics": {
+        "micro": {
+          "precision": 0.8959537572254336,
+          "recall": 0.8157894736842105,
+          "f1": 0.8539944903581268,
+          "tp": 155,
+          "fp": 18,
+          "fn": 35
+        },
+        "macro": {
+          "f1": 0.7286648401503284
+        },
+        "per_type": {
+          "PER": {
+            "precision": 0.9866666666666667,
+            "recall": 0.9024390243902439,
+            "f1": 0.9426751592356688,
+            "tp": 74,
+            "fp": 1,
+            "fn": 8
+          },
+          "ORG": {
+            "precision": 0.9024390243902439,
+            "recall": 0.7872340425531915,
+            "f1": 0.8409090909090909,
+            "tp": 37,
+            "fp": 4,
+            "fn": 10
+          },
+          "LOC": {
+            "precision": 0.8367346938775511,
+            "recall": 0.8541666666666666,
+            "f1": 0.845360824742268,
+            "tp": 41,
+            "fp": 8,
+            "fn": 7
+          },
+          "MISC": {
+            "precision": 0.375,
+            "recall": 0.23076923076923078,
+            "f1": 0.2857142857142857,
+            "tp": 3,
+            "fp": 5,
+            "fn": 10
+          }
+        },
+        "errors": {
+          "type_mismatch": 10,
+          "boundary_mismatch": 5,
+          "spurious": 3,
+          "missing": 20
+        }
+      }
+    },
+    {
+      "checkpoint": "chunk03",
+      "node_end_index": 299,
+      "status": "passed",
+      "used_config": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/configs/runtime.deepseek.all_agents.yaml",
+      "optimized": false,
+      "node_f1": 0.8346774193548387,
+      "cumulative_f1": 0.875968992248062,
+      "metrics": {
+        "micro": {
+          "precision": 0.8961038961038961,
+          "recall": 0.7811320754716982,
+          "f1": 0.8346774193548387,
+          "tp": 207,
+          "fp": 24,
+          "fn": 58
+        },
+        "macro": {
+          "f1": 0.7292251254278209
+        },
+        "per_type": {
+          "PER": {
+            "precision": 0.9929577464788732,
+            "recall": 0.8867924528301887,
+            "f1": 0.9368770764119602,
+            "tp": 141,
+            "fp": 1,
+            "fn": 18
+          },
+          "ORG": {
+            "precision": 0.46875,
+            "recall": 0.9375,
+            "f1": 0.625,
+            "tp": 15,
+            "fp": 17,
+            "fn": 1
+          },
+          "LOC": {
+            "precision": 0.975609756097561,
+            "recall": 0.5555555555555556,
+            "f1": 0.7079646017699116,
+            "tp": 40,
+            "fp": 1,
+            "fn": 32
+          },
+          "MISC": {
+            "precision": 0.6875,
+            "recall": 0.6111111111111112,
+            "f1": 0.6470588235294118,
+            "tp": 11,
+            "fp": 5,
+            "fn": 7
+          }
+        },
+        "errors": {
+          "type_mismatch": 17,
+          "boundary_mismatch": 2,
+          "spurious": 5,
+          "missing": 40
+        }
+      }
+    },
+    {
+      "checkpoint": "chunk04",
+      "node_end_index": 399,
+      "status": "passed",
+      "used_config": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/configs/runtime.deepseek.all_agents.yaml",
+      "optimized": false,
+      "node_f1": 0.7438016528925621,
+      "cumulative_f1": 0.8469449485783423,
+      "metrics": {
+        "micro": {
+          "precision": 0.7541899441340782,
+          "recall": 0.7336956521739131,
+          "f1": 0.7438016528925621,
+          "tp": 135,
+          "fp": 44,
+          "fn": 49
+        },
+        "macro": {
+          "f1": 0.6409774436090225
+        },
+        "per_type": {
+          "PER": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 73,
+            "fp": 0,
+            "fn": 0
+          },
+          "ORG": {
+            "precision": 0.34615384615384615,
+            "recall": 0.24324324324324326,
+            "f1": 0.2857142857142857,
+            "tp": 9,
+            "fp": 17,
+            "fn": 28
+          },
+          "LOC": {
+            "precision": 0.6811594202898551,
+            "recall": 0.734375,
+            "f1": 0.7067669172932332,
+            "tp": 47,
+            "fp": 22,
+            "fn": 17
+          },
+          "MISC": {
+            "precision": 0.5454545454545454,
+            "recall": 0.6,
+            "f1": 0.5714285714285713,
+            "tp": 6,
+            "fp": 5,
+            "fn": 4
+          }
+        },
+        "errors": {
+          "type_mismatch": 32,
+          "boundary_mismatch": 3,
+          "spurious": 9,
+          "missing": 14
+        }
+      }
+    }
+  ],
   "full_metrics": null,
   "data_path": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/datasets/conll2003/conll2003_test.0_all.jsonl",
   "chunks_dir": "/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/datasets/conll2003/chunks_0_all_100",

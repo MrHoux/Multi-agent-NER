@@ -3,10 +3,10 @@ seed: 42
 llm:
   provider: openai_compatible
   base_url: https://api.deepseek.com/v1
-  api_key: xxxxxxxx
+  api_key: xxxxxxx
   model: deepseek-chat
-  timeout_s: 90
-  max_retries: 5
+  timeout_s: 45
+  max_retries: 2
   retry_backoff_s: 1.5
   temperature: 0.0
 
@@ -23,7 +23,7 @@ pipeline:
   sample_retry_backoff_s: 1.0
   sample_post_error_retries: 2
   sample_post_error_backoff_s: 4.0
-  progress_logging: false
+  progress_logging: true
   progress_agent_trace: false
 
   max_debate_turns: 4
@@ -44,9 +44,9 @@ pipeline:
     fallback_enable_list_context: true
     fallback_enable_schema_profile: true
 
-  allow_expert_span_augmentation: true
+  allow_expert_span_augmentation: false
   allow_re_span_augmentation: false
-  rerun_after_span_augmentation: true
+  rerun_after_span_augmentation: false
   localize_augmented_ner_inference: true
   max_augmented_spans_per_sample: 20
   augmentation_requires_seed_candidate: true
@@ -132,11 +132,11 @@ memory:
   retrieval_min_confidence: 0.82
 
 rag:
-  max_open_questions: 20
+  max_open_questions: 8
   wikipedia:
     enabled: true
     language: en
-    max_requests_per_sample: 6
+    max_requests_per_sample: 3
     max_results_per_request: 2
     summary_chars: 420
     timeout_s: 12

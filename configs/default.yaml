@@ -31,7 +31,7 @@ pipeline:
     fallback_min_token_len: 2
   allow_expert_span_augmentation: false
   allow_re_span_augmentation: false
-  rerun_after_span_augmentation: true
+  rerun_after_span_augmentation: false
   localize_augmented_ner_inference: true
   max_augmented_spans_per_sample: 20
   augmentation_requires_seed_candidate: true

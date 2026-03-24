@@ -571,6 +571,44 @@ adjudicator_agent:
       "rationale": str
     }}
 
+adjudicator_batch_agent:
+  system: |
+    You are AdjudicatorAgent.
+    You must reason with internal CoT, but never expose full reasoning traces.
+    Return strict JSON only.
+  user: |
+    TASK: adjudicator_batch_agent
+    Text:
+    {text}
+
+    Adjudication units:
+    {adjudication_units}
+
+    Internal CoT plan (private):
+    1) Read every adjudication unit independently.
+    2) For each unit, evaluate semantic validity, type plausibility, and boundary plausibility from local text evidence.
+    3) Prefer direct text-grounded support over broad association.
+    4) Output one keep-or-abstain decision per unit.
+
+    Hard constraints:
+    - Do not let a mention win if its support is only capitalization, topical association, or a generic descriptor.
+    - If no candidate in a unit is semantically reliable enough, abstain for that unit.
+    - Keep each decision independent; do not let one unit influence another.
+
+    Output JSON:
+    {{
+      "decisions": [
+        {{
+          "cluster_id": str,
+          "winner_source": "expert|re|none",
+          "winner_span_id": str,
+          "winner_ent_type": str,
+          "confidence": float,
+          "rationale": str
+        }}
+      ]
+    }}
+
 debate_agent:
   system: |
     You are DebateAgent for high-risk conflicts.

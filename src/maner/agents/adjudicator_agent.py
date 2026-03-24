@@ -35,12 +35,52 @@ class AdjudicatorAgent:
         selected_mentions: dict[str, Mention] = {}
         trace: list[dict[str, Any]] = []
         usage = UsageCost()
+        pending_semantic: list[tuple[ConflictCluster, list[Mention], list[Mention]]] = []
 
         for cluster in clusters:
             exp_mentions = [exp_by_sid[sid] for sid in cluster.span_ids if sid in exp_by_sid]
             re_mentions = [re_by_sid[sid] for sid in cluster.span_ids if sid in re_by_sid]
 
             debate_required = enable_debate and ((not l3_only) or cluster.risk_level == "L3")
+            exp_best = max(exp_mentions, key=lambda m: m.confidence) if exp_mentions else None
+            re_best = max(re_mentions, key=lambda m: m.confidence) if re_mentions else None
+
+            if review_all_mentions and not debate_required and singleton_policy == "conservative":
+                if exp_best and not re_best and not _singleton_passes(
+                    text=text,
+                    mention=exp_best,
+                    min_confidence=singleton_min_confidence,
+                    require_entity_like=singleton_require_entity_like,
+                ):
+                    trace.append(
+                        {
+                            "cluster_id": cluster.cluster_id,
+                            "decision": "abstain_expert_only",
+                            "reason": "singleton_guard_failed",
+                            "review_mode": "semantic_batch",
+                        }
+                    )
+                    continue
+                if re_best and not exp_best and not _singleton_passes(
+                    text=text,
+                    mention=re_best,
+                    min_confidence=singleton_min_confidence,
+                    require_entity_like=singleton_require_entity_like,
+                ):
+                    trace.append(
+                        {
+                            "cluster_id": cluster.cluster_id,
+                            "decision": "abstain_re_only",
+                            "reason": "singleton_guard_failed",
+                            "review_mode": "semantic_batch",
+                        }
+                    )
+                    continue
+
+            if review_all_mentions and not debate_required:
+                pending_semantic.append((cluster, exp_mentions, re_mentions))
+                continue
+
             winner, cluster_trace, cluster_usage = self._decide_cluster(
                 text=text,
                 cluster=cluster,
@@ -67,6 +107,23 @@ class AdjudicatorAgent:
             if winner is not None:
                 selected_mentions[winner.span_id] = winner
             trace.append(cluster_trace)
+
+        if pending_semantic:
+            semantic_winners, semantic_traces, semantic_usage = self._batch_semantic_review(
+                text=text,
+                cluster_bundle=pending_semantic,
+            )
+            usage.calls += semantic_usage.calls
+            usage.prompt_tokens = _sum_opt(usage.prompt_tokens, semantic_usage.prompt_tokens)
+            usage.completion_tokens = _sum_opt(
+                usage.completion_tokens, semantic_usage.completion_tokens
+            )
+            usage.total_tokens = _sum_opt(usage.total_tokens, semantic_usage.total_tokens)
+            usage.latency_ms.extend(semantic_usage.latency_ms)
+            for winner in semantic_winners:
+                if winner is not None:
+                    selected_mentions[winner.span_id] = winner
+            trace.extend(semantic_traces)
 
         final_mentions = list(selected_mentions.values())
         return Decision(final_mentions=final_mentions, trace=trace), usage, {"clusters": trace}
@@ -287,6 +344,122 @@ class AdjudicatorAgent:
             "review_mode": "semantic",
         }
         return winner, trace, usage
+
+    def _batch_semantic_review(
+        self,
+        text: str,
+        cluster_bundle: list[tuple[ConflictCluster, list[Mention], list[Mention]]],
+    ) -> tuple[list[Mention | None], list[dict[str, Any]], UsageCost]:
+        adjudication_units = []
+        exp_index: dict[str, dict[str, Mention]] = {}
+        re_index: dict[str, dict[str, Mention]] = {}
+
+        for cluster, exp_mentions, re_mentions in cluster_bundle:
+            adjudication_units.append(
+                {
+                    "cluster_id": cluster.cluster_id,
+                    "conflicts": cluster.conflicts,
+                    "risk_level": cluster.risk_level,
+                    "score": cluster.score,
+                    "expert_mentions": [_mention_payload(m) for m in exp_mentions],
+                    "re_mentions": [_mention_payload(m) for m in re_mentions],
+                }
+            )
+            exp_index[cluster.cluster_id] = {m.span_id: m for m in exp_mentions}
+            re_index[cluster.cluster_id] = {m.span_id: m for m in re_mentions}
+
+        system, user = self.prompt_manager.render(
+            "adjudicator_batch_agent",
+            text=text,
+            adjudication_units=adjudication_units,
+        )
+
+        context = None
+        if self.llm_client.provider == "mock":
+            context = {
+                "mock_result": {
+                    "decisions": [
+                        {
+                            "cluster_id": cluster.cluster_id,
+                            **self._heuristic_semantic_review(
+                                cluster=cluster,
+                                exp_mentions=exp_mentions,
+                                re_mentions=re_mentions,
+                            ),
+                        }
+                        for cluster, exp_mentions, re_mentions in cluster_bundle
+                    ]
+                }
+            }
+
+        llm_result = self.llm_client.chat_json(
+            system_prompt=system,
+            user_prompt=user,
+            task="adjudicator_batch_agent",
+            context=context,
+        )
+
+        payload = llm_result.parsed_json
+        if payload.get("mock") and "result" in payload:
+            payload = payload["result"]
+
+        usage = UsageCost(
+            calls=llm_result.usage.calls,
+            prompt_tokens=llm_result.usage.prompt_tokens,
+            completion_tokens=llm_result.usage.completion_tokens,
+            total_tokens=llm_result.usage.total_tokens,
+            latency_ms=llm_result.usage.latency_ms or [],
+        )
+
+        decisions_by_cluster = {
+            str(item.get("cluster_id", "")): item
+            for item in payload.get("decisions", []) or []
+            if isinstance(item, dict) and str(item.get("cluster_id", "")).strip()
+        }
+
+        winners: list[Mention | None] = []
+        traces: list[dict[str, Any]] = []
+        for cluster, exp_mentions, re_mentions in cluster_bundle:
+            item = decisions_by_cluster.get(cluster.cluster_id, {})
+            winner_source = str(item.get("winner_source", "none"))
+            winner_span_id = str(item.get("winner_span_id", ""))
+            winner_ent_type = str(item.get("winner_ent_type", ""))
+            winner_confidence = float(item.get("confidence", 0.0) or 0.0)
+            rationale = str(item.get("rationale", ""))
+
+            winner: Mention | None = None
+            decision = "abstain"
+            if winner_source == "expert" and winner_span_id in exp_index.get(cluster.cluster_id, {}):
+                base = exp_index[cluster.cluster_id][winner_span_id]
+                winner = replace(
+                    base,
+                    ent_type=winner_ent_type or base.ent_type,
+                    confidence=max(0.0, min(1.0, max(base.confidence, winner_confidence))),
+                    rationale=f"adjudicator:semantic:expert:{cluster.cluster_id}|{rationale}".strip("|"),
+                )
+                decision = "semantic_keep"
+            elif winner_source == "re" and winner_span_id in re_index.get(cluster.cluster_id, {}):
+                base = re_index[cluster.cluster_id][winner_span_id]
+                winner = replace(
+                    base,
+                    ent_type=winner_ent_type or base.ent_type,
+                    confidence=max(0.0, min(1.0, max(base.confidence, winner_confidence))),
+                    rationale=f"adjudicator:semantic:re:{cluster.cluster_id}|{rationale}".strip("|"),
+                )
+                decision = "semantic_keep"
+
+            winners.append(winner)
+            traces.append(
+                {
+                    "cluster_id": cluster.cluster_id,
+                    "decision": decision,
+                    "winner": winner.span_id if winner is not None else None,
+                    "winner_source": winner_source,
+                    "review_mode": "semantic_batch",
+                }
+            )
+
+        return winners, traces, usage
 
     def _heuristic_semantic_review(
         self,

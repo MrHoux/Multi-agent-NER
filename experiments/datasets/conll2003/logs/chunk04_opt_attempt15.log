@@ -1,0 +1,2 @@
+- 2026-03-24 00:29:01: start full-test checkpoint run: start_index=300, max_samples=100, kept_samples=100, checkpoint_size=100, threshold=0.00
+- 2026-03-24 00:29:01: checkpoint chunk01 (up to sample_index 399) active_config=/mnt/c/Users/87569/Documents/multi-agent-CoNLL03/configs/runtime.deepseek.all_agents.yaml
