@@ -1,0 +1,9 @@
+{
+  "entity_types": [
+    {
+      "name": "GENE",
+      "description": "B-GENE, I-GENE"
+    }
+  ],
+  "relation_constraints": []
+}

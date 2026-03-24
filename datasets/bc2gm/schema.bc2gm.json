@@ -1,0 +1,9 @@
+{
+  "entity_types": [
+    {
+      "name": "GENE",
+      "description": "Named mentions of genes or gene products in biomedical text, including gene symbols, gene/protein names, aliases, complexes, and specific named regulatory/product forms when used as molecular entities (for example: promoter/enhancer elements, motifs, domains, operons, reporter constructs, sequence-designated forms tied to a gene/gene product). Exclude non-entity biomedical phrases such as diseases, symptoms, tissues, cell types/lines, generic biological processes, treatment schedules, dosages, and strain/species names unless they are explicitly part of a named gene/gene-product mention. Generic reagents/chemicals should be excluded unless they are used as a specific named gene/gene-product entity in context. Use the minimal exact span covering only the entity mention."
+    }
+  ],
+  "relation_constraints": []
+}

@@ -70,7 +70,7 @@ class Relation:
 @dataclass
 class NERHypothesis:
     mentions: list[Mention]
-    source: Literal["expert", "re", "direct"]
+    source: Literal["expert", "re", "direct", "in_context"]
 
 
 @dataclass

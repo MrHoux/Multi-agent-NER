@@ -1,0 +1,100 @@
+{"id": "test-00700", "text": "SOCCER SHOWCASE-BETTING ON REAL MADRID V BARCELONA.", "gold_mentions": [{"start": 27, "end": 38, "ent_type": "ORG", "text": "REAL MADRID"}, {"start": 41, "end": 50, "ent_type": "ORG", "text": "BARCELONA"}]}
+{"id": "test-00701", "text": "MADRID 1996-12-06", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "MADRID"}]}
+{"id": "test-00702", "text": "William Hill betting on Saturday's", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "PER", "text": "William Hill"}]}
+{"id": "test-00703", "text": "Spanish first division match between Real Madrid and Barcelona:", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "MISC", "text": "Spanish"}, {"start": 37, "end": 48, "ent_type": "ORG", "text": "Real Madrid"}, {"start": 53, "end": 62, "ent_type": "ORG", "text": "Barcelona"}]}
+{"id": "test-00704", "text": "To win: 6-5 Real Madrid; 7-4 Barcelona", "gold_mentions": [{"start": 12, "end": 23, "ent_type": "ORG", "text": "Real Madrid"}, {"start": 29, "end": 38, "ent_type": "ORG", "text": "Barcelona"}]}
+{"id": "test-00705", "text": "Draw: 9-4", "gold_mentions": []}
+{"id": "test-00706", "text": "Correct score:", "gold_mentions": []}
+{"id": "test-00707", "text": "Real Madrid to win Barcelona to win", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Real Madrid"}, {"start": 19, "end": 28, "ent_type": "ORG", "text": "Barcelona"}]}
+{"id": "test-00708", "text": "1-0 13-2 1-0 15-2", "gold_mentions": []}
+{"id": "test-00709", "text": "2-0 9-1 2-0 12-1", "gold_mentions": []}
+{"id": "test-00710", "text": "2-1 8-1 2-1 10-1", "gold_mentions": []}
+{"id": "test-00711", "text": "3-0 20-1 3-0 28-1", "gold_mentions": []}
+{"id": "test-00712", "text": "3-1 16-1 3-1 22-1", "gold_mentions": []}
+{"id": "test-00713", "text": "3-2 25-1 3-2 25-1", "gold_mentions": []}
+{"id": "test-00714", "text": "4-0 50-1 4-0 100-1", "gold_mentions": []}
+{"id": "test-00715", "text": "4-1 40-1 4-1 80-1", "gold_mentions": []}
+{"id": "test-00716", "text": "4-2 50-1 4-2 80-1", "gold_mentions": []}
+{"id": "test-00717", "text": "Draw:", "gold_mentions": []}
+{"id": "test-00718", "text": "0-0 8-1", "gold_mentions": []}
+{"id": "test-00719", "text": "1-1 11-2", "gold_mentions": []}
+{"id": "test-00720", "text": "2-2 14-1", "gold_mentions": []}
+{"id": "test-00721", "text": "3-3 50-1", "gold_mentions": []}
+{"id": "test-00722", "text": "Double result:", "gold_mentions": []}
+{"id": "test-00723", "text": "half-time full-time", "gold_mentions": []}
+{"id": "test-00724", "text": "5-2 Real Madrid Real Madrid", "gold_mentions": [{"start": 4, "end": 15, "ent_type": "ORG", "text": "Real Madrid"}, {"start": 16, "end": 27, "ent_type": "ORG", "text": "Real Madrid"}]}
+{"id": "test-00725", "text": "14-1 Real Madrid Draw", "gold_mentions": [{"start": 5, "end": 16, "ent_type": "ORG", "text": "Real Madrid"}]}
+{"id": "test-00726", "text": "28-1 Real Madrid Barcelona", "gold_mentions": [{"start": 5, "end": 16, "ent_type": "ORG", "text": "Real Madrid"}, {"start": 17, "end": 26, "ent_type": "ORG", "text": "Barcelona"}]}
+{"id": "test-00727", "text": "5-1 Draw Real Madrid", "gold_mentions": [{"start": 9, "end": 20, "ent_type": "ORG", "text": "Real Madrid"}]}
+{"id": "test-00728", "text": "4-1 Draw Draw", "gold_mentions": []}
+{"id": "test-00729", "text": "11-2 Draw Barcelona", "gold_mentions": [{"start": 10, "end": 19, "ent_type": "ORG", "text": "Barcelona"}]}
+{"id": "test-00730", "text": "25-1 Barcelona Real Madrid", "gold_mentions": [{"start": 5, "end": 14, "ent_type": "ORG", "text": "Barcelona"}, {"start": 15, "end": 26, "ent_type": "ORG", "text": "Real Madrid"}]}
+{"id": "test-00731", "text": "14-1 Barcelona Draw", "gold_mentions": [{"start": 5, "end": 14, "ent_type": "ORG", "text": "Barcelona"}]}
+{"id": "test-00732", "text": "4-1 Barcelona Barcelona", "gold_mentions": [{"start": 4, "end": 13, "ent_type": "ORG", "text": "Barcelona"}, {"start": 14, "end": 23, "ent_type": "ORG", "text": "Barcelona"}]}
+{"id": "test-00733", "text": "First goalscorer of match:", "gold_mentions": []}
+{"id": "test-00734", "text": "Real Madrid Barcelona", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Real Madrid"}, {"start": 12, "end": 21, "ent_type": "ORG", "text": "Barcelona"}]}
+{"id": "test-00735", "text": "9-2 Davor Suker 9-2 Ronaldo", "gold_mentions": [{"start": 4, "end": 15, "ent_type": "PER", "text": "Davor Suker"}, {"start": 20, "end": 27, "ent_type": "PER", "text": "Ronaldo"}]}
+{"id": "test-00736", "text": "5-1 Pedrag Mijatovic 7-1 Luis Figo", "gold_mentions": [{"start": 4, "end": 20, "ent_type": "PER", "text": "Pedrag Mijatovic"}, {"start": 25, "end": 34, "ent_type": "PER", "text": "Luis Figo"}]}
+{"id": "test-00737", "text": "7-1 Raul Gonzalez 7-1 Juan Pizzi", "gold_mentions": [{"start": 4, "end": 17, "ent_type": "PER", "text": "Raul Gonzalez"}, {"start": 22, "end": 32, "ent_type": "PER", "text": "Juan Pizzi"}]}
+{"id": "test-00738", "text": "12-1 Fernando Redondo 9-1 Giovanni", "gold_mentions": [{"start": 5, "end": 21, "ent_type": "PER", "text": "Fernando Redondo"}, {"start": 26, "end": 34, "ent_type": "PER", "text": "Giovanni"}]}
+{"id": "test-00739", "text": "14-1 Victor Sanchez 12-1 Guillermo", "gold_mentions": [{"start": 5, "end": 19, "ent_type": "PER", "text": "Victor Sanchez"}, {"start": 25, "end": 34, "ent_type": "PER", "text": "Guillermo"}]}
+{"id": "test-00740", "text": "Amor", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "PER", "text": "Amor"}]}
+{"id": "test-00741", "text": "16-1 Jose Amavisca 14-1 Roger Garcia", "gold_mentions": [{"start": 5, "end": 18, "ent_type": "PER", "text": "Jose Amavisca"}, {"start": 24, "end": 36, "ent_type": "PER", "text": "Roger Garcia"}]}
+{"id": "test-00742", "text": "16-1 Manolo Sanchis 14-1 Gheorghe", "gold_mentions": [{"start": 5, "end": 19, "ent_type": "PER", "text": "Manolo Sanchis"}, {"start": 25, "end": 33, "ent_type": "PER", "text": "Gheorghe"}]}
+{"id": "test-00743", "text": "Popescu", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "PER", "text": "Popescu"}]}
+{"id": "test-00744", "text": "16-1 Roberto Carlos 16-1", "gold_mentions": [{"start": 5, "end": 19, "ent_type": "PER", "text": "Roberto Carlos"}]}
+{"id": "test-00745", "text": "JosepGuardiola", "gold_mentions": [{"start": 0, "end": 14, "ent_type": "PER", "text": "JosepGuardiola"}]}
+{"id": "test-00746", "text": "20-1 Fernando Hierro 20-1 Ivan de", "gold_mentions": [{"start": 5, "end": 20, "ent_type": "PER", "text": "Fernando Hierro"}, {"start": 26, "end": 33, "ent_type": "PER", "text": "Ivan de"}]}
+{"id": "test-00747", "text": "laPena", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "PER", "text": "laPena"}]}
+{"id": "test-00748", "text": "20-1 Luis Milla 25-1 Luis", "gold_mentions": [{"start": 5, "end": 15, "ent_type": "PER", "text": "Luis Milla"}, {"start": 21, "end": 25, "ent_type": "PER", "text": "Luis"}]}
+{"id": "test-00749", "text": "Enrique", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "PER", "text": "Enrique"}]}
+{"id": "test-00750", "text": "33-1 Fernando Sanz 25-1", "gold_mentions": [{"start": 5, "end": 18, "ent_type": "PER", "text": "Fernando Sanz"}]}
+{"id": "test-00751", "text": "AbelardoFernandez", "gold_mentions": [{"start": 0, "end": 17, "ent_type": "PER", "text": "AbelardoFernandez"}]}
+{"id": "test-00752", "text": "40-1 Carlos Secretario 28-1 Sergi Barjuan", "gold_mentions": [{"start": 5, "end": 22, "ent_type": "PER", "text": "Carlos Secretario"}, {"start": 28, "end": 41, "ent_type": "PER", "text": "Sergi Barjuan"}]}
+{"id": "test-00753", "text": "40-1 Rafael Alkorta 33-1 Albert", "gold_mentions": [{"start": 5, "end": 19, "ent_type": "PER", "text": "Rafael Alkorta"}, {"start": 25, "end": 31, "ent_type": "PER", "text": "Albert"}]}
+{"id": "test-00754", "text": "Ferrer", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "PER", "text": "Ferrer"}]}
+{"id": "test-00755", "text": "40-1 Chendo Porlan 33-1 Miguel Nadal", "gold_mentions": [{"start": 5, "end": 18, "ent_type": "PER", "text": "Chendo Porlan"}, {"start": 24, "end": 36, "ent_type": "PER", "text": "Miguel Nadal"}]}
+{"id": "test-00756", "text": "40-1", "gold_mentions": []}
+{"id": "test-00757", "text": "Laurent Blanc", "gold_mentions": [{"start": 0, "end": 13, "ent_type": "PER", "text": "Laurent Blanc"}]}
+{"id": "test-00758", "text": "SOCCER SHOWCASE-FANS FACE BREATHALYSER TESTS, PAPER SAYS.", "gold_mentions": []}
+{"id": "test-00759", "text": "MADRID 1996-12-06", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "MADRID"}]}
+{"id": "test-00760", "text": "Spanish police will breathalyse fans at the gates of the Santiago Bernabeu stadium and ban drunk supporters from Saturday's big Real Madrid-Barcelona game, the Madrid daily El Mundo said on Friday.", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "MISC", "text": "Spanish"}, {"start": 57, "end": 82, "ent_type": "LOC", "text": "Santiago Bernabeu stadium"}, {"start": 128, "end": 149, "ent_type": "MISC", "text": "Real Madrid-Barcelona"}, {"start": 160, "end": 166, "ent_type": "LOC", "text": "Madrid"}, {"start": 173, "end": 181, "ent_type": "ORG", "text": "El Mundo"}]}
+{"id": "test-00761", "text": "Although there are no known precedents in the country, the action is envisaged in Spanish legislation governing sports events.", "gold_mentions": [{"start": 82, "end": 89, "ent_type": "MISC", "text": "Spanish"}]}
+{"id": "test-00762", "text": "Tickets for the game stipulate that supporters will be barred if they are \"under the effects of alcohol \".", "gold_mentions": []}
+{"id": "test-00763", "text": "SOCCER - SPANISH FIRST DIVISION STANDINGS.", "gold_mentions": [{"start": 9, "end": 16, "ent_type": "MISC", "text": "SPANISH"}]}
+{"id": "test-00764", "text": "MADRID 1996-12-06", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "MADRID"}]}
+{"id": "test-00765", "text": "Standings in the Spanish first", "gold_mentions": [{"start": 17, "end": 24, "ent_type": "MISC", "text": "Spanish"}]}
+{"id": "test-00766", "text": "division ahead of this weekend's games.", "gold_mentions": []}
+{"id": "test-00767", "text": "(tabulate under games played, won, drawn, lost, goals for,", "gold_mentions": []}
+{"id": "test-00768", "text": "against, points):", "gold_mentions": []}
+{"id": "test-00769", "text": "Real Madrid 15 10 5 0 31 12 35", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Real Madrid"}]}
+{"id": "test-00770", "text": "Barcelona 15 10 4 1 46 19 34", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Barcelona"}]}
+{"id": "test-00771", "text": "Deportivo Coruna 15 9 6 0 23 7 33", "gold_mentions": [{"start": 0, "end": 16, "ent_type": "ORG", "text": "Deportivo Coruna"}]}
+{"id": "test-00772", "text": "Real Betis 15 8 5 2 28 13 29", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Real Betis"}]}
+{"id": "test-00773", "text": "Atletico Madrid 15 8 3 4 26 17 27", "gold_mentions": [{"start": 0, "end": 15, "ent_type": "ORG", "text": "Atletico Madrid"}]}
+{"id": "test-00774", "text": "Athletic Bilbao 15 7 4 4 28 22 25", "gold_mentions": [{"start": 0, "end": 15, "ent_type": "ORG", "text": "Athletic Bilbao"}]}
+{"id": "test-00775", "text": "Real Sociedad 15 7 3 5 20 18 24", "gold_mentions": [{"start": 0, "end": 13, "ent_type": "ORG", "text": "Real Sociedad"}]}
+{"id": "test-00776", "text": "Valladolid 15 7 3 5 19 18 24", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Valladolid"}]}
+{"id": "test-00777", "text": "Racing Santander 15 5 7 3 15 15 22", "gold_mentions": [{"start": 0, "end": 16, "ent_type": "ORG", "text": "Racing Santander"}]}
+{"id": "test-00778", "text": "Rayo Vallecano 15 5 5 5 21 19 20", "gold_mentions": [{"start": 0, "end": 14, "ent_type": "ORG", "text": "Rayo Vallecano"}]}
+{"id": "test-00779", "text": "Valencia 15 6 2 7 23 22 20", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Valencia"}]}
+{"id": "test-00780", "text": "Celta Vigo 15 5 5 5 17 17 20", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Celta Vigo"}]}
+{"id": "test-00781", "text": "Tenerife 15 5 4 6 23 17 19", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Tenerife"}]}
+{"id": "test-00782", "text": "Espanyol 15 4 4 7 17 20 16", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Espanyol"}]}
+{"id": "test-00783", "text": "Oviedo 15 4 4 7 17 21 16", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "Oviedo"}]}
+{"id": "test-00784", "text": "Sporting Gijon 15 4 4 7 15 22 16", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Sporting"}]}
+{"id": "test-00785", "text": "Logrones 15 4 3 8 11 33 15", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Logrones"}]}
+{"id": "test-00786", "text": "Zaragoza 15 2 8 5 18 23 14", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Zaragoza"}]}
+{"id": "test-00787", "text": "Sevilla 15 4 2 9 13 20 14", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Sevilla"}]}
+{"id": "test-00788", "text": "Compostela 15 3 4 8 13 28 13", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Compostela"}]}
+{"id": "test-00789", "text": "Hercules 15 2 2 11 11 29 8", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Hercules"}]}
+{"id": "test-00790", "text": "Extremadura 15 1 3 11 8 30 6", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Extremadura"}]}
+{"id": "test-00791", "text": "SOCCER - SPAIN PICK UNCAPPED ARMANDO FOR WORLD CUP CLASH.", "gold_mentions": [{"start": 9, "end": 14, "ent_type": "LOC", "text": "SPAIN"}, {"start": 29, "end": 36, "ent_type": "PER", "text": "ARMANDO"}, {"start": 41, "end": 50, "ent_type": "MISC", "text": "WORLD CUP"}]}
+{"id": "test-00792", "text": "MADRID 1996-12-06", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "MADRID"}]}
+{"id": "test-00793", "text": "Spain coach Javier Clemente has added uncapped Deportivo Coruna midfielder Armando Alvarez to his squad for the World Cup qualifier against Yugoslavia on December 14.", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "LOC", "text": "Spain"}, {"start": 12, "end": 27, "ent_type": "PER", "text": "Javier Clemente"}, {"start": 47, "end": 63, "ent_type": "ORG", "text": "Deportivo Coruna"}, {"start": 75, "end": 90, "ent_type": "PER", "text": "Armando Alvarez"}, {"start": 112, "end": 121, "ent_type": "MISC", "text": "World Cup"}, {"start": 140, "end": 150, "ent_type": "LOC", "text": "Yugoslavia"}]}
+{"id": "test-00794", "text": "\"I don't believe it ...", "gold_mentions": []}
+{"id": "test-00795", "text": "I thought it was a joke, \"said Armando who replaces injured Atletico Madrid playmaker Jose Luis Caminero.", "gold_mentions": [{"start": 31, "end": 38, "ent_type": "PER", "text": "Armando"}, {"start": 60, "end": 75, "ent_type": "ORG", "text": "Atletico Madrid"}, {"start": 86, "end": 104, "ent_type": "PER", "text": "Jose Luis Caminero"}]}
+{"id": "test-00796", "text": "SOCCER - FIFA BOSS HAVELANGE STANDS BY WEAH.", "gold_mentions": [{"start": 9, "end": 13, "ent_type": "ORG", "text": "FIFA"}, {"start": 19, "end": 28, "ent_type": "PER", "text": "HAVELANGE"}, {"start": 39, "end": 43, "ent_type": "PER", "text": "WEAH"}]}
+{"id": "test-00797", "text": "ROME 1996-12-06", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "LOC", "text": "ROME"}]}
+{"id": "test-00798", "text": "FIFA chairman Joao Havelange said on Friday he would personally present AC Milan George Weah with world soccer's fair play award despite the striker's attack on Porto captain Jorge Costa.", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "ORG", "text": "FIFA"}, {"start": 14, "end": 28, "ent_type": "PER", "text": "Joao Havelange"}, {"start": 72, "end": 80, "ent_type": "ORG", "text": "AC Milan"}, {"start": 81, "end": 92, "ent_type": "PER", "text": "George Weah"}, {"start": 161, "end": 166, "ent_type": "ORG", "text": "Porto"}, {"start": 175, "end": 186, "ent_type": "PER", "text": "Jorge Costa"}]}
+{"id": "test-00799", "text": "In an interview with the Italian newspaper Gazzetta dello Sport, he was quoted as saying Weah had been provoked into the assault which left Costa with a broken nose.", "gold_mentions": [{"start": 25, "end": 32, "ent_type": "MISC", "text": "Italian"}, {"start": 43, "end": 63, "ent_type": "ORG", "text": "Gazzetta dello Sport"}, {"start": 89, "end": 93, "ent_type": "PER", "text": "Weah"}, {"start": 140, "end": 145, "ent_type": "PER", "text": "Costa"}]}

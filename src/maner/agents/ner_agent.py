@@ -124,6 +124,59 @@ class NERAgent:
         trace = {"agent": "ner_expert", "raw": llm_result.content, "parsed": payload}
         return hyp, cost, trace
 
+    def run_with_context(
+        self,
+        text: str,
+        candidate_set: CandidateSet,
+        schema: SchemaDefinition,
+        constraints: ExpertConstraints,
+    ) -> tuple[NERHypothesis, UsageCost, dict[str, Any]]:
+        system, user = self.prompt_manager.render(
+            "ner_in_context_agent",
+            text=text,
+            candidate_spans=self._candidate_payload(candidate_set),
+            in_context_constraints=self._constraints_payload(constraints),
+            entity_types=schema.to_prompt_block(),
+        )
+
+        context = None
+        if self.llm_client.provider == "mock":
+            context = {
+                "mock_result": self._heuristic_from_expert(
+                    text=text,
+                    candidate_set=candidate_set,
+                    schema=schema,
+                    constraints=constraints,
+                )
+            }
+
+        llm_result = self.llm_client.chat_json(
+            system_prompt=system,
+            user_prompt=user,
+            task="ner_in_context_agent",
+            context=context,
+        )
+        payload = llm_result.parsed_json
+        if payload.get("mock") and "result" in payload:
+            payload = payload["result"]
+
+        hyp = self._parse_mentions(
+            payload=payload,
+            text=text,
+            candidate_set=candidate_set,
+            valid_types=set(schema.entity_type_names),
+            source="in_context",
+        )
+        cost = UsageCost(
+            calls=llm_result.usage.calls,
+            prompt_tokens=llm_result.usage.prompt_tokens,
+            completion_tokens=llm_result.usage.completion_tokens,
+            total_tokens=llm_result.usage.total_tokens,
+            latency_ms=llm_result.usage.latency_ms or [],
+        )
+        trace = {"agent": "ner_in_context", "raw": llm_result.content, "parsed": payload}
+        return hyp, cost, trace
+
     def run_with_re(
         self,
         text: str,

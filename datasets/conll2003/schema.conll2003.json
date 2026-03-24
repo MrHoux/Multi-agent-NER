@@ -1,0 +1,22 @@
+{
+  "dataset_name": "conll2003",
+  "entity_types": [
+    {
+      "name": "PER",
+      "description": "A named individual person, including full names and personal name mentions."
+    },
+    {
+      "name": "ORG",
+      "description": "A named organization, institution, company, team, government body, or other formal collective entity."
+    },
+    {
+      "name": "LOC",
+      "description": "A named location such as a country, city, region, or other geographic place."
+    },
+    {
+      "name": "MISC",
+      "description": "A named entity that does not fit PER, ORG, or LOC, such as nationalities, events, works, products, or other proper named categories."
+    }
+  ],
+  "relation_constraints": []
+}

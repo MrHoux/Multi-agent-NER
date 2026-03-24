@@ -1,0 +1,100 @@
+{"id": "test-01700", "text": "In sentencing Darrel Voeks, 38, to a 10-year prison term on Thursday, Outagmie County Circuit Court Judge Dennis Luebke said he was \"a thief by habit. \"", "gold_mentions": [{"start": 14, "end": 26, "ent_type": "PER", "text": "Darrel Voeks"}, {"start": 70, "end": 85, "ent_type": "LOC", "text": "Outagmie County"}, {"start": 106, "end": 119, "ent_type": "PER", "text": "Dennis Luebke"}]}
+{"id": "test-01701", "text": "\"You are self-indulgent.", "gold_mentions": []}
+{"id": "test-01702", "text": "You are narcissitic, \"Luebke said at the sentencing, adding Voeks should pay restitution of more than $100,000 to the farming family who had hired him.", "gold_mentions": [{"start": 60, "end": 65, "ent_type": "PER", "text": "Voeks"}]}
+{"id": "test-01703", "text": "Voeks, who was already on probation for prior pig thefts, pleaded that he was trying to pay bills for his ex-wife and children.", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "PER", "text": "Voeks"}]}
+{"id": "test-01704", "text": "But the court heard that receipts showed much of the money went to dancers at strip clubs where he was known as a big tipper.", "gold_mentions": []}
+{"id": "test-01705", "text": "One stripper said Voeks offered to give her $3,000 for breast implant surgery.", "gold_mentions": [{"start": 18, "end": 23, "ent_type": "PER", "text": "Voeks"}]}
+{"id": "test-01706", "text": "Canadian grain statistics weekly.", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "MISC", "text": "Canadian"}]}
+{"id": "test-01707", "text": "CHICAGO, Dec 6 (Reuter) Statistics for the week ending December 1 in 000's tonnes.", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "LOC", "text": "CHICAGO"}, {"start": 16, "end": 22, "ent_type": "ORG", "text": "Reuter"}]}
+{"id": "test-01708", "text": "- Canadian Grain Commission", "gold_mentions": [{"start": 2, "end": 27, "ent_type": "ORG", "text": "Canadian Grain Commission"}]}
+{"id": "test-01709", "text": "Visible Supplies Farmers Deliveries", "gold_mentions": []}
+{"id": "test-01710", "text": "Curr Wk Yr Ago Curr Wk Yr to Date Yr Ago", "gold_mentions": []}
+{"id": "test-01711", "text": "Wheat 4320.2 3909.3 288.5 6278.9 5580.0", "gold_mentions": []}
+{"id": "test-01712", "text": "Durum 1168.9 1225.0 44.3 965.3 1069.6", "gold_mentions": []}
+{"id": "test-01713", "text": "Oats 286.5 284.6 31.9 937.3 581.2", "gold_mentions": []}
+{"id": "test-01714", "text": "Barley 1074.0 1104.8 178.0 2531.4 1897.1", "gold_mentions": []}
+{"id": "test-01715", "text": "Rye 44.6 86.3 2.3 108.2 119.2", "gold_mentions": []}
+{"id": "test-01716", "text": "Flax 165.2 181.9 14.9 231.4 332.9", "gold_mentions": []}
+{"id": "test-01717", "text": "Canola 646.6 769.4 60.5 1902.0 2147.6", "gold_mentions": []}
+{"id": "test-01718", "text": "Corn 79.6 163.5 9.4 95.7 252.0", "gold_mentions": []}
+{"id": "test-01719", "text": "Total 7785.8 7724.8 629.8 13050.2 11979.6", "gold_mentions": []}
+{"id": "test-01720", "text": "Exports Domestic Disappearance", "gold_mentions": []}
+{"id": "test-01721", "text": "Curr Wk YTD Yr Ago Curr Wk YTD Yr Ago", "gold_mentions": []}
+{"id": "test-01722", "text": "Wheat 387.4 4677.8 4553.6 55.2 1039.7 846.1", "gold_mentions": []}
+{"id": "test-01723", "text": "Durum 129.0 1515.9 1220.6 4.6 75.8 73.3", "gold_mentions": []}
+{"id": "test-01724", "text": "Oats 40.0 561.0 391.9 4.8 149.6 115.0", "gold_mentions": []}
+{"id": "test-01725", "text": "Barley 110.8 1203.4 506.0 48.2 941.0 786.6", "gold_mentions": []}
+{"id": "test-01726", "text": "Rye 4.1 60.7 57.9 3.0 10.7 18.9", "gold_mentions": []}
+{"id": "test-01727", "text": "Flax 7.2 154.1 235.7 1.1 22.2 15.7", "gold_mentions": []}
+{"id": "test-01728", "text": "Canola 47.1 988.1 1135.5 46.7 894.9 822.0", "gold_mentions": []}
+{"id": "test-01729", "text": "Corn 4.4 15.1 87.0 0.6 22.1 11.1", "gold_mentions": []}
+{"id": "test-01730", "text": "Total 730.0 9176.1 8188.2 164.2 3156.0 2686.7", "gold_mentions": []}
+{"id": "test-01731", "text": "In addition, Statistics Canada indicated the following exports to the U.S. between August and September 1996, in tonnes:", "gold_mentions": [{"start": 13, "end": 30, "ent_type": "ORG", "text": "Statistics Canada"}, {"start": 70, "end": 74, "ent_type": "LOC", "text": "U.S."}]}
+{"id": "test-01732", "text": "Oats Rye Flaxseed Canola Corn", "gold_mentions": []}
+{"id": "test-01733", "text": "Exports 29,200 17,200 7,700 100 59,400", "gold_mentions": []}
+{"id": "test-01734", "text": "Year Ago 47,000 24,300 8,700 8,200 12,200", "gold_mentions": []}
+{"id": "test-01735", "text": "(Chicago newsdesk 312 408 8720)", "gold_mentions": [{"start": 1, "end": 8, "ent_type": "LOC", "text": "Chicago"}]}
+{"id": "test-01736", "text": "NYMEX natgas ends sharply lower on weather outlook.", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "ORG", "text": "NYMEX"}]}
+{"id": "test-01737", "text": "NEW YORK 1996-12-06", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "NEW YORK"}]}
+{"id": "test-01738", "text": "NYMEX Henry Hub natgas futures settled significantly lower Friday, pressured early by profit taking and driven even lower late by the National Weather Service's bearish six to 10 day forecast, sources said.", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "ORG", "text": "NYMEX"}, {"start": 6, "end": 15, "ent_type": "LOC", "text": "Henry Hub"}, {"start": 134, "end": 158, "ent_type": "ORG", "text": "National Weather Service"}]}
+{"id": "test-01739", "text": "January ended 29.7 cents lower at $3.487 per million British thermal units after dipping to a low of $3.46.", "gold_mentions": [{"start": 53, "end": 60, "ent_type": "MISC", "text": "British"}]}
+{"id": "test-01740", "text": "Feb settled down 22 cents at $3.186.", "gold_mentions": []}
+{"id": "test-01741", "text": "Most others also were down.", "gold_mentions": []}
+{"id": "test-01742", "text": "\"Weather forecasts have been sketchy.", "gold_mentions": []}
+{"id": "test-01743", "text": "Now the National Weather Service is calling for above-normal temperatures in more than half of the U.S., \"one futures trader said.", "gold_mentions": [{"start": 8, "end": 32, "ent_type": "ORG", "text": "National Weather Service"}, {"start": 99, "end": 103, "ent_type": "LOC", "text": "U.S."}]}
+{"id": "test-01744", "text": "In its forecast, the NWS said it expects above-normal temperatures \"over the lower 48 states \"from December 12 through December 16.", "gold_mentions": [{"start": 21, "end": 24, "ent_type": "ORG", "text": "NWS"}]}
+{"id": "test-01745", "text": "With more room to the downside anticipated early next week, traders said support in January was at $3.47, then $3.35.", "gold_mentions": []}
+{"id": "test-01746", "text": "The next backstops were seen at $3.11 and $3.04, the low set on November 21.", "gold_mentions": []}
+{"id": "test-01747", "text": "Resistance was pegged at the new contract high of $3.80.", "gold_mentions": []}
+{"id": "test-01748", "text": "In the cash market, Gulf Coast prices were around $3.60 shortly before nomination deadlines.", "gold_mentions": [{"start": 20, "end": 30, "ent_type": "LOC", "text": "Gulf Coast"}]}
+{"id": "test-01749", "text": "Midcontinent prices were similarly lower in the $3.40s. New York city gate gas slipped into the $4.40s, down almost 15 cents.", "gold_mentions": [{"start": 56, "end": 64, "ent_type": "LOC", "text": "New York"}]}
+{"id": "test-01750", "text": "NYMEX said an estimated 35,662 Hub contracts traded, down from Thursday's revised tally of 43,955.", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "ORG", "text": "NYMEX"}]}
+{"id": "test-01751", "text": "NYMEX Alberta natgas remained untraded, with January settling at $1.65, off 10 cents from Thursday.", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "ORG", "text": "NYMEX"}, {"start": 6, "end": 13, "ent_type": "LOC", "text": "Alberta"}]}
+{"id": "test-01752", "text": "Physical prices for the weekend at the AECO storage hub were also down about 10 cents in the C$ 1.92-1.97 per gigajoule, or $1.52-1.56 per mmBtu range, pressured by unseasonably mild weather in western Canada.", "gold_mentions": [{"start": 39, "end": 43, "ent_type": "ORG", "text": "AECO"}, {"start": 93, "end": 95, "ent_type": "MISC", "text": "C$"}, {"start": 202, "end": 208, "ent_type": "LOC", "text": "Canada"}]}
+{"id": "test-01753", "text": "NYMEX Permian natgas, also untraded, ended 10 cents lower at $2.90.", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "ORG", "text": "NYMEX"}, {"start": 6, "end": 13, "ent_type": "MISC", "text": "Permian"}]}
+{"id": "test-01754", "text": "In congruence with futures, Permian cash prices for the weekend fell more than 10 cents to the high - $3.40s.", "gold_mentions": [{"start": 28, "end": 35, "ent_type": "MISC", "text": "Permian"}]}
+{"id": "test-01755", "text": "On the KCBT, January finished 26.5 cents lower at $3.35 after dipping to a low of $3.33 earlier in the session.", "gold_mentions": [{"start": 7, "end": 11, "ent_type": "ORG", "text": "KCBT"}]}
+{"id": "test-01756", "text": "February was down 22 cents at the close, while other deferreds were 4.5 to nine cents lower.", "gold_mentions": []}
+{"id": "test-01757", "text": "The East /West spread narrowed by 3.2 cents to 13.7 cents (NYMEX premium).", "gold_mentions": [{"start": 59, "end": 64, "ent_type": "ORG", "text": "NYMEX"}]}
+{"id": "test-01758", "text": "Physical prices at Waha for the weekend lost more than 15 cents to the low-to-mid $3.50s as milder weather moved into the Southwest.", "gold_mentions": [{"start": 19, "end": 23, "ent_type": "LOC", "text": "Waha"}]}
+{"id": "test-01759", "text": "-- H McCulloch, New York Power Desk +212-859-1628", "gold_mentions": [{"start": 3, "end": 14, "ent_type": "PER", "text": "H McCulloch"}, {"start": 16, "end": 35, "ent_type": "ORG", "text": "New York Power Desk"}]}
+{"id": "test-01760", "text": "U.S. barges lightly quoted on call session.", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "LOC", "text": "U.S."}]}
+{"id": "test-01761", "text": "ST. LOUIS 1996-12-06", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "LOC", "text": "ST. LOUIS"}]}
+{"id": "test-01762", "text": "U.S. barge rates were lightly quoted Friday on the St. Louis Merchants Exchange call session.", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "LOC", "text": "U.S."}, {"start": 51, "end": 60, "ent_type": "LOC", "text": "St. Louis"}]}
+{"id": "test-01763", "text": "No barges traded versus no trades Thursday.", "gold_mentions": []}
+{"id": "test-01764", "text": "- Two barges next week Illinois bid at a steady 130 percent of tariff, offered at 135 percent.", "gold_mentions": [{"start": 23, "end": 31, "ent_type": "LOC", "text": "Illinois"}]}
+{"id": "test-01765", "text": "- One barge, week of December 15, lower Ohio bid 2-1/2 points higher at 105 percent, no offer.", "gold_mentions": [{"start": 40, "end": 44, "ent_type": "LOC", "text": "Ohio"}]}
+{"id": "test-01766", "text": "Two barges, week of January 5, Illinois, offered five points lower at 195 percent, bid at 150 percent.", "gold_mentions": [{"start": 31, "end": 39, "ent_type": "LOC", "text": "Illinois"}]}
+{"id": "test-01767", "text": "- Five barges, 30-day open, mid-Mississippi (McGregor and south) bid at 160 percent, offered at 170 percent, no comparisons.", "gold_mentions": [{"start": 28, "end": 43, "ent_type": "MISC", "text": "mid-Mississippi"}, {"start": 45, "end": 53, "ent_type": "PER", "text": "McGregor"}]}
+{"id": "test-01768", "text": "- 36 barges, two each week May-August, Illinois, offered at 130 percent of tariff, no bid or comparison.", "gold_mentions": [{"start": 39, "end": 47, "ent_type": "LOC", "text": "Illinois"}]}
+{"id": "test-01769", "text": "- 36 barges, two each week May-August, mid-Mississippi offered at a steady 135 percent, bid at 120 percent (basis one each week).", "gold_mentions": [{"start": 39, "end": 54, "ent_type": "MISC", "text": "mid-Mississippi"}]}
+{"id": "test-01770", "text": "-- Chicago newsdesk 312-408 8720", "gold_mentions": [{"start": 3, "end": 10, "ent_type": "LOC", "text": "Chicago"}]}
+{"id": "test-01771", "text": "CBOT grain /oilseed receipts and shipments.", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "ORG", "text": "CBOT"}]}
+{"id": "test-01772", "text": "CHICAGO 1996-12-06", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "LOC", "text": "CHICAGO"}]}
+{"id": "test-01773", "text": "Grain and soybean receipts and shipments, in bushels, at delivery locations for the previous trading day, according to the Chicago Board of Trade -", "gold_mentions": [{"start": 123, "end": 145, "ent_type": "ORG", "text": "Chicago Board of Trade"}]}
+{"id": "test-01774", "text": "Receipts Shipments", "gold_mentions": []}
+{"id": "test-01775", "text": "Wheat", "gold_mentions": []}
+{"id": "test-01776", "text": "Chicago 0 0", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "LOC", "text": "Chicago"}]}
+{"id": "test-01777", "text": "St. Louis 21,346 0", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "LOC", "text": "St. Louis"}]}
+{"id": "test-01778", "text": "Toledo 61,514 0", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "Toledo"}]}
+{"id": "test-01779", "text": "Corn", "gold_mentions": []}
+{"id": "test-01780", "text": "Chicago 78,056 0", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "LOC", "text": "Chicago"}]}
+{"id": "test-01781", "text": "St. Louis 217,092 75,810", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "LOC", "text": "St. Louis"}]}
+{"id": "test-01782", "text": "Toledo 285,505 561,287", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "Toledo"}]}
+{"id": "test-01783", "text": "Oats", "gold_mentions": []}
+{"id": "test-01784", "text": "Chicago 0 0", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "LOC", "text": "Chicago"}]}
+{"id": "test-01785", "text": "Minneapolis 306,364 153,231", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "LOC", "text": "Minneapolis"}]}
+{"id": "test-01786", "text": "Soybeans", "gold_mentions": []}
+{"id": "test-01787", "text": "Chicago 8,674 484,018", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "LOC", "text": "Chicago"}]}
+{"id": "test-01788", "text": "St. Louis 253,821 223,172", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "LOC", "text": "St. Louis"}]}
+{"id": "test-01789", "text": "Toledo 64,334 160,476", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "Toledo"}]}
+{"id": "test-01790", "text": "((Chicago Newsdesk 312-408-8720))", "gold_mentions": [{"start": 2, "end": 18, "ent_type": "ORG", "text": "Chicago Newsdesk"}]}
+{"id": "test-01791", "text": "Clinton to have more news conferences in 2nd term.", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "PER", "text": "Clinton"}]}
+{"id": "test-01792", "text": "WASHINGTON 1996-12-06", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "LOC", "text": "WASHINGTON"}]}
+{"id": "test-01793", "text": "President Clinton aims to hold more news conferences in his second term and will have one Dec. 13, the White House said Friday.", "gold_mentions": [{"start": 10, "end": 17, "ent_type": "PER", "text": "Clinton"}, {"start": 103, "end": 114, "ent_type": "LOC", "text": "White House"}]}
+{"id": "test-01794", "text": "The president had only two formal, full-blown news conferences last year, one in January and one after he won re-election in November, although he had various other limited sessions with the press.", "gold_mentions": []}
+{"id": "test-01795", "text": "White House spokesman Mike McCurry said Clinton \"plans to have regular news conferences \"during his second term.", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "LOC", "text": "White House"}, {"start": 22, "end": 34, "ent_type": "PER", "text": "Mike McCurry"}, {"start": 40, "end": 47, "ent_type": "PER", "text": "Clinton"}]}
+{"id": "test-01796", "text": "But when asked how frequent these would be, he was evasive, saying, \"periodic, occasional. \"", "gold_mentions": []}
+{"id": "test-01797", "text": "\"He enjoys the give and take \"with reporters, the spokesman added.", "gold_mentions": []}
+{"id": "test-01798", "text": "Action Performance to acquire firms.", "gold_mentions": []}
+{"id": "test-01799", "text": "TEMPE, Ariz.", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "LOC", "text": "TEMPE"}, {"start": 7, "end": 11, "ent_type": "LOC", "text": "Ariz"}]}

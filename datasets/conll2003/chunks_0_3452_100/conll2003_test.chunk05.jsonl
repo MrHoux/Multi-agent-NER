@@ -1,0 +1,100 @@
+{"id": "test-00400", "text": "ST LOUIS AT COLORADO", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "ST LOUIS"}, {"start": 12, "end": 20, "ent_type": "LOC", "text": "COLORADO"}]}
+{"id": "test-00401", "text": "OTTAWA AT EDMONTON", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "OTTAWA"}, {"start": 10, "end": 18, "ent_type": "LOC", "text": "EDMONTON"}]}
+{"id": "test-00402", "text": "NHL ICE HOCKEY - THURSDAY'S RESULTS.", "gold_mentions": [{"start": 0, "end": 3, "ent_type": "ORG", "text": "NHL"}]}
+{"id": "test-00403", "text": "[CORRECTED 08:40 GMT]", "gold_mentions": [{"start": 17, "end": 20, "ent_type": "MISC", "text": "GMT"}]}
+{"id": "test-00404", "text": "NEW YORK 1996-12-06", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "NEW YORK"}]}
+{"id": "test-00405", "text": "(Corrects headline from NBA to NHL and corrects team name in second result from La Clippers to Ny Islanders.", "gold_mentions": [{"start": 24, "end": 27, "ent_type": "ORG", "text": "NBA"}, {"start": 31, "end": 34, "ent_type": "ORG", "text": "NHL"}, {"start": 80, "end": 91, "ent_type": "ORG", "text": "La Clippers"}, {"start": 95, "end": 107, "ent_type": "ORG", "text": "Ny Islanders"}]}
+{"id": "test-00406", "text": ")", "gold_mentions": []}
+{"id": "test-00407", "text": "Results of National Hockey", "gold_mentions": [{"start": 11, "end": 26, "ent_type": "ORG", "text": "National Hockey"}]}
+{"id": "test-00408", "text": "League games on Thursday (home team in CAPS):", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "League"}]}
+{"id": "test-00409", "text": "Hartford 4 BOSTON 2", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Hartford"}, {"start": 11, "end": 17, "ent_type": "ORG", "text": "BOSTON"}]}
+{"id": "test-00410", "text": "FLORIDA 4 Ny Islanders 2", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "FLORIDA"}, {"start": 10, "end": 22, "ent_type": "ORG", "text": "Ny Islanders"}]}
+{"id": "test-00411", "text": "NEW JERSEY 2 Calgary 1", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "NEW JERSEY"}, {"start": 13, "end": 20, "ent_type": "ORG", "text": "Calgary"}]}
+{"id": "test-00412", "text": "Phoenix 3 ST LOUIS 0", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Phoenix"}, {"start": 10, "end": 18, "ent_type": "ORG", "text": "ST LOUIS"}]}
+{"id": "test-00413", "text": "Tampa Bay 2 LOS ANGELES 1", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Tampa Bay"}, {"start": 12, "end": 23, "ent_type": "ORG", "text": "LOS ANGELES"}]}
+{"id": "test-00414", "text": "NFL AMERICAN FOOTBALL-COLTS CLOBBER EAGLES TO STAY IN PLAYOFF HUNT.", "gold_mentions": [{"start": 0, "end": 3, "ent_type": "ORG", "text": "NFL"}, {"start": 36, "end": 42, "ent_type": "ORG", "text": "EAGLES"}]}
+{"id": "test-00415", "text": "INDIANAPOLIS 1996-12-06", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "LOC", "text": "INDIANAPOLIS"}]}
+{"id": "test-00416", "text": "The injury-plagued Indianapolis Colts lost another quarterback on Thursday but last year's AFC finalists rallied together to shoot down the Philadelphia Eagles 37-10 in a showdown of playoff contenders.", "gold_mentions": [{"start": 19, "end": 37, "ent_type": "ORG", "text": "Indianapolis Colts"}, {"start": 140, "end": 159, "ent_type": "ORG", "text": "Philadelphia Eagles"}]}
+{"id": "test-00417", "text": "Marshall Faulk rushed for 101 yards and two touchdowns and Jason Belser returned an interception 44 yards for a score as the Colts improved to 8-6, the same mark as the Eagles, who lost for the fourth time in five games.", "gold_mentions": [{"start": 0, "end": 14, "ent_type": "PER", "text": "Marshall Faulk"}, {"start": 59, "end": 71, "ent_type": "PER", "text": "Jason Belser"}, {"start": 125, "end": 130, "ent_type": "ORG", "text": "Colts"}, {"start": 169, "end": 175, "ent_type": "ORG", "text": "Eagles"}]}
+{"id": "test-00418", "text": "Paul Justin, starting for the sidelined Jim Harbaugh, was 14-of-23 for 144 yards and a touchdown for the the Colts, who played their last home game of the season.", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "PER", "text": "Paul Justin"}, {"start": 40, "end": 52, "ent_type": "PER", "text": "Jim Harbaugh"}, {"start": 109, "end": 114, "ent_type": "ORG", "text": "Colts"}]}
+{"id": "test-00419", "text": "Indianapolis closes with games at Kansas City and Cincinnati.", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "LOC", "text": "Indianapolis"}, {"start": 34, "end": 45, "ent_type": "LOC", "text": "Kansas City"}, {"start": 50, "end": 60, "ent_type": "LOC", "text": "Cincinnati"}]}
+{"id": "test-00420", "text": "The Eagles were held without a touchdown until the final five seconds.", "gold_mentions": [{"start": 4, "end": 10, "ent_type": "ORG", "text": "Eagles"}]}
+{"id": "test-00421", "text": "Philadelphia, which fell from an NFC East tie with the Dallas Cowboys and Washington Redskins, go on the road against the New York Jets and then entertain Arizona.", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "LOC", "text": "Philadelphia"}, {"start": 55, "end": 69, "ent_type": "ORG", "text": "Dallas Cowboys"}, {"start": 74, "end": 93, "ent_type": "ORG", "text": "Washington Redskins"}, {"start": 122, "end": 135, "ent_type": "ORG", "text": "New York Jets"}, {"start": 155, "end": 162, "ent_type": "ORG", "text": "Arizona"}]}
+{"id": "test-00422", "text": "The loss by Philadelphia allowed the idle Green Bay Packers (10-3) to clinch the first NFC playoff berth.", "gold_mentions": [{"start": 12, "end": 24, "ent_type": "ORG", "text": "Philadelphia"}, {"start": 42, "end": 59, "ent_type": "ORG", "text": "Green Bay Packers"}]}
+{"id": "test-00423", "text": "The Colts won despite the absence of injured starting defensive tackle Tony Siragusa, cornerback Ray Buchanan and linebacker Quentin Coryatt.", "gold_mentions": [{"start": 4, "end": 9, "ent_type": "ORG", "text": "Colts"}, {"start": 71, "end": 84, "ent_type": "PER", "text": "Tony Siragusa"}, {"start": 97, "end": 109, "ent_type": "PER", "text": "Ray Buchanan"}, {"start": 125, "end": 140, "ent_type": "PER", "text": "Quentin Coryatt"}]}
+{"id": "test-00424", "text": "Faulk carried 16 times, including a 13-yard TD run in the first quarter and a seven-yard score early in the final period.", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "PER", "text": "Faulk"}]}
+{"id": "test-00425", "text": "Justin made his second straight start for Harbaugh, who has a knee injury.", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "PER", "text": "Justin"}, {"start": 42, "end": 50, "ent_type": "PER", "text": "Harbaugh"}]}
+{"id": "test-00426", "text": "Justin suffered a sprained right shoulder in the third quarter and did not return.", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "PER", "text": "Justin"}]}
+{"id": "test-00427", "text": "Third-stringer Kerwin Bell, a 1988 draft choice of the Miami Dolphins, made his NFL debut and was 5-of-5 for 75 yards, including a 20-yard scoring strike to Marvin Harrison in the third period.", "gold_mentions": [{"start": 15, "end": 26, "ent_type": "PER", "text": "Kerwin Bell"}, {"start": 55, "end": 69, "ent_type": "ORG", "text": "Miami Dolphins"}, {"start": 80, "end": 83, "ent_type": "ORG", "text": "NFL"}, {"start": 157, "end": 172, "ent_type": "PER", "text": "Marvin Harrison"}]}
+{"id": "test-00428", "text": "A 39-yard interference penalty against Philadelphia's Troy Vincent set up Faulk's first score around left end that capped an 80-yard march 5:17 into the game and the rout was on.", "gold_mentions": [{"start": 39, "end": 51, "ent_type": "LOC", "text": "Philadelphia"}, {"start": 54, "end": 66, "ent_type": "PER", "text": "Troy Vincent"}, {"start": 74, "end": 79, "ent_type": "PER", "text": "Faulk"}]}
+{"id": "test-00429", "text": "Eagles quarterback Ty Detmer was 17-of-34 for 182 yards before he was benched.", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "Eagles"}, {"start": 19, "end": 28, "ent_type": "PER", "text": "Ty Detmer"}]}
+{"id": "test-00430", "text": "Ricky Watters, who leads the NFC in rushing, left the game after getting kneed to the helmet after gaining 33 yards on seven carries.", "gold_mentions": [{"start": 0, "end": 13, "ent_type": "PER", "text": "Ricky Watters"}]}
+{"id": "test-00431", "text": "NBA BASKETBALL - STANDINGS AFTER THURSDAY'S GAMES.", "gold_mentions": [{"start": 0, "end": 3, "ent_type": "ORG", "text": "NBA"}]}
+{"id": "test-00432", "text": "NEW YORK 1996-12-06", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "NEW YORK"}]}
+{"id": "test-00433", "text": "Standings of National", "gold_mentions": [{"start": 13, "end": 21, "ent_type": "ORG", "text": "National"}]}
+{"id": "test-00434", "text": "Basketball Association teams after games played on Thursday", "gold_mentions": [{"start": 0, "end": 22, "ent_type": "ORG", "text": "Basketball Association"}]}
+{"id": "test-00435", "text": "(tabulate under won, lost, percentage, games behind):", "gold_mentions": []}
+{"id": "test-00436", "text": "EASTERN CONFERENCE", "gold_mentions": []}
+{"id": "test-00437", "text": "ATLANTIC DIVISION", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "ATLANTIC"}]}
+{"id": "test-00438", "text": "W L PCT GB", "gold_mentions": []}
+{"id": "test-00439", "text": "MIAMI 14 4 .778 -", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "ORG", "text": "MIAMI"}]}
+{"id": "test-00440", "text": "NEW YORK 10 6 .625 3", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "NEW YORK"}]}
+{"id": "test-00441", "text": "ORLANDO 8 6 .571 4", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "ORLANDO"}]}
+{"id": "test-00442", "text": "WASHINGTON 7 9 .438 6", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "WASHINGTON"}]}
+{"id": "test-00443", "text": "PHILADELPHIA 7 10 .412 6 1/2", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "PHILADELPHIA"}]}
+{"id": "test-00444", "text": "BOSTON 4 12 .250 9", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "BOSTON"}]}
+{"id": "test-00445", "text": "NEW JERSEY 3 10 .231 8 1/2", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "NEW JERSEY"}]}
+{"id": "test-00446", "text": "CENTRAL DIVISION", "gold_mentions": []}
+{"id": "test-00447", "text": "W L PCT GB", "gold_mentions": []}
+{"id": "test-00448", "text": "CHICAGO 17 1 .944 -", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "CHICAGO"}]}
+{"id": "test-00449", "text": "DETROIT 13 3 .813 3", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "DETROIT"}]}
+{"id": "test-00450", "text": "CLEVELAND 11 5 .688 5", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "CLEVELAND"}]}
+{"id": "test-00451", "text": "ATLANTA 10 8 .556 7", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "ATLANTA"}]}
+{"id": "test-00452", "text": "CHARLOTTE 8 8 .500 8", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "CHARLOTTE"}]}
+{"id": "test-00453", "text": "MILWAUKEE 8 8 .500 8", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "MILWAUKEE"}]}
+{"id": "test-00454", "text": "INDIANA 7 8 .467 8 1/2", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "INDIANA"}]}
+{"id": "test-00455", "text": "TORONTO 6 11 .353 10 1/2", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "TORONTO"}]}
+{"id": "test-00456", "text": "WESTERN CONFERENCE", "gold_mentions": []}
+{"id": "test-00457", "text": "MIDWEST DIVISION", "gold_mentions": []}
+{"id": "test-00458", "text": "W L PCT GB", "gold_mentions": []}
+{"id": "test-00459", "text": "HOUSTON 16 2 .889 -", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "HOUSTON"}]}
+{"id": "test-00460", "text": "UTAH 14 2 .875 1", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "ORG", "text": "UTAH"}]}
+{"id": "test-00461", "text": "MINNESOTA 7 10 .412 8 1/2", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "MINNESOTA"}]}
+{"id": "test-00462", "text": "DALLAS 6 11 .353 9 1/2", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "DALLAS"}]}
+{"id": "test-00463", "text": "DENVER 5 14 .263 11 1/2", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "DENVER"}]}
+{"id": "test-00464", "text": "SAN ANTONIO 3 13 .188 12", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "SAN ANTONIO"}]}
+{"id": "test-00465", "text": "VANCOUVER 2 16 .111 14", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "VANCOUVER"}]}
+{"id": "test-00466", "text": "PACIFIC DIVISION", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "LOC", "text": "PACIFIC"}]}
+{"id": "test-00467", "text": "W L PCT GB", "gold_mentions": []}
+{"id": "test-00468", "text": "SEATTLE 15 5 .750 -", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "SEATTLE"}]}
+{"id": "test-00469", "text": "LA LAKERS 13 7 .650 2", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "LA LAKERS"}]}
+{"id": "test-00470", "text": "PORTLAND 11 8 .579 3 1/2", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "PORTLAND"}]}
+{"id": "test-00471", "text": "LA CLIPPERS 7 11 .389 7", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "LA CLIPPERS"}]}
+{"id": "test-00472", "text": "GOLDEN STATE 6 12 .333 8", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "GOLDEN STATE"}]}
+{"id": "test-00473", "text": "SACRAMENTO 6 12 .333 8", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "SACRAMENTO"}]}
+{"id": "test-00474", "text": "PHOENIX 2 14 .125 11", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "PHOENIX"}]}
+{"id": "test-00475", "text": "FRIDAY, DECEMBER 6", "gold_mentions": []}
+{"id": "test-00476", "text": "NEW JERSEY AT BOSTON", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "NEW JERSEY"}, {"start": 14, "end": 20, "ent_type": "LOC", "text": "BOSTON"}]}
+{"id": "test-00477", "text": "CLEVELAND AT DETROIT", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "CLEVELAND"}, {"start": 13, "end": 20, "ent_type": "LOC", "text": "DETROIT"}]}
+{"id": "test-00478", "text": "NEW YORK AT MIAMI", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "NEW YORK"}, {"start": 12, "end": 17, "ent_type": "LOC", "text": "MIAMI"}]}
+{"id": "test-00479", "text": "PHOENIX AT SACRAMENTO", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "PHOENIX"}, {"start": 11, "end": 21, "ent_type": "LOC", "text": "SACRAMENTO"}]}
+{"id": "test-00480", "text": "VANCOUVER AT SAN ANTONIO", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "VANCOUVER"}, {"start": 13, "end": 24, "ent_type": "LOC", "text": "SAN ANTONIO"}]}
+{"id": "test-00481", "text": "MINNESOTA AT UTAH", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "MINNESOTA"}, {"start": 13, "end": 17, "ent_type": "LOC", "text": "UTAH"}]}
+{"id": "test-00482", "text": "CHARLOTTE AT PORTLAND", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "CHARLOTTE"}, {"start": 13, "end": 21, "ent_type": "LOC", "text": "PORTLAND"}]}
+{"id": "test-00483", "text": "INDIANA AT GOLDEN STATE", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "INDIANA"}, {"start": 11, "end": 23, "ent_type": "LOC", "text": "GOLDEN STATE"}]}
+{"id": "test-00484", "text": "ORLANDO AT LA LAKERS", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "ORLANDO"}, {"start": 11, "end": 20, "ent_type": "LOC", "text": "LA LAKERS"}]}
+{"id": "test-00485", "text": "NFL AMERICAN FOOTBALL-STANDINGS AFTER THURSDAY'S GAME.", "gold_mentions": [{"start": 0, "end": 3, "ent_type": "ORG", "text": "NFL"}]}
+{"id": "test-00486", "text": "NEW YORK 1996-12-05", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "NEW YORK"}]}
+{"id": "test-00487", "text": "National Football League", "gold_mentions": [{"start": 0, "end": 24, "ent_type": "ORG", "text": "National Football League"}]}
+{"id": "test-00488", "text": "standings after Thursday's game (tabulate under won, lost,", "gold_mentions": []}
+{"id": "test-00489", "text": "tied, points for and points against):", "gold_mentions": []}
+{"id": "test-00490", "text": "AMERICAN FOOTBALL CONFERENCE", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "MISC", "text": "AMERICAN"}]}
+{"id": "test-00491", "text": "EASTERN DIVISION", "gold_mentions": []}
+{"id": "test-00492", "text": "W L T PF PA", "gold_mentions": []}
+{"id": "test-00493", "text": "NEW ENGLAND 9 4 0 355 269", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "NEW ENGLAND"}]}
+{"id": "test-00494", "text": "BUFFALO 9 4 0 267 215", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "BUFFALO"}]}
+{"id": "test-00495", "text": "INDIANAPOLIS 8 6 0 269 284", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "INDIANAPOLIS"}]}
+{"id": "test-00496", "text": "MIAMI 6 7 0 285 266", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "ORG", "text": "MIAMI"}]}
+{"id": "test-00497", "text": "NY JETS 1 12 0 221 368", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "NY JETS"}]}
+{"id": "test-00498", "text": "CENTRAL DIVISION", "gold_mentions": []}
+{"id": "test-00499", "text": "W L T PF PA", "gold_mentions": [{"start": 9, "end": 11, "ent_type": "ORG", "text": "PA"}]}

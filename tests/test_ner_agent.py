@@ -16,7 +16,7 @@ def test_ner_agent_routes_output_valid_mentions() -> None:
 
     cset, _, _ = CandidateAgent(llm, prompts).run(text, schema)
     constraints, _, _ = ExpertAgent(llm, prompts).run(text, cset, schema, [])
-    relations, _, _ = REAgent(llm, prompts).run(text, cset, schema, [])
+    relations, _, _, _ = REAgent(llm, prompts).run(text, cset, schema, [])
 
     ner_agent = NERAgent(llm, prompts)
     y_exp, _, _ = ner_agent.run_with_expert(text, cset, schema, constraints)

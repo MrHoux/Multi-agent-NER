@@ -1,0 +1,100 @@
+{"id": "test-03300", "text": "VANCOUVER AT DALLAS", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "VANCOUVER"}, {"start": 13, "end": 19, "ent_type": "LOC", "text": "DALLAS"}]}
+{"id": "test-03301", "text": "PHILADELPHIA AT HOUSTON", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "PHILADELPHIA"}, {"start": 16, "end": 23, "ent_type": "LOC", "text": "HOUSTON"}]}
+{"id": "test-03302", "text": "UTAH AT DENVER", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "ORG", "text": "UTAH"}, {"start": 8, "end": 14, "ent_type": "LOC", "text": "DENVER"}]}
+{"id": "test-03303", "text": "CHARLOTTE AT SEATTLE", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "CHARLOTTE"}, {"start": 13, "end": 20, "ent_type": "LOC", "text": "SEATTLE"}]}
+{"id": "test-03304", "text": "NBA BASKETBALL - FRIDAY'S RESULTS.", "gold_mentions": [{"start": 0, "end": 3, "ent_type": "ORG", "text": "NBA"}]}
+{"id": "test-03305", "text": "NEW YORK 1996-12-07", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "NEW YORK"}]}
+{"id": "test-03306", "text": "Results of National Basketball", "gold_mentions": [{"start": 11, "end": 30, "ent_type": "ORG", "text": "National Basketball"}]}
+{"id": "test-03307", "text": "Association games on Friday (home team in CAPS):", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Association"}]}
+{"id": "test-03308", "text": "New Jersey 110 BOSTON 108 (OT)", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "New Jersey"}, {"start": 15, "end": 21, "ent_type": "ORG", "text": "BOSTON"}]}
+{"id": "test-03309", "text": "DETROIT 93 Cleveland 81", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "DETROIT"}, {"start": 11, "end": 20, "ent_type": "ORG", "text": "Cleveland"}]}
+{"id": "test-03310", "text": "New York 103 MIAMI 85", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "New York"}, {"start": 13, "end": 18, "ent_type": "ORG", "text": "MIAMI"}]}
+{"id": "test-03311", "text": "Phoenix 101 SACRAMENTO 95", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Phoenix"}, {"start": 12, "end": 22, "ent_type": "ORG", "text": "SACRAMENTO"}]}
+{"id": "test-03312", "text": "Vancouver 105 SAN ANTONIO 89", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Vancouver"}, {"start": 14, "end": 25, "ent_type": "ORG", "text": "SAN ANTONIO"}]}
+{"id": "test-03313", "text": "UTAH 106 Minnesota 95", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "ORG", "text": "UTAH"}, {"start": 9, "end": 18, "ent_type": "ORG", "text": "Minnesota"}]}
+{"id": "test-03314", "text": "PORTLAND 97 Charlotte 93", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "PORTLAND"}, {"start": 12, "end": 21, "ent_type": "ORG", "text": "Charlotte"}]}
+{"id": "test-03315", "text": "Indiana 86 GOLDEN STATE 71", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Indiana"}, {"start": 11, "end": 23, "ent_type": "ORG", "text": "GOLDEN STATE"}]}
+{"id": "test-03316", "text": "LA LAKERS 92 Orlando 81", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "LA LAKERS"}, {"start": 13, "end": 20, "ent_type": "ORG", "text": "Orlando"}]}
+{"id": "test-03317", "text": "NHL ICE HOCKEY - STANDINGS AFTER FRIDAY'S GAMES.", "gold_mentions": [{"start": 0, "end": 3, "ent_type": "ORG", "text": "NHL"}]}
+{"id": "test-03318", "text": "NEW YORK 1996-12-07", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "NEW YORK"}]}
+{"id": "test-03319", "text": "Standings of National Hockey", "gold_mentions": [{"start": 13, "end": 28, "ent_type": "ORG", "text": "National Hockey"}]}
+{"id": "test-03320", "text": "League teams after games played on Friday (tabulate under won,", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "League"}]}
+{"id": "test-03321", "text": "lost, tied, goals for, goals against, points):", "gold_mentions": []}
+{"id": "test-03322", "text": "EASTERN CONFERENCE", "gold_mentions": []}
+{"id": "test-03323", "text": "NORTHEAST DIVISION", "gold_mentions": []}
+{"id": "test-03324", "text": "W L T GF GA PTS", "gold_mentions": []}
+{"id": "test-03325", "text": "HARTFORD 12 7 6 77 76 30", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "HARTFORD"}]}
+{"id": "test-03326", "text": "BUFFALO 13 12 2 78 77 28", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "BUFFALO"}]}
+{"id": "test-03327", "text": "MONTREAL 11 14 4 99 104 26", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "MONTREAL"}]}
+{"id": "test-03328", "text": "BOSTON 10 11 4 74 84 24", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "BOSTON"}]}
+{"id": "test-03329", "text": "PITTSBURGH 10 13 3 86 94 23", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "PITTSBURGH"}]}
+{"id": "test-03330", "text": "OTTAWA 7 12 6 64 77 20", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "OTTAWA"}]}
+{"id": "test-03331", "text": "ATLANTIC DIVISION", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "ATLANTIC"}]}
+{"id": "test-03332", "text": "W L T GF GA PTS", "gold_mentions": []}
+{"id": "test-03333", "text": "FLORIDA 17 4 6 83 53 40", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "FLORIDA"}]}
+{"id": "test-03334", "text": "PHILADELPHIA 15 12 2 81 78 32", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "PHILADELPHIA"}]}
+{"id": "test-03335", "text": "NEW JERSEY 14 10 1 61 61 29", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "NEW JERSEY"}]}
+{"id": "test-03336", "text": "WASHINGTON 13 13 1 72 71 27", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "WASHINGTON"}]}
+{"id": "test-03337", "text": "NY RANGERS 11 13 5 97 86 27", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "NY RANGERS"}]}
+{"id": "test-03338", "text": "NY ISLANDERS 7 11 8 65 72 22", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "NY ISLANDERS"}]}
+{"id": "test-03339", "text": "TAMPA BAY 8 15 2 69 81 18", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "TAMPA BAY"}]}
+{"id": "test-03340", "text": "WESTERN CONFERENCE", "gold_mentions": []}
+{"id": "test-03341", "text": "CENTRAL DIVISION", "gold_mentions": []}
+{"id": "test-03342", "text": "W L T GF GA PTS", "gold_mentions": []}
+{"id": "test-03343", "text": "DETROIT 15 9 4 81 53 34", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "DETROIT"}]}
+{"id": "test-03344", "text": "DALLAS 16 10 1 77 66 33", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "DALLAS"}]}
+{"id": "test-03345", "text": "ST LOUIS 14 14 0 82 84 28", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "ST LOUIS"}]}
+{"id": "test-03346", "text": "CHICAGO 12 13 3 72 70 27", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "CHICAGO"}]}
+{"id": "test-03347", "text": "TORONTO 11 16 0 81 95 22", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "TORONTO"}]}
+{"id": "test-03348", "text": "PHOENIX 9 13 4 61 74 22", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "PHOENIX"}]}
+{"id": "test-03349", "text": "PACIFIC DIVISION", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "LOC", "text": "PACIFIC"}]}
+{"id": "test-03350", "text": "W L T GF GA PTS", "gold_mentions": []}
+{"id": "test-03351", "text": "COLORADO 17 7 4 100 60 38", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "COLORADO"}]}
+{"id": "test-03352", "text": "VANCOUVER 14 11 1 84 83 29", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "VANCOUVER"}]}
+{"id": "test-03353", "text": "EDMONTON 14 14 1 99 90 29", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "EDMONTON"}]}
+{"id": "test-03354", "text": "LOS ANGELES 11 13 3 72 83 25", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "LOS ANGELES"}]}
+{"id": "test-03355", "text": "SAN JOSE 10 13 4 69 87 24", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "SAN JOSE"}]}
+{"id": "test-03356", "text": "ANAHEIM 9 14 5 74 87 23", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "ANAHEIM"}]}
+{"id": "test-03357", "text": "CALGARY 10 16 2 65 77 22", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "CALGARY"}]}
+{"id": "test-03358", "text": "SATURDAY, DECEMBER 7 SCHEDULE", "gold_mentions": []}
+{"id": "test-03359", "text": "PHOENIX AT NEW JERSEY", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "PHOENIX"}, {"start": 11, "end": 21, "ent_type": "LOC", "text": "NEW JERSEY"}]}
+{"id": "test-03360", "text": "CALGARY AT BOSTON", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "CALGARY"}, {"start": 11, "end": 17, "ent_type": "LOC", "text": "BOSTON"}]}
+{"id": "test-03361", "text": "BUFFALO AT HARTFORD", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "BUFFALO"}, {"start": 11, "end": 19, "ent_type": "LOC", "text": "HARTFORD"}]}
+{"id": "test-03362", "text": "WASHINGTON AT NY ISLANDERS", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "WASHINGTON"}, {"start": 14, "end": 26, "ent_type": "LOC", "text": "NY ISLANDERS"}]}
+{"id": "test-03363", "text": "CHICAGO AT MONTREAL", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "CHICAGO"}, {"start": 11, "end": 19, "ent_type": "LOC", "text": "MONTREAL"}]}
+{"id": "test-03364", "text": "NY RANGERS AT TORONTO", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "NY RANGERS"}, {"start": 14, "end": 21, "ent_type": "LOC", "text": "TORONTO"}]}
+{"id": "test-03365", "text": "ANAHEIM AT PITTSBURGH", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "ANAHEIM"}, {"start": 11, "end": 21, "ent_type": "LOC", "text": "PITTSBURGH"}]}
+{"id": "test-03366", "text": "COLORADO AT LOS ANGELES", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "COLORADO"}, {"start": 12, "end": 23, "ent_type": "LOC", "text": "LOS ANGELES"}]}
+{"id": "test-03367", "text": "TAMPA BAY AT SAN JOSE", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "TAMPA BAY"}, {"start": 13, "end": 21, "ent_type": "LOC", "text": "SAN JOSE"}]}
+{"id": "test-03368", "text": "OTTAWA AT VANCOUVER", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "OTTAWA"}, {"start": 10, "end": 19, "ent_type": "LOC", "text": "VANCOUVER"}]}
+{"id": "test-03369", "text": "NHL ICE HOCKEY - FRIDAY'S RESULTS.", "gold_mentions": [{"start": 0, "end": 3, "ent_type": "ORG", "text": "NHL"}]}
+{"id": "test-03370", "text": "NEW YORK 1996-12-07", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "NEW YORK"}]}
+{"id": "test-03371", "text": "Results of National Hockey", "gold_mentions": [{"start": 11, "end": 26, "ent_type": "ORG", "text": "National Hockey"}]}
+{"id": "test-03372", "text": "League games on Friday (home team in CAPS):", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "League"}]}
+{"id": "test-03373", "text": "NY RANGERS 6 Toronto 5", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "NY RANGERS"}, {"start": 13, "end": 20, "ent_type": "ORG", "text": "Toronto"}]}
+{"id": "test-03374", "text": "BUFFALO 1 Anaheim 1 (OT)", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "BUFFALO"}, {"start": 10, "end": 17, "ent_type": "ORG", "text": "Anaheim"}]}
+{"id": "test-03375", "text": "Pittsburgh 5 WASHINGTON 3", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Pittsburgh"}, {"start": 13, "end": 23, "ent_type": "ORG", "text": "WASHINGTON"}]}
+{"id": "test-03376", "text": "Montreal 3 CHICAGO 1", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Montreal"}, {"start": 11, "end": 18, "ent_type": "ORG", "text": "CHICAGO"}]}
+{"id": "test-03377", "text": "Philadelphia 6 DALLAS 3", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "LOC", "text": "Philadelphia"}, {"start": 15, "end": 21, "ent_type": "LOC", "text": "DALLAS"}]}
+{"id": "test-03378", "text": "St Louis 4 COLORADO 3", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "St Louis"}, {"start": 11, "end": 19, "ent_type": "LOC", "text": "COLORADO"}]}
+{"id": "test-03379", "text": "EDMONTON 5 Ottawa 2", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "EDMONTON"}, {"start": 11, "end": 17, "ent_type": "LOC", "text": "Ottawa"}]}
+{"id": "test-03380", "text": "NHL ICE HOCKEY - CANUCKS RW BURE SUSPENDED FOR ONE GAME.", "gold_mentions": [{"start": 0, "end": 3, "ent_type": "ORG", "text": "NHL"}, {"start": 17, "end": 24, "ent_type": "ORG", "text": "CANUCKS"}, {"start": 28, "end": 32, "ent_type": "PER", "text": "BURE"}]}
+{"id": "test-03381", "text": "NEW YORK 1996-12-06", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "NEW YORK"}]}
+{"id": "test-03382", "text": "Vancouver Canucks star right wing Pavel Bure was suspended for one game by the National Hockey League and fined $1,000 Friday for his hit on Buffalo Sabres defenceman Garry Galley on Wednesday.", "gold_mentions": [{"start": 0, "end": 17, "ent_type": "ORG", "text": "Vancouver Canucks"}, {"start": 34, "end": 44, "ent_type": "PER", "text": "Pavel Bure"}, {"start": 79, "end": 101, "ent_type": "ORG", "text": "National Hockey League"}, {"start": 141, "end": 155, "ent_type": "ORG", "text": "Buffalo Sabres"}, {"start": 167, "end": 179, "ent_type": "PER", "text": "Garry Galley"}]}
+{"id": "test-03383", "text": "Bure received a double-minor penalty for high-sticking with 2:22 left in the first period of Wednesday's 7-6 overtime win by Vancouver after colliding with Galley in Buffalo zone.", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "PER", "text": "Bure"}, {"start": 125, "end": 134, "ent_type": "ORG", "text": "Vancouver"}, {"start": 156, "end": 162, "ent_type": "PER", "text": "Galley"}, {"start": 166, "end": 173, "ent_type": "ORG", "text": "Buffalo"}]}
+{"id": "test-03384", "text": "Galley suffered a concussion and did not return to the game.", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "PER", "text": "Galley"}]}
+{"id": "test-03385", "text": "\"Mr Bure left his feet to deliver a forearm blow to Mr Galley as he was about to be checked legally by his opponent, \"said NHL discipline chief Brian Burke in handing out the suspension.", "gold_mentions": [{"start": 4, "end": 8, "ent_type": "PER", "text": "Bure"}, {"start": 55, "end": 61, "ent_type": "PER", "text": "Galley"}, {"start": 123, "end": 126, "ent_type": "ORG", "text": "NHL"}, {"start": 144, "end": 155, "ent_type": "PER", "text": "Brian Burke"}]}
+{"id": "test-03386", "text": "\"Although it is clear from the videotape that Mr Bure's actions were a reaction to the impending hit and there was no intent to injure his opponent, there can be no excuse for this type of conduct, \"Burke said.", "gold_mentions": [{"start": 49, "end": 53, "ent_type": "PER", "text": "Bure"}, {"start": 199, "end": 204, "ent_type": "PER", "text": "Burke"}]}
+{"id": "test-03387", "text": "Bure, who is struggling with only nine goals and 12 assists in 26 games, will miss Saturday's home game against Ottawa.", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "PER", "text": "Bure"}, {"start": 112, "end": 118, "ent_type": "ORG", "text": "Ottawa"}]}
+{"id": "test-03388", "text": "BOXING - SCHULZ DEFEATS RIBALTA IN IBF HEAVYWEIGHT FIGHT.", "gold_mentions": [{"start": 9, "end": 15, "ent_type": "PER", "text": "SCHULZ"}, {"start": 24, "end": 31, "ent_type": "PER", "text": "RIBALTA"}, {"start": 35, "end": 38, "ent_type": "ORG", "text": "IBF"}]}
+{"id": "test-03389", "text": "VIENNA 1996-12-07", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "VIENNA"}]}
+{"id": "test-03390", "text": "German Axel Schulz outpointed Cuba's Jose Ribalta in their International Boxing Federation non-title 10-round heavyweight fight on Saturday.", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "MISC", "text": "German"}, {"start": 7, "end": 18, "ent_type": "PER", "text": "Axel Schulz"}, {"start": 30, "end": 34, "ent_type": "LOC", "text": "Cuba"}, {"start": 37, "end": 49, "ent_type": "PER", "text": "Jose Ribalta"}, {"start": 59, "end": 90, "ent_type": "ORG", "text": "International Boxing Federation"}]}
+{"id": "test-03391", "text": "SOCCER - SPANISH FIRST DIVISION SUMMARY.", "gold_mentions": [{"start": 9, "end": 16, "ent_type": "MISC", "text": "SPANISH"}]}
+{"id": "test-03392", "text": "MADRID 1996-12-07", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "MADRID"}]}
+{"id": "test-03393", "text": "Summary of Saturday's Spanish first division match:", "gold_mentions": [{"start": 22, "end": 29, "ent_type": "MISC", "text": "Spanish"}]}
+{"id": "test-03394", "text": "Real Madrid 2 (Davor Suker 24, Predrag Mijatovic 48) Barcelona 0.", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Real Madrid"}, {"start": 15, "end": 26, "ent_type": "PER", "text": "Davor Suker"}, {"start": 31, "end": 48, "ent_type": "PER", "text": "Predrag Mijatovic"}, {"start": 53, "end": 62, "ent_type": "ORG", "text": "Barcelona"}]}
+{"id": "test-03395", "text": "Halftime 1-0.", "gold_mentions": []}
+{"id": "test-03396", "text": "Attendance 106,000.", "gold_mentions": []}
+{"id": "test-03397", "text": "SOCCER - BALKAN STRIKE FORCE WIN OLD FIRM GAME FOR REAL.", "gold_mentions": [{"start": 9, "end": 15, "ent_type": "LOC", "text": "BALKAN"}, {"start": 51, "end": 55, "ent_type": "ORG", "text": "REAL"}]}
+{"id": "test-03398", "text": "MADRID 1996-12-07", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "MADRID"}]}
+{"id": "test-03399", "text": "Real Madrid's Balkan strike force of Davor Suker and Predrag Mijatovic shot their side to a 2-0 win over Barcelona in Spain's old firm game on Saturday.", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Real Madrid"}, {"start": 14, "end": 20, "ent_type": "LOC", "text": "Balkan"}, {"start": 37, "end": 48, "ent_type": "PER", "text": "Davor Suker"}, {"start": 53, "end": 70, "ent_type": "PER", "text": "Predrag Mijatovic"}, {"start": 105, "end": 114, "ent_type": "ORG", "text": "Barcelona"}, {"start": 118, "end": 123, "ent_type": "LOC", "text": "Spain"}]}

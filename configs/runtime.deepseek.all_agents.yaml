@@ -3,7 +3,7 @@ seed: 42
 llm:
   provider: openai_compatible
   base_url: https://api.deepseek.com/v1
-  api_key: xxxxxxx
+  api_key: xxxxxxxx
   model: deepseek-chat
   timeout_s: 45
   max_retries: 2
@@ -25,6 +25,7 @@ pipeline:
   sample_post_error_backoff_s: 4.0
   progress_logging: true
   progress_agent_trace: false
+  parallelize_independent_branches: true
 
   max_debate_turns: 4
   early_stop_delta: 0.01

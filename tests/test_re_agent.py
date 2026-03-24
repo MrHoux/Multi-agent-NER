@@ -13,7 +13,7 @@ def test_re_agent_relations_with_evidence() -> None:
     schema = load_schema("tests/fixtures/schema_example.json")
 
     cset, _, _ = CandidateAgent(llm, prompts).run(text, schema)
-    relations, cost, _ = REAgent(llm, prompts).run(text, cset, schema, memory_items=[])
+    relations, _, cost, _ = REAgent(llm, prompts).run(text, cset, schema, memory_items=[])
 
     assert cost.calls == 1
     assert isinstance(relations, list)

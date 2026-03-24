@@ -1,0 +1,100 @@
+{"id": "test-01600", "text": "Peres, who was ousted in May by rightwing Israeli leader Benjamin Netanyahu, said there could not be real negotiations with Lebanon \"unless it will stop the maltreatment of the SLA and its commanders. \"", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "PER", "text": "Peres"}, {"start": 42, "end": 49, "ent_type": "MISC", "text": "Israeli"}, {"start": 57, "end": 75, "ent_type": "PER", "text": "Benjamin Netanyahu"}, {"start": 124, "end": 131, "ent_type": "LOC", "text": "Lebanon"}, {"start": 177, "end": 180, "ent_type": "ORG", "text": "SLA"}]}
+{"id": "test-01601", "text": "The Beirut military court also sentenced to life in jail in absentia Etian Saqr, former head of the pro-Israeli Guardians of the Cedars, a small rightwing Christian civil war militia.", "gold_mentions": [{"start": 4, "end": 10, "ent_type": "LOC", "text": "Beirut"}, {"start": 69, "end": 79, "ent_type": "PER", "text": "Etian Saqr"}, {"start": 100, "end": 111, "ent_type": "MISC", "text": "pro-Israeli"}, {"start": 112, "end": 135, "ent_type": "ORG", "text": "Guardians of the Cedars"}, {"start": 155, "end": 164, "ent_type": "MISC", "text": "Christian"}]}
+{"id": "test-01602", "text": "Saqr, whose trial was concurrent with Lahd's, was convicted of \"contacting the Israeli enemy, passing information to Israel and undertaking hostile acts against Lebanon \".", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "PER", "text": "Saqr"}, {"start": 38, "end": 42, "ent_type": "PER", "text": "Lahd"}, {"start": 79, "end": 86, "ent_type": "MISC", "text": "Israeli"}, {"start": 117, "end": 123, "ent_type": "LOC", "text": "Israel"}, {"start": 161, "end": 168, "ent_type": "LOC", "text": "Lebanon"}]}
+{"id": "test-01603", "text": "Texas /w Okla fed cattle market thin at $67 - USDA.", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "LOC", "text": "Texas"}, {"start": 9, "end": 13, "ent_type": "LOC", "text": "Okla"}, {"start": 46, "end": 50, "ent_type": "ORG", "text": "USDA"}]}
+{"id": "test-01604", "text": "AMARILLO 1996-12-06", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "AMARILLO"}]}
+{"id": "test-01605", "text": "Trade was slow in the Panhandle area Friday, USDA said.", "gold_mentions": [{"start": 22, "end": 31, "ent_type": "LOC", "text": "Panhandle"}, {"start": 45, "end": 49, "ent_type": "ORG", "text": "USDA"}]}
+{"id": "test-01606", "text": "Slaughter steers and heifers were $1.00 per cwt lower.", "gold_mentions": []}
+{"id": "test-01607", "text": "Feedlots reporting moderate inquiry.", "gold_mentions": []}
+{"id": "test-01608", "text": "Sales reported on 8,200 head slaughter steers and 1,000 heifers; following weekly movement of 71,200 head.", "gold_mentions": []}
+{"id": "test-01609", "text": "Note - all cattle prices based on net weights FOB the feedlot after a 4 percent shrink.", "gold_mentions": []}
+{"id": "test-01610", "text": "Slaughter Steers - Select and Choice 2-3 1150-1200 lbs 67.00.", "gold_mentions": []}
+{"id": "test-01611", "text": "Slaughter Heifers - Select and Choice 2-3 1050-1100 lbs 67.00.", "gold_mentions": []}
+{"id": "test-01612", "text": "Confirmed - 9,300 Week Ago - None Year Ago - None", "gold_mentions": []}
+{"id": "test-01613", "text": "((Chicago newsdesk 312 408 8720))", "gold_mentions": [{"start": 2, "end": 9, "ent_type": "LOC", "text": "Chicago"}]}
+{"id": "test-01614", "text": "USDA daily cattle and hog slaughter - Dec 6.", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "ORG", "text": "USDA"}]}
+{"id": "test-01615", "text": "Est daily livestock slaughter under Fed inspection - USDA", "gold_mentions": [{"start": 36, "end": 39, "ent_type": "ORG", "text": "Fed"}, {"start": 53, "end": 57, "ent_type": "ORG", "text": "USDA"}]}
+{"id": "test-01616", "text": "CATTLE CALVES HOGS", "gold_mentions": []}
+{"id": "test-01617", "text": "Friday 12/06/96 (est) 132,000 7,000 359,000", "gold_mentions": []}
+{"id": "test-01618", "text": "Week ago (est) 130,000 6,000 346,000", "gold_mentions": []}
+{"id": "test-01619", "text": "Year ago (act) 132,000 6,000 336,000", "gold_mentions": []}
+{"id": "test-01620", "text": "Saturday 12/07/96 (est) 38,000 0 18,000", "gold_mentions": []}
+{"id": "test-01621", "text": "Week to date (est) 688,000 31,000 1,810,000", "gold_mentions": []}
+{"id": "test-01622", "text": "Same Period Last Week (est) 601,000 26,000 1,547,000", "gold_mentions": []}
+{"id": "test-01623", "text": "Same Period Last Year* (act) 685,000 31,000 1,914,000", "gold_mentions": []}
+{"id": "test-01624", "text": "1996 Year to date 33,549,000 1,589,000 84,894,000", "gold_mentions": []}
+{"id": "test-01625", "text": "1995 Year to date* 32,970,000 1,305,000 88,800,000", "gold_mentions": []}
+{"id": "test-01626", "text": "Percent change 1.8% 21.8% - 4.4%", "gold_mentions": []}
+{"id": "test-01627", "text": "*1995 totals adjusted to reflect NASS revisions 1996 Totals are subject to revision Yearly totals may not add due to rounding.", "gold_mentions": [{"start": 33, "end": 37, "ent_type": "ORG", "text": "NASS"}]}
+{"id": "test-01628", "text": "Previous day estimated Steer and Heifer Cow and Bull", "gold_mentions": []}
+{"id": "test-01629", "text": "Thursday 100,000 33,000", "gold_mentions": []}
+{"id": "test-01630", "text": "BALANCE - Hartford, Conn.", "gold_mentions": [{"start": 10, "end": 18, "ent_type": "LOC", "text": "Hartford"}, {"start": 20, "end": 24, "ent_type": "LOC", "text": "Conn"}]}
+{"id": "test-01631", "text": ", $11 mln.", "gold_mentions": []}
+{"id": "test-01632", "text": "CITY OF HARTFORD, CONNECTICUT", "gold_mentions": [{"start": 8, "end": 16, "ent_type": "LOC", "text": "HARTFORD"}, {"start": 18, "end": 29, "ent_type": "LOC", "text": "CONNECTICUT"}]}
+{"id": "test-01633", "text": "RE: $25,000,000", "gold_mentions": []}
+{"id": "test-01634", "text": "GENERAL OBLIGATION BONDS", "gold_mentions": []}
+{"id": "test-01635", "text": "MOODY'S: Aaa /A1 S&P: AAA /AA-", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "MOODY'S"}, {"start": 17, "end": 20, "ent_type": "ORG", "text": "S&P"}]}
+{"id": "test-01636", "text": "Delivery Date: 12/16/1996", "gold_mentions": []}
+{"id": "test-01637", "text": "FSA INSURED", "gold_mentions": [{"start": 0, "end": 3, "ent_type": "ORG", "text": "FSA"}]}
+{"id": "test-01638", "text": "Maturity Balance Coupon List", "gold_mentions": []}
+{"id": "test-01639", "text": "12/15/2000 1,250M 6.25 4.10", "gold_mentions": []}
+{"id": "test-01640", "text": "12/15/2001 575M 4.60 4.20", "gold_mentions": []}
+{"id": "test-01641", "text": "12/15/2003 265M 4.40 4.40", "gold_mentions": []}
+{"id": "test-01642", "text": "12/15/2004 625M 4.50 4.50", "gold_mentions": []}
+{"id": "test-01643", "text": "12/15/2005 55M 4.60 4.60", "gold_mentions": []}
+{"id": "test-01644", "text": "12/15/2006 145M 4.70 4.70", "gold_mentions": []}
+{"id": "test-01645", "text": "12/15/2007 850M 4.85 4.85", "gold_mentions": []}
+{"id": "test-01646", "text": "12/15/2008 1,200M 4.95 4.95", "gold_mentions": []}
+{"id": "test-01647", "text": "12/15/2009 1,240M 5.05 5.05", "gold_mentions": []}
+{"id": "test-01648", "text": "12/15/2010 1,250M 5.15 5.15", "gold_mentions": []}
+{"id": "test-01649", "text": "12/15/2011 1,240M 5.25 5.25", "gold_mentions": []}
+{"id": "test-01650", "text": "12/15/2012 1,200M 5.25 5.30", "gold_mentions": []}
+{"id": "test-01651", "text": "12/15/2013 1,135M 5.30 5.35", "gold_mentions": []}
+{"id": "test-01652", "text": "12/15/2014 850M 5.30 5.35", "gold_mentions": []}
+{"id": "test-01653", "text": "Total: 11,880M", "gold_mentions": []}
+{"id": "test-01654", "text": "State Street Bank and Trust Company", "gold_mentions": [{"start": 0, "end": 35, "ent_type": "ORG", "text": "State Street Bank and Trust Company"}]}
+{"id": "test-01655", "text": "Prudential Securities Incorporated", "gold_mentions": [{"start": 0, "end": 34, "ent_type": "ORG", "text": "Prudential Securities Incorporated"}]}
+{"id": "test-01656", "text": "PaineWebber Incorporated", "gold_mentions": [{"start": 0, "end": 24, "ent_type": "ORG", "text": "PaineWebber Incorporated"}]}
+{"id": "test-01657", "text": "First Union Capital Markets Corp. - NJ", "gold_mentions": [{"start": 0, "end": 33, "ent_type": "ORG", "text": "First Union Capital Markets Corp."}, {"start": 36, "end": 38, "ent_type": "LOC", "text": "NJ"}]}
+{"id": "test-01658", "text": "-- U.S. Municipal Desk, 212-859-1650", "gold_mentions": [{"start": 3, "end": 22, "ent_type": "ORG", "text": "U.S. Municipal Desk"}]}
+{"id": "test-01659", "text": "14 years later, Florida man dies for killing.", "gold_mentions": [{"start": 16, "end": 23, "ent_type": "LOC", "text": "Florida"}]}
+{"id": "test-01660", "text": "TALLAHASSEE, Fla. 1996-12-06", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "LOC", "text": "TALLAHASSEE"}, {"start": 13, "end": 17, "ent_type": "LOC", "text": "Fla."}]}
+{"id": "test-01661", "text": "Fourteen years after he bludgeoned and shot a man whose trailer home he robbed in 1982, John Mills Jr.", "gold_mentions": [{"start": 88, "end": 98, "ent_type": "PER", "text": "John Mills"}]}
+{"id": "test-01662", "text": ", 41, was put to death in Florida's electric chair Friday.", "gold_mentions": [{"start": 26, "end": 33, "ent_type": "LOC", "text": "Florida"}]}
+{"id": "test-01663", "text": "As Glenn Lawhon, a rural Florida minister who is the victim's father, looked on, Mills was pronounced dead at 7:13 a.m. EST (1213 GMT) for the murder of Lester Lawhon.", "gold_mentions": [{"start": 3, "end": 15, "ent_type": "PER", "text": "Glenn Lawhon"}, {"start": 25, "end": 32, "ent_type": "LOC", "text": "Florida"}, {"start": 81, "end": 86, "ent_type": "PER", "text": "Mills"}, {"start": 130, "end": 133, "ent_type": "MISC", "text": "GMT"}, {"start": 153, "end": 166, "ent_type": "PER", "text": "Lester Lawhon"}]}
+{"id": "test-01664", "text": "Speaking in Arabic, Mills made a final statement before an anonymous citizen flipped the switch that sent 2000 volts of electricity through his body, said Department of Corrections spokesman Eugene Morris, who was present at the execution.", "gold_mentions": [{"start": 12, "end": 18, "ent_type": "MISC", "text": "Arabic"}, {"start": 20, "end": 25, "ent_type": "PER", "text": "Mills"}, {"start": 155, "end": 180, "ent_type": "ORG", "text": "Department of Corrections"}, {"start": 191, "end": 204, "ent_type": "PER", "text": "Eugene Morris"}]}
+{"id": "test-01665", "text": "\"I bear witness that there is no God but Allah and I bear witness that the prophet Mohammed is the messenger of God, \"he quoted Mills as saying.", "gold_mentions": [{"start": 33, "end": 36, "ent_type": "PER", "text": "God"}, {"start": 41, "end": 46, "ent_type": "PER", "text": "Allah"}, {"start": 83, "end": 91, "ent_type": "PER", "text": "Mohammed"}, {"start": 112, "end": 115, "ent_type": "PER", "text": "God"}, {"start": 128, "end": 133, "ent_type": "PER", "text": "Mills"}]}
+{"id": "test-01666", "text": "Prison officials said they had no record of Mills' official conversion, but they said that, on May 14, 1991, he had asked that a new name, Yuhanna Abdullah Muhammed, be added to his prison file, which is usually an indication of a conversion to Islam.", "gold_mentions": [{"start": 44, "end": 49, "ent_type": "PER", "text": "Mills"}, {"start": 139, "end": 164, "ent_type": "PER", "text": "Yuhanna Abdullah Muhammed"}, {"start": 245, "end": 250, "ent_type": "MISC", "text": "Islam"}]}
+{"id": "test-01667", "text": "Mills is the 38th person to die in Florida's electric chair since the U.S. Supreme Court reversed itself in 1976 and legalised the death penalty.", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "PER", "text": "Mills"}, {"start": 35, "end": 42, "ent_type": "LOC", "text": "Florida"}, {"start": 70, "end": 88, "ent_type": "ORG", "text": "U.S. Supreme Court"}]}
+{"id": "test-01668", "text": "Prison officials said Mills made no special request for a last meal and did not eat the steak, fried potatoes and orange juice offered him.", "gold_mentions": [{"start": 22, "end": 27, "ent_type": "PER", "text": "Mills"}]}
+{"id": "test-01669", "text": "He spent Thursday with family members and his spiritual adviser, Morris said.", "gold_mentions": [{"start": 65, "end": 71, "ent_type": "PER", "text": "Morris"}]}
+{"id": "test-01670", "text": "Mills was scheduled to die Wednesday but had his sentence temporarily postponed by the Florida Supreme Court.", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "PER", "text": "Mills"}, {"start": 87, "end": 108, "ent_type": "ORG", "text": "Florida Supreme Court"}]}
+{"id": "test-01671", "text": "On Thursday, the 11th Circuit U.S. Court of Appeals in Atlanta denied his appeal in federal court.", "gold_mentions": [{"start": 30, "end": 51, "ent_type": "ORG", "text": "U.S. Court of Appeals"}, {"start": 55, "end": 62, "ent_type": "LOC", "text": "Atlanta"}]}
+{"id": "test-01672", "text": "In March 1982, Mills and accomplice Michael Frederick knocked on the door of Lester Lawhon's trailer in an attempt to rob it, police said.", "gold_mentions": [{"start": 15, "end": 20, "ent_type": "PER", "text": "Mills"}, {"start": 36, "end": 53, "ent_type": "PER", "text": "Michael Frederick"}, {"start": 77, "end": 90, "ent_type": "PER", "text": "Lester Lawhon"}]}
+{"id": "test-01673", "text": "Lester Lawhon was taken to a nearby airstrip where he was bludgeoned with a tire iron.", "gold_mentions": [{"start": 0, "end": 13, "ent_type": "PER", "text": "Lester Lawhon"}]}
+{"id": "test-01674", "text": "Mills then fired two shots that killed Lawhon as the victim tried to run away.", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "PER", "text": "Mills"}, {"start": 39, "end": 45, "ent_type": "PER", "text": "Lawhon"}]}
+{"id": "test-01675", "text": "Frederick is serving a 347-year sentence.", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "PER", "text": "Frederick"}]}
+{"id": "test-01676", "text": "New York grain freight fixtures - Dec 5.", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "New York"}]}
+{"id": "test-01677", "text": "NEW YORK 1996-12-06", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "NEW YORK"}]}
+{"id": "test-01678", "text": "Mana 50,000 tonnes soybeans USG /China 10-15/12 $23.50 10,000 /4,000 GeePee.", "gold_mentions": [{"start": 33, "end": 38, "ent_type": "LOC", "text": "China"}]}
+{"id": "test-01679", "text": "-- New York Commodities Desk +1 212 859 1640", "gold_mentions": [{"start": 3, "end": 28, "ent_type": "ORG", "text": "New York Commodities Desk"}]}
+{"id": "test-01680", "text": "Iowa-S Minn fed cattle market quiet, no sales-USDA.", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "Iowa-S"}, {"start": 7, "end": 11, "ent_type": "LOC", "text": "Minn"}, {"start": 40, "end": 50, "ent_type": "MISC", "text": "sales-USDA"}]}
+{"id": "test-01681", "text": "DES MOINES 1996-12-06", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "LOC", "text": "DES MOINES"}]}
+{"id": "test-01682", "text": "Slaughter steers and heifers not tested, compared with Thursday's close, USDA said.", "gold_mentions": [{"start": 73, "end": 77, "ent_type": "ORG", "text": "USDA"}]}
+{"id": "test-01683", "text": "Trade slow.", "gold_mentions": []}
+{"id": "test-01684", "text": "Demand and seller interest light.", "gold_mentions": []}
+{"id": "test-01685", "text": "Offerings light.", "gold_mentions": []}
+{"id": "test-01686", "text": "Steers - Select and Choice 2-4 no sales.", "gold_mentions": []}
+{"id": "test-01687", "text": "Heifers - Select and Choice 2-4 no sales.", "gold_mentions": []}
+{"id": "test-01688", "text": "Carcass Basis (weight only) Compared Thursdays Close - Slaughter steers and heifers not tested.", "gold_mentions": []}
+{"id": "test-01689", "text": "Steers - Select and Choice 2-4 no sales.", "gold_mentions": []}
+{"id": "test-01690", "text": "Holstein - (weight only) Select to mostly Choice 2-3 1250-1400 lbs no sales.", "gold_mentions": []}
+{"id": "test-01691", "text": "Holsteins - (grade and weight) Choice 2-3 1250-1450 lbs no sales Select 2-3 1250-1450 lbs no sales.", "gold_mentions": []}
+{"id": "test-01692", "text": "Heifers - Select and Choice 2-4 no sales.", "gold_mentions": []}
+{"id": "test-01693", "text": "Confirmed - None Week Ago - 800 Year Ago - 900", "gold_mentions": []}
+{"id": "test-01694", "text": "Wk to Date - None Week Ago - 800 Year Ago - 900", "gold_mentions": []}
+{"id": "test-01695", "text": "((Chicago newsdesk 312-408-8720))", "gold_mentions": [{"start": 2, "end": 9, "ent_type": "LOC", "text": "Chicago"}]}
+{"id": "test-01696", "text": "Man stole pigs, tipped strippers, gets 10 years.", "gold_mentions": []}
+{"id": "test-01697", "text": "APPLETON, Wis.", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "APPLETON"}, {"start": 10, "end": 13, "ent_type": "LOC", "text": "Wis"}]}
+{"id": "test-01698", "text": "1996-12-06", "gold_mentions": []}
+{"id": "test-01699", "text": "A farmhand used the proceeds from stolen pigs to lavish tips on dancers at strip clubs and offered one $3,000 to pay for breast implant surgery, authorities said Friday.", "gold_mentions": []}

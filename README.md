@@ -1,11 +1,16 @@
 # multiagent-ner
 
-Training-free, span-level multi-agent NER research codebase with dual evidence lines:
+Training-free multi-agent NER pipeline with:
 
-- `Expert line`: Expert constraints `E` -> `Y_exp`
-- `RE line`: Relation reasoning `R` -> `Y_re`
-- Conflict-driven arbitration/debate (only on conflict clusters)
-- Verifier-gated memory writeback
+- `direct NER` as the primary extraction line
+- `candidate` as span supplementation
+- `expert` for schema-grounded domain reasoning
+- `in-context` for sentence-level contextual reasoning
+- `RAG` for optional Wikipedia-backed disambiguation
+- `adjudicator` for final semantic arbitration
+- `verifier` for structural validation only
+
+The repository is packaged so another machine can clone it, add a dataset in the expected format, set API credentials, and run.
 
 ## 1. Install
 
@@ -15,130 +20,152 @@ python -m venv .venv
 python -m pip install -e .
 ```
 
-## 2. Environment
+## 2. Required Configuration
 
-Copy `.env.example` to `.env` (or export variables directly):
+Main config files:
 
-- `LLM_BASE_URL`
-- `LLM_API_KEY`
-- `LLM_MODEL`
+- `configs/default.yaml`
+- `configs/deepseek.yaml`
+- `configs/prompts_cot.yaml`
+- `configs/runtime.deepseek.all_agents.yaml`
 
-Default config uses `provider: mock` for local reproducible smoke runs.
+Dataset-specific runtime files for the current CoNLL2003 setup:
 
-## 3. Data Format
+- `datasets/conll2003/schema.conll2003.json`
+- `experiments/datasets/conll2003/dataset.eval.yaml`
+- `experiments/datasets/conll2003/prompts/expert.generated.yaml`
 
-No dataset is hard-coded. Reader interface expects generic jsonl lines:
+`logs/`, `results/`, and `runtime/` under `experiments/datasets/<dataset>/` are runtime directories. They are auto-created when needed and are ignored by git.
+
+## 3. API Credentials
+
+Set your provider credentials in:
+
+- `configs/deepseek.yaml`
+
+If you want environment-variable based configuration, use:
+
+- `.env.example`
+
+## 4. Dataset Format
+
+Expected JSONL format:
 
 ```json
-{"id":"s1","text":"John works at Acme Corp.","gold_mentions":[{"start":0,"end":4,"ent_type":"PERSON"}]}
+{"id":"s1","text":"sample text","gold_mentions":[{"start":0,"end":4,"ent_type":"PER"}]}
 ```
 
-- required: `id`, `text`
-- optional (for eval): `gold_mentions`
+Required fields:
 
-Schema JSON format:
+- `id`
+- `text`
+
+Optional for evaluation:
+
+- `gold_mentions`
+
+Schema format:
 
 ```json
 {
-  "entity_types": [{"name": "PERSON", "description": "..."}],
-  "relation_constraints": [{"name": "works_for", "head_types": ["PERSON"], "tail_types": ["ORG"]}]
+  "dataset_name": "my_dataset",
+  "entity_types": [
+    {"name": "PER", "description": "Person entity."}
+  ],
+  "relation_constraints": []
 }
 ```
 
-See `schema_example.json`.
+## 5. Main Entrypoints
 
-## 4. Run Pipeline
-
-```bash
-python -m maner.cli.run_pipeline --config configs/default.yaml
-```
-
-You can reuse one config for multiple experiments via runtime overrides:
+Low-level pipeline:
 
 ```bash
-python -m maner.cli.run_pipeline \
-  --config experiments/bc2gm/config.bc2gm.deepseek.yaml \
-  --set data.data_path=outputs/bc2gm/bc2gm_test.20.jsonl \
-  --set output.predictions_path=outputs/bc2gm/predictions.deepseek.real.20.jsonl
+python -m maner.cli.run_pipeline --config configs/runtime.deepseek.all_agents.yaml
 ```
 
-Output: `outputs/predictions.jsonl` (configurable)
-
-Each line contains:
-
-- `id`, `text`
-- `mentions[]`: span-level offsets + type + confidence + evidence + rationale
-- `traces`: per-agent trace, conflict/debate/verifier/memory traces
-- `costs`: calls, token usage (if available), latency, debate rounds, trigger rate
-
-## 5. Evaluate
+Dataset runner:
 
 ```bash
-python -m maner.cli.run_eval --gold_path tests/fixtures/tiny_gold.jsonl --pred_path outputs/predictions.jsonl --schema_path tests/fixtures/schema_example.json
+python experiments/run_dataset_eval.py start --dataset-id conll2003 --background
 ```
 
-Metrics:
+Status:
 
-- strict span-level exact match F1
-- micro / macro (by type)
-- error stats: `type_mismatch`, `boundary_mismatch`, `spurious`, `missing`
+```bash
+python experiments/run_dataset_eval.py status --dataset-id conll2003
+```
 
-Evaluation protocol note:
+Logs:
 
-- Do not iteratively tune rules/prompts on the same holdout set.
-- Keep a fixed dev split for tuning and a separate untouched test split for final reporting.
+```bash
+python experiments/run_dataset_eval.py logs --dataset-id conll2003 --follow
+```
 
-## 6. Ablations (all in config)
+Evaluation:
 
-In `configs/default.yaml` -> `ablations`:
+```bash
+python -m maner.cli.run_eval --gold_path <gold.jsonl> --pred_path <pred.jsonl> --schema_path <schema.json>
+```
 
-- `w_o_expert`
-- `w_o_re`
-- `w_o_debate`
-- `w_o_verifier`
-- `w_o_memory`
+## 6. Logging
 
-## 7. Span Augmentation (optional)
+Pipeline logs are timestamped and emitted in a stable key-value format:
 
-You can allow Expert/RE to propose extra recall spans that are merged into `CandidateSet` with provenance:
+```text
+[2026-03-25 00:51:35] [pipeline] sample_start | chars=55 idx=1 sample_id=test-00000
+```
 
-- `pipeline.allow_expert_span_augmentation`
-- `pipeline.allow_re_span_augmentation`
-- `pipeline.rerun_after_span_augmentation`
-- `pipeline.max_augmented_spans_per_sample`
+When `pipeline.progress_agent_trace=true`, agent-level timing is also logged:
 
-Behavior:
+```text
+[2026-03-25 00:51:42] [pipeline] ner_direct_agent_done | elapsed_ms=7689 llm_calls=1 mentions=2 sample_id=test-00000
+```
 
-- Expert/RE may output `new_spans[]` in strict JSON.
-- Pipeline validates offsets/substring and deduplicates by exact offsets.
-- Accepted spans are assigned `aug_xxxx` ids and `provenance`.
-- If rerun is enabled, pipeline reruns RAG/Expert/RE once on the augmented candidate set before NER.
+This format is designed for direct reading and for downstream parsing.
 
-## 8. Generalization-Safe Runtime Controls
+## 7. Runtime Outputs
 
-To avoid dataset-specific hardcoding in core runtime:
+Prediction files contain:
 
-- `pipeline.inject_high_value_candidates`: default `false`
-- `pipeline.lexical_injection_rules`: default `[]` (config-only, no built-in terms)
-- `pipeline.mention_blocklist`: default `[]` (config-only, no built-in terms)
-- `pipeline.candidate.*`: generic fallback controls (no domain lexicon in code)
-- `pipeline.enable_descriptor_expansion`: default `false`; if enabled, descriptor terms can be derived from schema
+- `id`
+- `text`
+- `mentions`
+- `traces`
+- `costs`
+
+The repository does not keep historical runtime artifacts by default. Temporary logs, PID files, sqlite memory files, and generated results are ignored by `.gitignore`.
+
+## 8. Evaluation Metric
+
+Primary metric is strict span-level exact-match micro-F1:
+
+- `Precision = TP / (TP + FP)`
+- `Recall = TP / (TP + FN)`
+- `F1 = 2PR / (P + R)`
+
+An entity counts as correct only when both:
+
+- span offsets match exactly
+- entity type matches exactly
 
 ## 9. Key Modules
 
-- `src/maner/core/`: types, schema, dataset reader, config/prompt loading
-- `src/maner/llm/`: provider client + strict JSON parsing/minimal fix
-- `src/maner/agents/`: candidate/expert/re/ner/adjudicator/debate/verifier
-- `src/maner/orchestrator/`: conflict triage + end-to-end pipeline
-- `src/maner/memory/`: sqlite memory store (retrieve/writeback/promote)
-- `src/maner/eval/`: strict metrics + error analysis
-- `tests/`: unit tests + tiny fixtures
+- `src/maner/core/`
+- `src/maner/llm/`
+- `src/maner/agents/`
+- `src/maner/orchestrator/`
+- `src/maner/memory/`
+- `src/maner/eval/`
+- `experiments/`
 
-## 10. Provider
+## 10. Repository State
 
-Implemented provider:
+The repository is now kept in a handoff-safe state:
 
-- `openai_compatible` REST (`base_url + api_key + model`)
-- `mock` provider for local deterministic tests/smoke
-
-Provider adapter can be extended in `src/maner/llm/client.py`.
+- source code retained
+- required configs retained
+- dataset definition retained
+- prompt files retained
+- runtime artifacts cleaned
+- temporary caches ignored

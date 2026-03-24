@@ -1,0 +1,100 @@
+{"id": "test-03200", "text": "SOCCER - ISRAELI FIRST DIVISION RESULTS /STANDINGS.", "gold_mentions": [{"start": 9, "end": 16, "ent_type": "MISC", "text": "ISRAELI"}]}
+{"id": "test-03201", "text": "JERUSALEM 1996-12-07", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "LOC", "text": "JERUSALEM"}]}
+{"id": "test-03202", "text": "Results of first division soccer", "gold_mentions": []}
+{"id": "test-03203", "text": "matches played over the weekend:", "gold_mentions": []}
+{"id": "test-03204", "text": "Zafririm Holon 1 Hapoel Petah Tikva 1", "gold_mentions": [{"start": 0, "end": 14, "ent_type": "ORG", "text": "Zafririm Holon"}, {"start": 17, "end": 35, "ent_type": "ORG", "text": "Hapoel Petah Tikva"}]}
+{"id": "test-03205", "text": "Maccabi Haifa 1 Hapoel Taibe 1", "gold_mentions": [{"start": 0, "end": 13, "ent_type": "ORG", "text": "Maccabi Haifa"}, {"start": 16, "end": 28, "ent_type": "ORG", "text": "Hapoel Taibe"}]}
+{"id": "test-03206", "text": "Hapoel Kfar Sava 1 Bnei Yehuda 0", "gold_mentions": [{"start": 0, "end": 16, "ent_type": "ORG", "text": "Hapoel Kfar Sava"}, {"start": 19, "end": 30, "ent_type": "ORG", "text": "Bnei Yehuda"}]}
+{"id": "test-03207", "text": "Hapoel Tel Aviv 1 Betar Jerusalem 4", "gold_mentions": [{"start": 0, "end": 15, "ent_type": "ORG", "text": "Hapoel Tel Aviv"}, {"start": 18, "end": 33, "ent_type": "ORG", "text": "Betar Jerusalem"}]}
+{"id": "test-03208", "text": "Hapoel Jerusalem 0 Maccabi Tel Aviv 4", "gold_mentions": [{"start": 0, "end": 16, "ent_type": "ORG", "text": "Hapoel Jerusalem"}, {"start": 19, "end": 35, "ent_type": "ORG", "text": "Maccabi Tel Aviv"}]}
+{"id": "test-03209", "text": "Ironi Rishon Lezion 1 Maccabi Herzliya 0", "gold_mentions": [{"start": 0, "end": 19, "ent_type": "ORG", "text": "Ironi Rishon Lezion"}, {"start": 22, "end": 38, "ent_type": "ORG", "text": "Maccabi Herzliya"}]}
+{"id": "test-03210", "text": "Hapoel Beit She'an 2 Hapoel Beersheba 1", "gold_mentions": [{"start": 0, "end": 18, "ent_type": "ORG", "text": "Hapoel Beit She'an"}, {"start": 21, "end": 37, "ent_type": "ORG", "text": "Hapoel Beersheba"}]}
+{"id": "test-03211", "text": "Maccabi Petah Tikva 0 Hapoel Haifa 2", "gold_mentions": [{"start": 0, "end": 19, "ent_type": "ORG", "text": "Maccabi Petah Tikva"}, {"start": 22, "end": 34, "ent_type": "ORG", "text": "Hapoel Haifa"}]}
+{"id": "test-03212", "text": "Standings (tabulate under played, won, drawn, lost, goals", "gold_mentions": []}
+{"id": "test-03213", "text": "for, against, points):", "gold_mentions": []}
+{"id": "test-03214", "text": "Betar Jerusalem 12 10 2 0 28 7 32", "gold_mentions": [{"start": 0, "end": 15, "ent_type": "ORG", "text": "Betar Jerusalem"}]}
+{"id": "test-03215", "text": "Hapoel Petah Tikva 12 9 2 1 27 13 29", "gold_mentions": [{"start": 0, "end": 18, "ent_type": "ORG", "text": "Hapoel Petah Tikva"}]}
+{"id": "test-03216", "text": "Hapoel Beersheba 12 8 0 4 18 9 24", "gold_mentions": [{"start": 0, "end": 16, "ent_type": "ORG", "text": "Hapoel Beersheba"}]}
+{"id": "test-03217", "text": "Maccabi Tel Aviv 12 6 4 2 21 14 22", "gold_mentions": [{"start": 0, "end": 16, "ent_type": "ORG", "text": "Maccabi Tel Aviv"}]}
+{"id": "test-03218", "text": "Maccabi Petah Tikva 12 6 2 4 14 12 20", "gold_mentions": [{"start": 0, "end": 19, "ent_type": "ORG", "text": "Maccabi Petah Tikva"}]}
+{"id": "test-03219", "text": "Bnei Yehuda 12 6 2 4 15 15 20", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Bnei Yehuda"}]}
+{"id": "test-03220", "text": "Hapoel Haifa 12 6 1 5 21 16 19", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "Hapoel Haifa"}]}
+{"id": "test-03221", "text": "Maccabi Haifa 12 4 4 4 14 15 16", "gold_mentions": [{"start": 0, "end": 13, "ent_type": "ORG", "text": "Maccabi Haifa"}]}
+{"id": "test-03222", "text": "Hapoel Kfar Sava 12 5 1 6 10 11 16", "gold_mentions": [{"start": 0, "end": 16, "ent_type": "ORG", "text": "Hapoel Kfar Sava"}]}
+{"id": "test-03223", "text": "Hapoel Jerusalem 12 4 1 7 10 18 13", "gold_mentions": [{"start": 0, "end": 16, "ent_type": "ORG", "text": "Hapoel Jerusalem"}]}
+{"id": "test-03224", "text": "Ironi Rishon Lezion 12 4 1 7 13 24 13", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "Ironi Rishon"}]}
+{"id": "test-03225", "text": "Zafririm Holon 12 2 4 6 8 14 10", "gold_mentions": [{"start": 0, "end": 14, "ent_type": "ORG", "text": "Zafririm Holon"}]}
+{"id": "test-03226", "text": "Maccabi Herzliya 12 3 1 8 5 12 10", "gold_mentions": [{"start": 0, "end": 16, "ent_type": "ORG", "text": "Maccabi Herzliya"}]}
+{"id": "test-03227", "text": "Hapoel Taiba 12 3 1 8 10 21 10", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "Hapoel Taiba"}]}
+{"id": "test-03228", "text": "Hapoel Beit She'an 12 2 3 7 9 13 9", "gold_mentions": [{"start": 0, "end": 18, "ent_type": "ORG", "text": "Hapoel Beit She'an"}]}
+{"id": "test-03229", "text": "Hapoel Tel Aviv 12 2 3 7 7 16 9", "gold_mentions": [{"start": 0, "end": 15, "ent_type": "ORG", "text": "Hapoel Tel Aviv"}]}
+{"id": "test-03230", "text": "SOCCER - ASIAN CUP RESULTS.", "gold_mentions": [{"start": 9, "end": 18, "ent_type": "MISC", "text": "ASIAN CUP"}]}
+{"id": "test-03231", "text": "ABU DHABI 1996-12-07", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "LOC", "text": "ABU DHABI"}]}
+{"id": "test-03232", "text": "Results of Asian Cup group A matches on Saturday:", "gold_mentions": [{"start": 11, "end": 20, "ent_type": "MISC", "text": "Asian Cup"}]}
+{"id": "test-03233", "text": "United Arab Emirates 3 Kuwait 2 (halftime 0-2)", "gold_mentions": [{"start": 0, "end": 20, "ent_type": "LOC", "text": "United Arab Emirates"}, {"start": 23, "end": 29, "ent_type": "LOC", "text": "Kuwait"}]}
+{"id": "test-03234", "text": "Scorers:", "gold_mentions": []}
+{"id": "test-03235", "text": "UAE - Hassan Ahmed 53, Adnan Al Talyani 55, Bakhit Saad 80", "gold_mentions": [{"start": 0, "end": 3, "ent_type": "LOC", "text": "UAE"}, {"start": 6, "end": 18, "ent_type": "PER", "text": "Hassan Ahmed"}, {"start": 23, "end": 39, "ent_type": "PER", "text": "Adnan Al Talyani"}, {"start": 44, "end": 55, "ent_type": "PER", "text": "Bakhit Saad"}]}
+{"id": "test-03236", "text": "Kuwait - Jassem Al-Huwaidi 9, 44", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "Kuwait"}, {"start": 9, "end": 26, "ent_type": "PER", "text": "Jassem Al-Huwaidi"}]}
+{"id": "test-03237", "text": "Attendance: 15,000", "gold_mentions": []}
+{"id": "test-03238", "text": "South Korea 4 Indonesia 2 (3-0)", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "LOC", "text": "South Korea"}, {"start": 14, "end": 23, "ent_type": "LOC", "text": "Indonesia"}]}
+{"id": "test-03239", "text": "Scorers:", "gold_mentions": []}
+{"id": "test-03240", "text": "South Korea - Kim Do Hoon 5, Hwang Sun Hong 7 and 15, Koo", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "LOC", "text": "South Korea"}, {"start": 14, "end": 25, "ent_type": "PER", "text": "Kim Do Hoon"}, {"start": 29, "end": 43, "ent_type": "PER", "text": "Hwang Sun Hong"}, {"start": 54, "end": 57, "ent_type": "PER", "text": "Koo"}]}
+{"id": "test-03241", "text": "Jeon Woon 55", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "PER", "text": "Jeon Woon"}]}
+{"id": "test-03242", "text": "Indonesia - Ronny Wabia 58, Widodo Putra 65", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "LOC", "text": "Indonesia"}, {"start": 12, "end": 23, "ent_type": "PER", "text": "Ronny Wabia"}, {"start": 28, "end": 40, "ent_type": "PER", "text": "Widodo Putra"}]}
+{"id": "test-03243", "text": "Attendance: 2,000", "gold_mentions": []}
+{"id": "test-03244", "text": "Group A standings (tabulate under: played, won, drawn, lost,", "gold_mentions": []}
+{"id": "test-03245", "text": "goals for, against, points):", "gold_mentions": []}
+{"id": "test-03246", "text": "South Korea 2 1 1 0 5 3 4", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "LOC", "text": "South Korea"}]}
+{"id": "test-03247", "text": "UAE 2 1 1 0 4 3 4", "gold_mentions": [{"start": 0, "end": 3, "ent_type": "LOC", "text": "UAE"}]}
+{"id": "test-03248", "text": "Kuwait 2 0 1 1 4 5 1", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "Kuwait"}]}
+{"id": "test-03249", "text": "Indonesia 2 0 1 1 4 6 1", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "LOC", "text": "Indonesia"}]}
+{"id": "test-03250", "text": "NBA BASKETBALL - STANDINGS AFTER FRIDAY'S GAMES.", "gold_mentions": [{"start": 0, "end": 3, "ent_type": "ORG", "text": "NBA"}]}
+{"id": "test-03251", "text": "NEW YORK 1996-12-07", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "NEW YORK"}]}
+{"id": "test-03252", "text": "Standings of National", "gold_mentions": [{"start": 13, "end": 21, "ent_type": "ORG", "text": "National"}]}
+{"id": "test-03253", "text": "Basketball Association teams after games played on Friday", "gold_mentions": [{"start": 0, "end": 22, "ent_type": "ORG", "text": "Basketball Association"}]}
+{"id": "test-03254", "text": "(tabulate under won, lost, percentage, games behind):", "gold_mentions": []}
+{"id": "test-03255", "text": "EASTERN CONFERENCE", "gold_mentions": []}
+{"id": "test-03256", "text": "ATLANTIC DIVISION", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "ATLANTIC"}]}
+{"id": "test-03257", "text": "W L PCT GB", "gold_mentions": []}
+{"id": "test-03258", "text": "MIAMI 14 5 .737 -", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "ORG", "text": "MIAMI"}]}
+{"id": "test-03259", "text": "NEW YORK 11 6 .647 2", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "NEW YORK"}]}
+{"id": "test-03260", "text": "ORLANDO 8 7 .533 4", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "ORLANDO"}]}
+{"id": "test-03261", "text": "WASHINGTON 7 9 .438 5 1/2", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "WASHINGTON"}]}
+{"id": "test-03262", "text": "PHILADELPHIA 7 10 .412 6", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "PHILADELPHIA"}]}
+{"id": "test-03263", "text": "NEW JERSEY 4 10 .286 7 1/2", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "NEW JERSEY"}]}
+{"id": "test-03264", "text": "BOSTON 4 13 .235 9", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "BOSTON"}]}
+{"id": "test-03265", "text": "CENTRAL DIVISION", "gold_mentions": [{"start": 0, "end": 16, "ent_type": "MISC", "text": "CENTRAL DIVISION"}]}
+{"id": "test-03266", "text": "W L PCT GB", "gold_mentions": []}
+{"id": "test-03267", "text": "CHICAGO 17 1 .944 -", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "CHICAGO"}]}
+{"id": "test-03268", "text": "DETROIT 14 3 .824 2 1/2", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "DETROIT"}]}
+{"id": "test-03269", "text": "CLEVELAND 11 6 .647 5 1/2", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "CLEVELAND"}]}
+{"id": "test-03270", "text": "ATLANTA 10 8 .556 7", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "ATLANTA"}]}
+{"id": "test-03271", "text": "MILWAUKEE 8 8 .500 8", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "MILWAUKEE"}]}
+{"id": "test-03272", "text": "INDIANA 8 8 .500 8", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "INDIANA"}]}
+{"id": "test-03273", "text": "CHARLOTTE 8 9 .471 8 1/2", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "CHARLOTTE"}]}
+{"id": "test-03274", "text": "TORONTO 6 11 .353 10 1/2", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "TORONTO"}]}
+{"id": "test-03275", "text": "WESTERN CONFERENCE", "gold_mentions": []}
+{"id": "test-03276", "text": "MIDWEST DIVISION", "gold_mentions": []}
+{"id": "test-03277", "text": "W L PCT GB", "gold_mentions": []}
+{"id": "test-03278", "text": "HOUSTON 16 2 .889 -", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "HOUSTON"}]}
+{"id": "test-03279", "text": "UTAH 15 2 .882 1/2", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "ORG", "text": "UTAH"}]}
+{"id": "test-03280", "text": "MINNESOTA 7 11 .389 9", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "MINNESOTA"}]}
+{"id": "test-03281", "text": "DALLAS 6 11 .353 9 1/2", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "DALLAS"}]}
+{"id": "test-03282", "text": "DENVER 5 14 .263 11 1/2", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "DENVER"}]}
+{"id": "test-03283", "text": "SAN ANTONIO 3 14 .176 12 1/2", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "SAN ANTONIO"}]}
+{"id": "test-03284", "text": "VANCOUVER 3 16 .158 13 1/2", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "VANCOUVER"}]}
+{"id": "test-03285", "text": "PACIFIC DIVISION", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "LOC", "text": "PACIFIC"}]}
+{"id": "test-03286", "text": "W L PCT GB", "gold_mentions": []}
+{"id": "test-03287", "text": "SEATTLE 15 5 .750 -", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "SEATTLE"}]}
+{"id": "test-03288", "text": "LA LAKERS 14 7 .667 1 1/2", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "LA LAKERS"}]}
+{"id": "test-03289", "text": "PORTLAND 12 8 .600 3", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "PORTLAND"}]}
+{"id": "test-03290", "text": "LA CLIPPERS 7 11 .389 7", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "LA CLIPPERS"}]}
+{"id": "test-03291", "text": "GOLDEN STATE 6 13 .316 8 1/2", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "GOLDEN STATE"}]}
+{"id": "test-03292", "text": "SACRAMENTO 6 13 .316 8 1/2", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "SACRAMENTO"}]}
+{"id": "test-03293", "text": "PHOENIX 3 14 .176 10 1/2", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "PHOENIX"}]}
+{"id": "test-03294", "text": "SATURDAY, DECEMBER 7 SCHEDULE", "gold_mentions": []}
+{"id": "test-03295", "text": "TORONTO AT ATLANTA", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "TORONTO"}, {"start": 11, "end": 18, "ent_type": "LOC", "text": "ATLANTA"}]}
+{"id": "test-03296", "text": "LA CLIPPERS AT NEW YORK", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "LA CLIPPERS"}, {"start": 15, "end": 23, "ent_type": "LOC", "text": "NEW YORK"}]}
+{"id": "test-03297", "text": "MILWAUKEE AT WASHINGTON", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "MILWAUKEE"}, {"start": 13, "end": 23, "ent_type": "LOC", "text": "WASHINGTON"}]}
+{"id": "test-03298", "text": "DETROIT AT NEW JERSEY", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "DETROIT"}, {"start": 11, "end": 21, "ent_type": "LOC", "text": "NEW JERSEY"}]}
+{"id": "test-03299", "text": "MIAMI AT CHICAGO", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "ORG", "text": "MIAMI"}, {"start": 9, "end": 16, "ent_type": "LOC", "text": "CHICAGO"}]}

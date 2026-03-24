@@ -32,14 +32,17 @@ class REAgent:
         allow_span_proposals: bool = False,
     ) -> tuple[list[Relation], ExpertConstraints, UsageCost, dict[str, Any]]:
         memory_items = memory_items or []
-        relation_mode = "schema_bound" if schema.relation_constraints else "structure_only"
+        has_relation_schema = bool(schema.relation_constraints)
+        role_mode = "re" if has_relation_schema else "in_context"
+        relation_mode = "schema_bound" if has_relation_schema else "in_context"
         augmentation_policy = (
             "enabled: you may propose additional recall spans via `new_spans`."
             if allow_span_proposals
             else "disabled: do not output `new_spans`."
         )
+        prompt_key = "re_agent" if has_relation_schema else "in_context_agent"
         system, user = self.prompt_manager.render(
-            "re_agent",
+            prompt_key,
             text=text,
             candidate_spans=self._candidate_payload(candidate_set),
             memory_items=memory_items,
@@ -62,7 +65,7 @@ class REAgent:
         llm_result = self.llm_client.chat_json(
             system_prompt=system,
             user_prompt=user,
-            task="re_agent",
+            task=prompt_key,
             context=context,
         )
         payload = llm_result.parsed_json
@@ -101,7 +104,7 @@ class REAgent:
             latency_ms=llm_result.usage.latency_ms or [],
         )
         trace = {
-            "agent": "re",
+            "agent": role_mode,
             "relation_mode": relation_mode,
             "raw": llm_result.content,
             "parsed": payload,

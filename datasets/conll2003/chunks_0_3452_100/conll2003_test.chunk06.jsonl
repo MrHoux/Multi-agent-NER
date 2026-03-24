@@ -1,0 +1,100 @@
+{"id": "test-00500", "text": "PITTSBURGH 9 4 0 299 211", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "PITTSBURGH"}]}
+{"id": "test-00501", "text": "HOUSTON 7 6 0 291 254", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "HOUSTON"}]}
+{"id": "test-00502", "text": "JACKSONVILLE 6 7 0 263 288", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "JACKSONVILLE"}]}
+{"id": "test-00503", "text": "CINCINNATI 5 8 0 299 318", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "CINCINNATI"}]}
+{"id": "test-00504", "text": "BALTIMORE 4 9 0 320 369", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "BALTIMORE"}]}
+{"id": "test-00505", "text": "WESTERN DIVISION", "gold_mentions": []}
+{"id": "test-00506", "text": "W L T PF PA", "gold_mentions": []}
+{"id": "test-00507", "text": "X-DENVER 12 1 0 351 199", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "MISC", "text": "X-DENVER"}]}
+{"id": "test-00508", "text": "KANSAS CITY 9 4 0 262 230", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "KANSAS CITY"}]}
+{"id": "test-00509", "text": "SAN DIEGO 7 6 0 277 323", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "SAN DIEGO"}]}
+{"id": "test-00510", "text": "OAKLAND 6 7 0 274 234", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "OAKLAND"}]}
+{"id": "test-00511", "text": "SEATTLE 5 8 0 250 317", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "SEATTLE"}]}
+{"id": "test-00512", "text": "NATIONAL FOOTBALL CONFERENCE", "gold_mentions": []}
+{"id": "test-00513", "text": "EASTERN DIVISION", "gold_mentions": []}
+{"id": "test-00514", "text": "W L T PF PA", "gold_mentions": []}
+{"id": "test-00515", "text": "DALLAS 8 5 0 254 201", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "DALLAS"}]}
+{"id": "test-00516", "text": "WASHINGTON 8 5 0 291 251", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "WASHINGTON"}]}
+{"id": "test-00517", "text": "PHILADELPHIA 8 6 0 313 302", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "PHILADELPHIA"}]}
+{"id": "test-00518", "text": "ARIZONA 6 7 0 248 332", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "ARIZONA"}]}
+{"id": "test-00519", "text": "NY GIANTS 5 8 0 200 250", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "NY GIANTS"}]}
+{"id": "test-00520", "text": "CENTRAL DIVISION", "gold_mentions": []}
+{"id": "test-00521", "text": "W L T PF PA", "gold_mentions": []}
+{"id": "test-00522", "text": "Y-GREEN BAY 10 3 0 346 191", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "MISC", "text": "Y-GREEN BAY"}]}
+{"id": "test-00523", "text": "MINNESOTA 7 6 0 243 245", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "MINNESOTA"}]}
+{"id": "test-00524", "text": "CHICAGO 5 8 0 202 248", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "CHICAGO"}]}
+{"id": "test-00525", "text": "DETROIT 5 8 0 263 289", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "DETROIT"}]}
+{"id": "test-00526", "text": "TAMPA BAY 4 9 0 153 243", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "TAMPA BAY"}]}
+{"id": "test-00527", "text": "WESTERN DIVISION", "gold_mentions": []}
+{"id": "test-00528", "text": "W L T PF PA", "gold_mentions": []}
+{"id": "test-00529", "text": "SAN FRANCISCO 10 3 0 325 198", "gold_mentions": [{"start": 0, "end": 13, "ent_type": "ORG", "text": "SAN FRANCISCO"}]}
+{"id": "test-00530", "text": "CAROLINA 9 4 0 292 164", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "CAROLINA"}]}
+{"id": "test-00531", "text": "ST LOUIS 4 9 0 246 334", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "ST LOUIS"}]}
+{"id": "test-00532", "text": "ATLANTA 2 11 0 234 393", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "ATLANTA"}]}
+{"id": "test-00533", "text": "NEW ORLEANS 2 11 0 184 291", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "NEW ORLEANS"}]}
+{"id": "test-00534", "text": "X -- CLINCHED DIVISION TITLE", "gold_mentions": []}
+{"id": "test-00535", "text": "Y -- CLINCHED PLAYOFF BERTH", "gold_mentions": []}
+{"id": "test-00536", "text": "SUNDAY, DECEMBER 8", "gold_mentions": []}
+{"id": "test-00537", "text": "ST LOUIS AT CHICAGO", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "ST LOUIS"}, {"start": 12, "end": 19, "ent_type": "LOC", "text": "CHICAGO"}]}
+{"id": "test-00538", "text": "BALTIMORE AT CINCINNATI", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "BALTIMORE"}, {"start": 13, "end": 23, "ent_type": "LOC", "text": "CINCINNATI"}]}
+{"id": "test-00539", "text": "DENVER AT GREEN BAY", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "DENVER"}, {"start": 10, "end": 19, "ent_type": "LOC", "text": "GREEN BAY"}]}
+{"id": "test-00540", "text": "JACKSONVILLE AT HOUSTON", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "JACKSONVILLE"}, {"start": 16, "end": 23, "ent_type": "LOC", "text": "HOUSTON"}]}
+{"id": "test-00541", "text": "NY GIANTS AT MIAMI", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "NY GIANTS"}, {"start": 13, "end": 18, "ent_type": "LOC", "text": "MIAMI"}]}
+{"id": "test-00542", "text": "ATLANTA AT NEW ORLEANS", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "ATLANTA"}, {"start": 11, "end": 22, "ent_type": "LOC", "text": "NEW ORLEANS"}]}
+{"id": "test-00543", "text": "SAN DIEGO AT PITTSBURGH", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "SAN DIEGO"}, {"start": 13, "end": 23, "ent_type": "LOC", "text": "PITTSBURGH"}]}
+{"id": "test-00544", "text": "WASHINGTON AT TAMPA BAY", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "WASHINGTON"}, {"start": 14, "end": 23, "ent_type": "LOC", "text": "TAMPA BAY"}]}
+{"id": "test-00545", "text": "DALLAS AT ARIZONA", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "DALLAS"}, {"start": 10, "end": 17, "ent_type": "LOC", "text": "ARIZONA"}]}
+{"id": "test-00546", "text": "NY JETS AT NEW ENGLAND", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "NY JETS"}, {"start": 11, "end": 22, "ent_type": "LOC", "text": "NEW ENGLAND"}]}
+{"id": "test-00547", "text": "BUFFALO AT SEATTLE", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "BUFFALO"}, {"start": 11, "end": 18, "ent_type": "LOC", "text": "SEATTLE"}]}
+{"id": "test-00548", "text": "CAROLINA AT SAN FRANCISCO", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "CAROLINA"}, {"start": 12, "end": 25, "ent_type": "LOC", "text": "SAN FRANCISCO"}]}
+{"id": "test-00549", "text": "MINNESOTA AT DETROIT", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "MINNESOTA"}, {"start": 13, "end": 20, "ent_type": "LOC", "text": "DETROIT"}]}
+{"id": "test-00550", "text": "MONDAY, DECEMBER 9", "gold_mentions": []}
+{"id": "test-00551", "text": "KANSAS CITY AT OAKLAND", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "KANSAS CITY"}, {"start": 15, "end": 22, "ent_type": "LOC", "text": "OAKLAND"}]}
+{"id": "test-00552", "text": "NFL AMERICAN FOOTBALL-THURSDAY'S RESULT.", "gold_mentions": [{"start": 0, "end": 3, "ent_type": "ORG", "text": "NFL"}]}
+{"id": "test-00553", "text": "NEW YORK 1996-12-05", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "LOC", "text": "NEW YORK"}]}
+{"id": "test-00554", "text": "Result of National Football", "gold_mentions": [{"start": 10, "end": 18, "ent_type": "ORG", "text": "National"}, {"start": 19, "end": 27, "ent_type": "LOC", "text": "Football"}]}
+{"id": "test-00555", "text": "League game on Thursday (home team in CAPS):", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "League"}]}
+{"id": "test-00556", "text": "INDIANAPOLIS 37 Philadelphia 10", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "INDIANAPOLIS"}, {"start": 16, "end": 28, "ent_type": "ORG", "text": "Philadelphia"}]}
+{"id": "test-00557", "text": "NCAA AMERICAN FOOTBALL-OHIO STATE'S PACE FIRST REPEAT LOMBARDI AWARD WINNER.", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "ORG", "text": "NCAA"}, {"start": 14, "end": 33, "ent_type": "MISC", "text": "FOOTBALL-OHIO STATE"}, {"start": 36, "end": 40, "ent_type": "PER", "text": "PACE"}, {"start": 54, "end": 68, "ent_type": "MISC", "text": "LOMBARDI AWARD"}]}
+{"id": "test-00558", "text": "HOUSTON 1996-12-05", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "LOC", "text": "HOUSTON"}]}
+{"id": "test-00559", "text": "Ohio State left tackle Orlando Pace became the first repeat winner of the Lombardi Award Thursday night when the Rotary Club of Houston again honoured him as college football's lineman of the year.", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Ohio State"}, {"start": 23, "end": 35, "ent_type": "PER", "text": "Orlando Pace"}, {"start": 74, "end": 88, "ent_type": "MISC", "text": "Lombardi Award"}, {"start": 113, "end": 124, "ent_type": "ORG", "text": "Rotary Club"}, {"start": 128, "end": 135, "ent_type": "LOC", "text": "Houston"}]}
+{"id": "test-00560", "text": "Pace, a junior, helped Ohio State to a 10-1 record and a berth in the Rose Bowl against Arizona State.", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "PER", "text": "Pace"}, {"start": 23, "end": 33, "ent_type": "ORG", "text": "Ohio State"}, {"start": 70, "end": 79, "ent_type": "MISC", "text": "Rose Bowl"}, {"start": 88, "end": 101, "ent_type": "ORG", "text": "Arizona State"}]}
+{"id": "test-00561", "text": "He was the most dominant offensive lineman in the country and also played defensive line in goal-line situations.", "gold_mentions": []}
+{"id": "test-00562", "text": "Last year, Pace became the first sophomore to win the award since its inception in 1970.", "gold_mentions": [{"start": 11, "end": 15, "ent_type": "PER", "text": "Pace"}]}
+{"id": "test-00563", "text": "Pace outdistanced three senior finalists -- Virginia Tech defensive end Cornell Brown, Arizona State offensive tackle Juan Roque and defensive end Jared Tomich of Nebraska.", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "PER", "text": "Pace"}, {"start": 44, "end": 57, "ent_type": "ORG", "text": "Virginia Tech"}, {"start": 72, "end": 85, "ent_type": "PER", "text": "Cornell Brown"}, {"start": 87, "end": 100, "ent_type": "ORG", "text": "Arizona State"}, {"start": 118, "end": 128, "ent_type": "PER", "text": "Juan Roque"}, {"start": 147, "end": 159, "ent_type": "PER", "text": "Jared Tomich"}, {"start": 163, "end": 171, "ent_type": "ORG", "text": "Nebraska"}]}
+{"id": "test-00564", "text": "The Lombardi Award is presented to the college lineman who, in addition to outstanding effort on the field, best exemplifies the characteristics and discipline of Vince Lombardi, legendary coach of the Green Bay Packers.", "gold_mentions": [{"start": 4, "end": 18, "ent_type": "MISC", "text": "Lombardi Award"}, {"start": 163, "end": 177, "ent_type": "PER", "text": "Vince Lombardi"}, {"start": 202, "end": 219, "ent_type": "ORG", "text": "Green Bay Packers"}]}
+{"id": "test-00565", "text": "SOCCER - DUTCH FIRST DIVISION RESULTS /STANDINGS.", "gold_mentions": [{"start": 9, "end": 14, "ent_type": "MISC", "text": "DUTCH"}]}
+{"id": "test-00566", "text": "AMSTERDAM 1996-12-06", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "LOC", "text": "AMSTERDAM"}]}
+{"id": "test-00567", "text": "Result of Dutch first division", "gold_mentions": [{"start": 10, "end": 15, "ent_type": "MISC", "text": "Dutch"}]}
+{"id": "test-00568", "text": "soccer match played on Friday:", "gold_mentions": []}
+{"id": "test-00569", "text": "RKC Waalwijk 1 Willem II Tilburg 2", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "RKC Waalwijk"}, {"start": 15, "end": 32, "ent_type": "ORG", "text": "Willem II Tilburg"}]}
+{"id": "test-00570", "text": "Standings (tabulate under played, won, drawn, lost, goals", "gold_mentions": []}
+{"id": "test-00571", "text": "for, goals against, points):", "gold_mentions": []}
+{"id": "test-00572", "text": "PSV Eindhoven 18 13 3 2 52 14 42", "gold_mentions": [{"start": 0, "end": 13, "ent_type": "ORG", "text": "PSV Eindhoven"}]}
+{"id": "test-00573", "text": "Feyenoord 17 11 3 3 29 20 36", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Feyenoord"}]}
+{"id": "test-00574", "text": "Twente Enschede 18 10 4 4 28 15 34", "gold_mentions": [{"start": 0, "end": 15, "ent_type": "ORG", "text": "Twente Enschede"}]}
+{"id": "test-00575", "text": "Graafschap Doetinchem 18 9 3 6 29 22 30", "gold_mentions": [{"start": 0, "end": 21, "ent_type": "ORG", "text": "Graafschap Doetinchem"}]}
+{"id": "test-00576", "text": "Vitesse Arnhem 18 8 5 5 29 21 29", "gold_mentions": [{"start": 0, "end": 14, "ent_type": "ORG", "text": "Vitesse Arnhem"}]}
+{"id": "test-00577", "text": "Ajax Amsterdam 18 7 8 3 23 16 29", "gold_mentions": [{"start": 0, "end": 14, "ent_type": "ORG", "text": "Ajax Amsterdam"}]}
+{"id": "test-00578", "text": "Heerenveen 18 7 7 4 30 20 28", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Heerenveen"}]}
+{"id": "test-00579", "text": "Roda JC Kerkrade 17 7 6 4 19 21 27", "gold_mentions": [{"start": 0, "end": 16, "ent_type": "ORG", "text": "Roda JC Kerkrade"}]}
+{"id": "test-00580", "text": "Utrecht 18 4 10 4 26 24 22", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Utrecht"}]}
+{"id": "test-00581", "text": "Volendam 18 5 6 7 20 23 21", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Volendam"}]}
+{"id": "test-00582", "text": "Sparta Rotterdam 19 6 3 10 21 25 21", "gold_mentions": [{"start": 0, "end": 16, "ent_type": "ORG", "text": "Sparta Rotterdam"}]}
+{"id": "test-00583", "text": "NAC Breda 18 6 3 9 17 29 21", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "NAC Breda"}]}
+{"id": "test-00584", "text": "Willem II Tilburg 18 5 4 9 19 31 19", "gold_mentions": [{"start": 0, "end": 17, "ent_type": "ORG", "text": "Willem II Tilburg"}]}
+{"id": "test-00585", "text": "Groningen 18 4 6 8 20 31 18", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Groningen"}]}
+{"id": "test-00586", "text": "AZ Alkmaar 18 5 2 11 16 23 17", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "AZ Alkmaar"}]}
+{"id": "test-00587", "text": "Fortuna Sittard 17 3 7 7 14 28 16", "gold_mentions": [{"start": 0, "end": 15, "ent_type": "ORG", "text": "Fortuna Sittard"}]}
+{"id": "test-00588", "text": "NEC Nijmegen 18 3 7 8 19 32 16", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "NEC Nijmegen"}]}
+{"id": "test-00589", "text": "RKC Waalwijk 19 3 5 11 18 33 14", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "RKC Waalwijk"}]}
+{"id": "test-00590", "text": "SOCCER - GERMAN FIRST DIVISION RESULTS /STANDINGS.", "gold_mentions": [{"start": 9, "end": 15, "ent_type": "MISC", "text": "GERMAN"}]}
+{"id": "test-00591", "text": "BONN 1996-12-06", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "LOC", "text": "BONN"}]}
+{"id": "test-00592", "text": "Results of German first division", "gold_mentions": [{"start": 11, "end": 17, "ent_type": "MISC", "text": "German"}]}
+{"id": "test-00593", "text": "soccer matches played on Friday:", "gold_mentions": []}
+{"id": "test-00594", "text": "Bochum 2 Bayer Leverkusen 2", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "Bochum"}, {"start": 9, "end": 25, "ent_type": "ORG", "text": "Bayer Leverkusen"}]}
+{"id": "test-00595", "text": "Werder Bremen 1 1860 Munich 1", "gold_mentions": [{"start": 0, "end": 13, "ent_type": "ORG", "text": "Werder Bremen"}, {"start": 16, "end": 27, "ent_type": "ORG", "text": "1860 Munich"}]}
+{"id": "test-00596", "text": "Karlsruhe 3 Freiburg 0", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Karlsruhe"}, {"start": 12, "end": 20, "ent_type": "ORG", "text": "Freiburg"}]}
+{"id": "test-00597", "text": "Schalke 2 Hansa Rostock 0", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Schalke"}, {"start": 10, "end": 23, "ent_type": "ORG", "text": "Hansa Rostock"}]}
+{"id": "test-00598", "text": "Standings (tabulated under played, won, drawn, lost, goals", "gold_mentions": []}
+{"id": "test-00599", "text": "for goals against points):", "gold_mentions": []}

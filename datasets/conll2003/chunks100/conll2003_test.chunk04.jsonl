@@ -1,0 +1,20 @@
+{"id": "test-00060", "text": "8. Dominick Gauthier (Canada) 22.73", "gold_mentions": [{"start": 3, "end": 20, "ent_type": "PER", "text": "Dominick Gauthier"}, {"start": 22, "end": 28, "ent_type": "LOC", "text": "Canada"}]}
+{"id": "test-00061", "text": "9. Johann Gregoire (France) 22.58", "gold_mentions": [{"start": 3, "end": 18, "ent_type": "PER", "text": "Johann Gregoire"}, {"start": 20, "end": 26, "ent_type": "LOC", "text": "France"}]}
+{"id": "test-00062", "text": "10. Troy Benson (U.S.) 22.56", "gold_mentions": [{"start": 4, "end": 15, "ent_type": "PER", "text": "Troy Benson"}, {"start": 17, "end": 21, "ent_type": "LOC", "text": "U.S."}]}
+{"id": "test-00063", "text": "Women", "gold_mentions": []}
+{"id": "test-00064", "text": "1. Tatjana Mittermayer (Germany) 24.32", "gold_mentions": [{"start": 3, "end": 22, "ent_type": "PER", "text": "Tatjana Mittermayer"}, {"start": 24, "end": 31, "ent_type": "LOC", "text": "Germany"}]}
+{"id": "test-00065", "text": "2. Candice Gilg (France) 24.31", "gold_mentions": [{"start": 3, "end": 15, "ent_type": "PER", "text": "Candice Gilg"}, {"start": 17, "end": 23, "ent_type": "LOC", "text": "France"}]}
+{"id": "test-00066", "text": "3. Minna Karhu (Finland) 24.05", "gold_mentions": [{"start": 3, "end": 14, "ent_type": "PER", "text": "Minna Karhu"}, {"start": 16, "end": 23, "ent_type": "LOC", "text": "Finland"}]}
+{"id": "test-00067", "text": "4. Tae Satoya (Japan) 23.75", "gold_mentions": [{"start": 3, "end": 13, "ent_type": "PER", "text": "Tae Satoya"}, {"start": 15, "end": 20, "ent_type": "LOC", "text": "Japan"}]}
+{"id": "test-00068", "text": "5. Ann Battellle (U.S.) 23.56", "gold_mentions": [{"start": 3, "end": 16, "ent_type": "PER", "text": "Ann Battellle"}, {"start": 18, "end": 22, "ent_type": "LOC", "text": "U.S."}]}
+{"id": "test-00069", "text": "6. Donna Weinbrecht (U.S.) 22.48", "gold_mentions": [{"start": 3, "end": 19, "ent_type": "PER", "text": "Donna Weinbrecht"}, {"start": 21, "end": 25, "ent_type": "LOC", "text": "U.S."}]}
+{"id": "test-00070", "text": "7. Liz McIntyre (U.S.) 22.00", "gold_mentions": [{"start": 3, "end": 15, "ent_type": "PER", "text": "Liz McIntyre"}, {"start": 17, "end": 21, "ent_type": "LOC", "text": "U.S."}]}
+{"id": "test-00071", "text": "8. Elena Koroleva (Russia) 21.77", "gold_mentions": [{"start": 3, "end": 17, "ent_type": "PER", "text": "Elena Koroleva"}, {"start": 19, "end": 25, "ent_type": "LOC", "text": "Russia"}]}
+{"id": "test-00072", "text": "9. Ljudmila Dymchenko (Russia) 21.59", "gold_mentions": [{"start": 3, "end": 21, "ent_type": "PER", "text": "Ljudmila Dymchenko"}, {"start": 23, "end": 29, "ent_type": "LOC", "text": "Russia"}]}
+{"id": "test-00073", "text": "10. Katleen Allais (France) 21.58", "gold_mentions": [{"start": 4, "end": 18, "ent_type": "PER", "text": "Katleen Allais"}, {"start": 20, "end": 26, "ent_type": "LOC", "text": "France"}]}
+{"id": "test-00074", "text": "SOCCER - ASIAN CUP GROUP C RESULTS.", "gold_mentions": [{"start": 9, "end": 18, "ent_type": "MISC", "text": "ASIAN CUP"}]}
+{"id": "test-00075", "text": "AL-AIN, United Arab Emirates 1996-12-06", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "AL-AIN"}, {"start": 8, "end": 28, "ent_type": "LOC", "text": "United Arab Emirates"}]}
+{"id": "test-00076", "text": "Results of Asian Cup group C matches played on Friday:", "gold_mentions": [{"start": 11, "end": 20, "ent_type": "MISC", "text": "Asian Cup"}]}
+{"id": "test-00077", "text": "Japan 2 Syria 1 (halftime 0-1)", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "LOC", "text": "Japan"}, {"start": 8, "end": 13, "ent_type": "LOC", "text": "Syria"}]}
+{"id": "test-00078", "text": "Scorers:", "gold_mentions": []}
+{"id": "test-00079", "text": "Japan - Hassan Abbas 84 own goal, Takuya Takagi 88.", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "LOC", "text": "Japan"}, {"start": 8, "end": 20, "ent_type": "PER", "text": "Hassan Abbas"}, {"start": 34, "end": 47, "ent_type": "PER", "text": "Takuya Takagi"}]}

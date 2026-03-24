@@ -1,3 +1,0 @@
-- 2026-03-24 03:24:39: start optimization cycle: threshold=0.00, drop_tolerance=1.00, start_index=300, max_samples=100, kept_samples=100, chunk_size=20, gate_samples=40, gate_chunk_count=2
-- 2026-03-24 03:24:39: evaluate config: /mnt/c/Users/87569/Documents/multi-agent-CoNLL03/configs/runtime.deepseek.all_agents.yaml
-- 2026-03-24 04:12:34: runtime.deepseek.all_agents chunk01 micro_f1=0.8031

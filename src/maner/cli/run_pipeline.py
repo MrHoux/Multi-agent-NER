@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+from datetime import datetime
 from maner.core.config import load_yaml
 from maner.orchestrator.pipeline import PipelineRunner, write_predictions
 
@@ -36,7 +37,8 @@ def main() -> None:
         runner.close()
 
     write_predictions(records, pred_path)
-    print(f"Predictions written to {pred_path}")
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"[{timestamp}] [pipeline] predictions_written | path={pred_path}")
 
 
 def _apply_overrides(cfg: dict[str, Any], overrides: list[str]) -> None:

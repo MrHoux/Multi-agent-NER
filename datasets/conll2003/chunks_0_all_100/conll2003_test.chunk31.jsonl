@@ -1,0 +1,100 @@
+{"id": "test-03000", "text": "Stockport 22 10 6 6 29 25 36", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Stockport"}]}
+{"id": "test-03001", "text": "Watford 21 9 9 3 24 18 36", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Watford"}]}
+{"id": "test-03002", "text": "Wrexham 20 9 8 3 27 22 35", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Wrexham"}]}
+{"id": "test-03003", "text": "Crewe 21 11 1 9 29 21 34", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "ORG", "text": "Crewe"}]}
+{"id": "test-03004", "text": "Bristol City 21 9 6 6 36 23 33", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "Bristol City"}]}
+{"id": "test-03005", "text": "Bristol Rovers 22 7 7 8 22 23 28", "gold_mentions": [{"start": 0, "end": 14, "ent_type": "ORG", "text": "Bristol Rovers"}]}
+{"id": "test-03006", "text": "Shrewsbury 22 7 6 9 26 33 27", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Shrewsbury"}]}
+{"id": "test-03007", "text": "York 21 7 5 9 23 29 26", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "ORG", "text": "York"}]}
+{"id": "test-03008", "text": "Blackpool 22 5 10 7 22 24 25", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Blackpool"}]}
+{"id": "test-03009", "text": "Walsall 21 7 4 10 21 25 25", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Walsall"}]}
+{"id": "test-03010", "text": "Gillingham 22 7 4 11 21 27 25", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Gillingham"}]}
+{"id": "test-03011", "text": "Preston 22 7 4 11 21 27 25", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Preston"}]}
+{"id": "test-03012", "text": "Bournemouth 22 7 4 11 20 27 25", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Bournemouth"}]}
+{"id": "test-03013", "text": "Plymouth 22 5 8 9 24 31 23", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Plymouth"}]}
+{"id": "test-03014", "text": "Peterborough 22 4 8 10 32 41 20", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "Peterborough"}]}
+{"id": "test-03015", "text": "Notts County 21 5 5 11 15 23 20", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "Notts County"}]}
+{"id": "test-03016", "text": "Wycombe 22 4 5 13 17 33 17", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Wycombe"}]}
+{"id": "test-03017", "text": "Rotherham 21 3 6 12 18 33 15", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Rotherham"}]}
+{"id": "test-03018", "text": "Division Three", "gold_mentions": []}
+{"id": "test-03019", "text": "Fulham 22 15 3 4 36 16 48", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "Fulham"}]}
+{"id": "test-03020", "text": "Cambridge 22 13 3 6 33 27 42", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Cambridge"}]}
+{"id": "test-03021", "text": "Wigan 21 12 4 5 39 24 40", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "ORG", "text": "Wigan"}]}
+{"id": "test-03022", "text": "Carlisle 22 11 7 4 32 20 40", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Carlisle"}]}
+{"id": "test-03023", "text": "Cardiff 21 10 4 7 25 22 34", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Cardiff"}]}
+{"id": "test-03024", "text": "Swansea 22 9 5 8 25 25 32", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Swansea"}]}
+{"id": "test-03025", "text": "Barnet 22 8 8 6 23 17 32", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "Barnet"}]}
+{"id": "test-03026", "text": "Colchester 22 7 10 5 32 26 31", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Colchester"}]}
+{"id": "test-03027", "text": "Scunthorpe 22 9 4 9 28 30 31", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Scunthorpe"}]}
+{"id": "test-03028", "text": "Northampton 22 8 6 8 31 26 30", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Northampton"}]}
+{"id": "test-03029", "text": "Scarborough 21 7 9 5 30 27 30", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Scarborough"}]}
+{"id": "test-03030", "text": "Lincoln 22 8 6 8 28 33 30", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Lincoln"}]}
+{"id": "test-03031", "text": "Chester 21 8 6 7 23 23 30", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Chester"}]}
+{"id": "test-03032", "text": "Hull 22 6 11 5 20 22 29", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "ORG", "text": "Hull"}]}
+{"id": "test-03033", "text": "Torquay 22 8 4 10 22 24 28", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Torquay"}]}
+{"id": "test-03034", "text": "Rochdale 21 6 8 7 27 26 26", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Rochdale"}]}
+{"id": "test-03035", "text": "Exeter 22 7 5 10 21 28 26", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "Exeter"}]}
+{"id": "test-03036", "text": "Doncaster 22 7 3 12 24 33 24", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Doncaster"}]}
+{"id": "test-03037", "text": "Mansfield 21 5 9 7 21 22 24", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Mansfield"}]}
+{"id": "test-03038", "text": "Leyton Orient 21 6 6 9 16 19 24", "gold_mentions": [{"start": 0, "end": 13, "ent_type": "ORG", "text": "Leyton Orient"}]}
+{"id": "test-03039", "text": "Hereford 22 6 5 11 23 31 23", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Hereford"}]}
+{"id": "test-03040", "text": "Darlington 22 6 4 12 30 39 22", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Darlington"}]}
+{"id": "test-03041", "text": "Hartlepool 21 6 4 11 23 28 22", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Hartlepool"}]}
+{"id": "test-03042", "text": "Brighton 22 3 4 15 18 42 13", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Brighton"}]}
+{"id": "test-03043", "text": "SOCCER - VIEIRA SAVES ARSENAL WITH LAST-MINUTE EQUALISER.", "gold_mentions": [{"start": 9, "end": 15, "ent_type": "PER", "text": "VIEIRA"}, {"start": 22, "end": 29, "ent_type": "ORG", "text": "ARSENAL"}]}
+{"id": "test-03044", "text": "LONDON 1996-12-07", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "LONDON"}]}
+{"id": "test-03045", "text": "Frenchman Patrick Vieira blasted a last-minute goal to salvage a 2-2 draw for English premier league leaders Arsenal at home to Derby on Saturday.", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "MISC", "text": "Frenchman"}, {"start": 10, "end": 24, "ent_type": "PER", "text": "Patrick Vieira"}, {"start": 78, "end": 85, "ent_type": "MISC", "text": "English"}, {"start": 109, "end": 116, "ent_type": "ORG", "text": "Arsenal"}, {"start": 128, "end": 133, "ent_type": "ORG", "text": "Derby"}]}
+{"id": "test-03046", "text": "The London club had been rocked by a two-goal burst from forwards Dean Sturridge and Darryl Powell in the 62nd and 71st minutes which overturned Arsenal's 1-0 lead from a diving header by captain Tony Adams on the stroke of halftime.", "gold_mentions": [{"start": 4, "end": 10, "ent_type": "LOC", "text": "London"}, {"start": 66, "end": 80, "ent_type": "PER", "text": "Dean Sturridge"}, {"start": 85, "end": 98, "ent_type": "PER", "text": "Darryl Powell"}, {"start": 145, "end": 152, "ent_type": "ORG", "text": "Arsenal"}, {"start": 196, "end": 206, "ent_type": "PER", "text": "Tony Adams"}]}
+{"id": "test-03047", "text": "Liverpool suffered an upset first home league defeat of the season, beaten 1-0 by a Guy Whittingham goal for Sheffield Wednesday.", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Liverpool"}, {"start": 84, "end": 99, "ent_type": "PER", "text": "Guy Whittingham"}, {"start": 109, "end": 128, "ent_type": "ORG", "text": "Sheffield Wednesday"}]}
+{"id": "test-03048", "text": "Wimbledon leap-frogged over Liverpool into second place by winning 3-1 at Sunderland to extend their unbeaten league and cup run to 18 games.", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Wimbledon"}, {"start": 28, "end": 37, "ent_type": "ORG", "text": "Liverpool"}, {"start": 74, "end": 84, "ent_type": "ORG", "text": "Sunderland"}]}
+{"id": "test-03049", "text": "Two strikes by Efan Ekoku in the first half and a late goal from fellow forward Dean Holdsworth secured victory for Wimbledon, who trail pacemakers Arsenal by four points.", "gold_mentions": [{"start": 15, "end": 25, "ent_type": "PER", "text": "Efan Ekoku"}, {"start": 80, "end": 95, "ent_type": "PER", "text": "Dean Holdsworth"}, {"start": 116, "end": 125, "ent_type": "ORG", "text": "Wimbledon"}, {"start": 148, "end": 155, "ent_type": "ORG", "text": "Arsenal"}]}
+{"id": "test-03050", "text": "SOCCER - SCOTTISH LEAGUE AND CUP RESULTS.", "gold_mentions": [{"start": 9, "end": 17, "ent_type": "MISC", "text": "SCOTTISH"}]}
+{"id": "test-03051", "text": "GLASGOW 1996-12-07", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "LOC", "text": "GLASGOW"}]}
+{"id": "test-03052", "text": "Results of Scottish league and cup", "gold_mentions": [{"start": 11, "end": 19, "ent_type": "MISC", "text": "Scottish"}]}
+{"id": "test-03053", "text": "matches played on Saturday:", "gold_mentions": []}
+{"id": "test-03054", "text": "Premier division", "gold_mentions": []}
+{"id": "test-03055", "text": "Dunfermline 2 Aberdeen 3", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Dunfermline"}, {"start": 14, "end": 22, "ent_type": "ORG", "text": "Aberdeen"}]}
+{"id": "test-03056", "text": "Hearts 0 Raith 0", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "Hearts"}, {"start": 9, "end": 14, "ent_type": "ORG", "text": "Raith"}]}
+{"id": "test-03057", "text": "Kilmarnock 0 Dundee United 2", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Kilmarnock"}, {"start": 13, "end": 26, "ent_type": "ORG", "text": "Dundee United"}]}
+{"id": "test-03058", "text": "Motherwell 2 Celtic 1", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Motherwell"}, {"start": 13, "end": 19, "ent_type": "ORG", "text": "Celtic"}]}
+{"id": "test-03059", "text": "Rangers 4 Hibernian 3", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Rangers"}, {"start": 10, "end": 19, "ent_type": "ORG", "text": "Hibernian"}]}
+{"id": "test-03060", "text": "Division one", "gold_mentions": []}
+{"id": "test-03061", "text": "Dundee 2 Falkirk 0", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "Dundee"}, {"start": 9, "end": 16, "ent_type": "ORG", "text": "Falkirk"}]}
+{"id": "test-03062", "text": "Greenock Morton 0 St Johnstone 2", "gold_mentions": [{"start": 0, "end": 15, "ent_type": "ORG", "text": "Greenock Morton"}, {"start": 18, "end": 30, "ent_type": "ORG", "text": "St Johnstone"}]}
+{"id": "test-03063", "text": "Postponed: Airdrieonians v Clydebank (to Wednesday), East", "gold_mentions": [{"start": 11, "end": 24, "ent_type": "ORG", "text": "Airdrieonians"}, {"start": 27, "end": 36, "ent_type": "ORG", "text": "Clydebank"}, {"start": 53, "end": 57, "ent_type": "ORG", "text": "East"}]}
+{"id": "test-03064", "text": "Fife v Partick, Stirling v St Mirren (to Tuesday)", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "ORG", "text": "Fife"}, {"start": 7, "end": 14, "ent_type": "ORG", "text": "Partick"}, {"start": 16, "end": 24, "ent_type": "ORG", "text": "Stirling"}, {"start": 27, "end": 36, "ent_type": "ORG", "text": "St Mirren"}]}
+{"id": "test-03065", "text": "Division two", "gold_mentions": []}
+{"id": "test-03066", "text": "Livingston 2 Stenhousemuir 1", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Livingston"}, {"start": 13, "end": 26, "ent_type": "ORG", "text": "Stenhousemuir"}]}
+{"id": "test-03067", "text": "Stranraer 0 Brechin 1", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Stranraer"}, {"start": 12, "end": 19, "ent_type": "ORG", "text": "Brechin"}]}
+{"id": "test-03068", "text": "Division three", "gold_mentions": []}
+{"id": "test-03069", "text": "Ross County 4 Montrose 4", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Ross County"}, {"start": 14, "end": 22, "ent_type": "ORG", "text": "Montrose"}]}
+{"id": "test-03070", "text": "Postponed: Forfar v Alloa, Inverness Thistle v Queen's Park", "gold_mentions": [{"start": 11, "end": 17, "ent_type": "ORG", "text": "Forfar"}, {"start": 20, "end": 25, "ent_type": "ORG", "text": "Alloa"}, {"start": 27, "end": 44, "ent_type": "ORG", "text": "Inverness Thistle"}, {"start": 47, "end": 59, "ent_type": "ORG", "text": "Queen's Park"}]}
+{"id": "test-03071", "text": "Scottish Cup first round", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "MISC", "text": "Scottish Cup"}]}
+{"id": "test-03072", "text": "Alloa 3 Hawick 1", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "ORG", "text": "Alloa"}, {"start": 8, "end": 14, "ent_type": "ORG", "text": "Hawick"}]}
+{"id": "test-03073", "text": "Elgin City 0 Whitehill 3", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Elgin City"}, {"start": 13, "end": 22, "ent_type": "ORG", "text": "Whitehill"}]}
+{"id": "test-03074", "text": "Postponed: Albion v Forfar, Huntly v Clyde (both now play on", "gold_mentions": [{"start": 11, "end": 17, "ent_type": "ORG", "text": "Albion"}, {"start": 20, "end": 26, "ent_type": "ORG", "text": "Forfar"}, {"start": 28, "end": 34, "ent_type": "ORG", "text": "Huntly"}, {"start": 37, "end": 42, "ent_type": "ORG", "text": "Clyde"}]}
+{"id": "test-03075", "text": "December 14)", "gold_mentions": []}
+{"id": "test-03076", "text": "SOCCER - ENGLISH LEAGUE AND CUP RESULTS.", "gold_mentions": [{"start": 9, "end": 16, "ent_type": "MISC", "text": "ENGLISH"}]}
+{"id": "test-03077", "text": "LONDON 1996-12-07", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "LONDON"}]}
+{"id": "test-03078", "text": "Results of English league and cup", "gold_mentions": [{"start": 11, "end": 18, "ent_type": "MISC", "text": "English"}]}
+{"id": "test-03079", "text": "matches on Saturday:", "gold_mentions": []}
+{"id": "test-03080", "text": "Premier league", "gold_mentions": [{"start": 0, "end": 14, "ent_type": "MISC", "text": "Premier league"}]}
+{"id": "test-03081", "text": "Arsenal 2 Derby 2", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Arsenal"}, {"start": 10, "end": 15, "ent_type": "ORG", "text": "Derby"}]}
+{"id": "test-03082", "text": "Chelsea 2 Everton 2", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Chelsea"}, {"start": 10, "end": 17, "ent_type": "ORG", "text": "Everton"}]}
+{"id": "test-03083", "text": "Coventry 1 Tottenham 2", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Coventry"}, {"start": 11, "end": 20, "ent_type": "ORG", "text": "Tottenham"}]}
+{"id": "test-03084", "text": "Leicester 1 Blackburn 1", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Leicester"}, {"start": 12, "end": 21, "ent_type": "ORG", "text": "Blackburn"}]}
+{"id": "test-03085", "text": "Liverpool 0 Sheffield Wednesday 1", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Liverpool"}, {"start": 12, "end": 31, "ent_type": "ORG", "text": "Sheffield Wednesday"}]}
+{"id": "test-03086", "text": "Middlesbrough 0 Leeds 0", "gold_mentions": [{"start": 0, "end": 13, "ent_type": "ORG", "text": "Middlesbrough"}, {"start": 16, "end": 21, "ent_type": "ORG", "text": "Leeds"}]}
+{"id": "test-03087", "text": "Southampton 0 Aston Villa 1", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Southampton"}, {"start": 14, "end": 25, "ent_type": "ORG", "text": "Aston Villa"}]}
+{"id": "test-03088", "text": "Sunderland 1 Wimbledon 3", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Sunderland"}, {"start": 13, "end": 22, "ent_type": "ORG", "text": "Wimbledon"}]}
+{"id": "test-03089", "text": "Division one", "gold_mentions": []}
+{"id": "test-03090", "text": "Barnsley 3 Southend 0", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Barnsley"}, {"start": 11, "end": 19, "ent_type": "ORG", "text": "Southend"}]}
+{"id": "test-03091", "text": "Birmingham 0 Grimsby 0", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Birmingham"}, {"start": 13, "end": 20, "ent_type": "ORG", "text": "Grimsby"}]}
+{"id": "test-03092", "text": "Charlton 2 Swindon 0", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Charlton"}, {"start": 11, "end": 18, "ent_type": "ORG", "text": "Swindon"}]}
+{"id": "test-03093", "text": "Crystal Palace 2 Oxford 2", "gold_mentions": [{"start": 0, "end": 14, "ent_type": "ORG", "text": "Crystal Palace"}, {"start": 17, "end": 23, "ent_type": "ORG", "text": "Oxford"}]}
+{"id": "test-03094", "text": "Huddersfield 2 Norwich 0", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "Huddersfield"}, {"start": 15, "end": 22, "ent_type": "ORG", "text": "Norwich"}]}
+{"id": "test-03095", "text": "Ipswich 0 Wolverhampton 0", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Ipswich"}, {"start": 10, "end": 23, "ent_type": "ORG", "text": "Wolverhampton"}]}
+{"id": "test-03096", "text": "Manchester City 3 Bradford 2", "gold_mentions": [{"start": 0, "end": 15, "ent_type": "ORG", "text": "Manchester City"}, {"start": 18, "end": 26, "ent_type": "ORG", "text": "Bradford"}]}
+{"id": "test-03097", "text": "Oldham 0 Queens Park Rangers 2", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "Oldham"}, {"start": 9, "end": 28, "ent_type": "ORG", "text": "Queens Park Rangers"}]}
+{"id": "test-03098", "text": "Reading 0 Port Vale 1", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Reading"}, {"start": 10, "end": 19, "ent_type": "ORG", "text": "Port Vale"}]}
+{"id": "test-03099", "text": "Sheffield United 1 Portsmouth 0", "gold_mentions": [{"start": 0, "end": 16, "ent_type": "ORG", "text": "Sheffield United"}, {"start": 19, "end": 29, "ent_type": "ORG", "text": "Portsmouth"}]}

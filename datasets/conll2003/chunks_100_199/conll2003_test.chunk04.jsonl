@@ -1,0 +1,20 @@
+{"id": "test-00160", "text": "played, won, lost, points):", "gold_mentions": []}
+{"id": "test-00161", "text": "Group A", "gold_mentions": []}
+{"id": "test-00162", "text": "CSKA Moscow (Russia 9 6 3 15", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "CSKA Moscow"}, {"start": 13, "end": 19, "ent_type": "LOC", "text": "Russia"}]}
+{"id": "test-00163", "text": "Stefanel Milan (Italy) 9 6 3 15", "gold_mentions": [{"start": 0, "end": 14, "ent_type": "ORG", "text": "Stefanel Milan"}, {"start": 16, "end": 21, "ent_type": "LOC", "text": "Italy"}]}
+{"id": "test-00164", "text": "Maccabi Tel Aviv (Israel) 9 5 4 14", "gold_mentions": [{"start": 0, "end": 16, "ent_type": "ORG", "text": "Maccabi Tel Aviv"}, {"start": 18, "end": 24, "ent_type": "LOC", "text": "Israel"}]}
+{"id": "test-00165", "text": "Ulker Spor (Turkey) 9 4 5 13", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Ulker Spor"}, {"start": 12, "end": 18, "ent_type": "LOC", "text": "Turkey"}]}
+{"id": "test-00166", "text": "Limoges (France) 9 3 6 12", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Limoges"}, {"start": 9, "end": 15, "ent_type": "LOC", "text": "France"}]}
+{"id": "test-00167", "text": "Panionios (Greece) 9 3 6 12", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Panionios"}, {"start": 11, "end": 17, "ent_type": "LOC", "text": "Greece"}]}
+{"id": "test-00168", "text": "Group B", "gold_mentions": []}
+{"id": "test-00169", "text": "Teamsystem Bologna (Italy) 9 7 2 16", "gold_mentions": [{"start": 0, "end": 18, "ent_type": "ORG", "text": "Teamsystem Bologna"}, {"start": 20, "end": 25, "ent_type": "LOC", "text": "Italy"}]}
+{"id": "test-00170", "text": "Olympiakos (Greece) 9 5 4 14", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Olympiakos"}, {"start": 12, "end": 18, "ent_type": "LOC", "text": "Greece"}]}
+{"id": "test-00171", "text": "Cibona Zagreb (Croatia) 9 5 4 14", "gold_mentions": [{"start": 0, "end": 13, "ent_type": "ORG", "text": "Cibona Zagreb"}, {"start": 15, "end": 22, "ent_type": "LOC", "text": "Croatia"}]}
+{"id": "test-00172", "text": "Alba Berlin (Germany) 9 5 4 14", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Alba Berlin"}, {"start": 13, "end": 20, "ent_type": "LOC", "text": "Germany"}]}
+{"id": "test-00173", "text": "Estudiantes Madrid (Spain) 9 5 4 14", "gold_mentions": [{"start": 0, "end": 18, "ent_type": "ORG", "text": "Estudiantes Madrid"}, {"start": 20, "end": 25, "ent_type": "LOC", "text": "Spain"}]}
+{"id": "test-00174", "text": "Charleroi (Belgium) 9 0 9 9", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Charleroi"}, {"start": 11, "end": 18, "ent_type": "LOC", "text": "Belgium"}]}
+{"id": "test-00175", "text": "Group C", "gold_mentions": []}
+{"id": "test-00176", "text": "Panathinaikos (Greece) 9 7 2 16", "gold_mentions": [{"start": 0, "end": 13, "ent_type": "ORG", "text": "Panathinaikos"}, {"start": 15, "end": 21, "ent_type": "LOC", "text": "Greece"}]}
+{"id": "test-00177", "text": "Ljubljana (Slovenia) 9 6 3 15", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Ljubljana"}, {"start": 11, "end": 19, "ent_type": "LOC", "text": "Slovenia"}]}
+{"id": "test-00178", "text": "Villeurbanne (France) 9 6 3 15", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "Villeurbanne"}, {"start": 14, "end": 20, "ent_type": "LOC", "text": "France"}]}
+{"id": "test-00179", "text": "Barcelona (Spain) 9 4 5 13", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Barcelona"}, {"start": 11, "end": 16, "ent_type": "LOC", "text": "Spain"}]}

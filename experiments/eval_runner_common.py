@@ -13,8 +13,12 @@ from maner.eval.metrics import evaluate_from_files
 from dataset_runtime import materialize_jsonl_window, split_jsonl_file
 
 
+def _timestamp() -> str:
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+
 def run_cmd(cmd: list[str], cwd: Path) -> None:
-    print(f"[run] {' '.join(cmd)}")
+    print(f"[{_timestamp()}] [run] {' '.join(cmd)}")
     subprocess.run(cmd, check=True, cwd=str(cwd))
 
 

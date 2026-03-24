@@ -1,8 +1,11 @@
 ﻿from __future__ import annotations
 
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
 import json
 import re
+import threading
 import time
 from pathlib import Path
 from typing import Any
@@ -61,6 +64,7 @@ class PipelineRunner:
         self.progress_agent_trace = bool(
             self.pipeline_cfg.get("progress_agent_trace", False)
         )
+        self._log_lock = threading.Lock()
 
         self.candidate_agent = CandidateAgent(
             self.llm,
@@ -125,16 +129,351 @@ class PipelineRunner:
     def _progress(self, event: str, **fields: Any) -> None:
         if not self.progress_logging:
             return
-        parts = [f"{key}={fields[key]}" for key in sorted(fields)]
-        message = f"[pipeline] {event}"
+        parts = [f"{key}={self._format_log_value(fields[key])}" for key in sorted(fields)]
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        message = f"[{timestamp}] [pipeline] {event}"
         if parts:
-            message += " " + " ".join(parts)
-        print(message, flush=True)
+            message += " | " + " ".join(parts)
+        with self._log_lock:
+            print(message, flush=True)
+
+    @staticmethod
+    def _format_log_value(value: Any) -> str:
+        if isinstance(value, float):
+            return f"{value:.3f}"
+        if isinstance(value, (dict, list, tuple, set)):
+            return json.dumps(value, ensure_ascii=False, sort_keys=True)
+        return str(value)
 
     def _agent_progress(self, agent: str, stage: str, **fields: Any) -> None:
         if not self.progress_agent_trace:
             return
         self._progress(f"{agent}_{stage}", **fields)
+
+    def _run_expert_branch(
+        self,
+        *,
+        sample_id: str,
+        text: str,
+        candidate_set: CandidateSet,
+        memory_items: list[dict[str, Any]],
+        use_expert: bool,
+        use_rag: bool,
+        allow_span_proposals: bool,
+    ) -> dict[str, Any]:
+        branch_cost = UsageCost()
+        branch_traces: dict[str, Any] = {}
+        communications: list[dict[str, Any]] = []
+        expert_retrieval_plan: dict[str, Any] = {}
+        rag_handoff: dict[str, Any] = {}
+        constraints = ExpertConstraints()
+
+        if use_rag and use_expert and candidate_set.spans:
+            started = time.perf_counter()
+            self._agent_progress("expert_retrieval_agent", "start", sample_id=sample_id)
+            expert_retrieval_plan, cost, trace = self.expert_agent.plan_retrieval(
+                text=text,
+                candidate_set=candidate_set,
+                schema=self.schema,
+                memory_items=memory_items,
+            )
+            elapsed_ms = int((time.perf_counter() - started) * 1000)
+            _accumulate_cost(branch_cost, cost)
+            branch_traces["expert_retrieval"] = trace
+            self._agent_progress(
+                "expert_retrieval_agent",
+                "done",
+                sample_id=sample_id,
+                llm_calls=cost.calls,
+                retrieval_requests=len(expert_retrieval_plan.get("retrieval_requests", []) or []),
+                elapsed_ms=elapsed_ms,
+            )
+            communications.append(
+                {
+                    "from": "expert_agent",
+                    "to": "rag_agent",
+                    "message_type": "retrieval_requests",
+                    "request_count": len(expert_retrieval_plan.get("retrieval_requests", []) or []),
+                }
+            )
+
+            started = time.perf_counter()
+            self._agent_progress("rag_agent", "start", sample_id=sample_id)
+            rag_handoff, cost, trace = self.rag_agent.run(
+                text=text,
+                candidate_set=candidate_set,
+                schema=self.schema,
+                memory_items=memory_items,
+                expert_retrieval_plan=expert_retrieval_plan,
+            )
+            elapsed_ms = int((time.perf_counter() - started) * 1000)
+            _accumulate_cost(branch_cost, cost)
+            branch_traces["rag"] = trace
+            self._agent_progress(
+                "rag_agent",
+                "done",
+                sample_id=sample_id,
+                llm_calls=cost.calls,
+                hinted_spans=len((rag_handoff.get("per_span_hints", {}) or {})),
+                elapsed_ms=elapsed_ms,
+            )
+            hinted = rag_handoff.get("per_span_hints", {}) or {}
+            hinted_count = len(hinted) if isinstance(hinted, dict) else 0
+            communications.append(
+                {
+                    "from": "rag_agent",
+                    "to": "expert_agent",
+                    "message_type": "rag_handoff",
+                    "handoff_id": str(rag_handoff.get("handoff_id", "")),
+                    "hinted_spans": hinted_count,
+                    "open_questions": len(rag_handoff.get("open_questions", []) or []),
+                }
+            )
+        elif use_rag and use_expert and not candidate_set.spans:
+            branch_traces["expert_retrieval"] = {
+                "skipped": True,
+                "reason": "no_candidate_spans",
+            }
+            branch_traces["rag"] = {
+                "skipped": True,
+                "reason": "no_candidate_spans",
+            }
+        else:
+            branch_traces["expert_retrieval"] = {"disabled": True}
+            branch_traces["rag"] = {"disabled": True}
+
+        if use_expert:
+            started = time.perf_counter()
+            self._agent_progress("expert_agent", "start", sample_id=sample_id)
+            constraints, cost, trace = self.expert_agent.run(
+                text=text,
+                candidate_set=candidate_set,
+                schema=self.schema,
+                memory_items=memory_items,
+                rag_handoff=rag_handoff,
+                allow_span_proposals=allow_span_proposals,
+            )
+            elapsed_ms = int((time.perf_counter() - started) * 1000)
+            _accumulate_cost(branch_cost, cost)
+            branch_traces["expert"] = trace
+            self._agent_progress(
+                "expert_agent",
+                "done",
+                sample_id=sample_id,
+                llm_calls=cost.calls,
+                constrained_spans=len(constraints.per_span),
+                elapsed_ms=elapsed_ms,
+            )
+            communications.append(
+                {
+                    "from": "expert_agent",
+                    "to": "pipeline",
+                    "message_type": "expert_constraints",
+                    "constrained_spans": len(constraints.per_span),
+                    "span_proposals": len(trace.get("span_proposals", []) or []),
+                }
+            )
+            if use_rag and branch_traces.get("rag", {}).get("disabled") is not True:
+                branch_traces["rag_expert_alignment"] = _summarize_rag_expert_alignment(
+                    rag_handoff=rag_handoff,
+                    constraints=constraints,
+                )
+        else:
+            branch_traces["expert"] = {"disabled": True}
+
+        return {
+            "cost": branch_cost,
+            "traces": branch_traces,
+            "communications": communications,
+            "expert_retrieval_plan": expert_retrieval_plan,
+            "rag_handoff": rag_handoff,
+            "constraints": constraints,
+        }
+
+    def _run_re_branch(
+        self,
+        *,
+        sample_id: str,
+        text: str,
+        candidate_set: CandidateSet,
+        memory_items: list[dict[str, Any]],
+        relation_schema_present: bool,
+        allow_span_proposals: bool,
+    ) -> dict[str, Any]:
+        branch_cost = UsageCost()
+        branch_traces: dict[str, Any] = {}
+        communications: list[dict[str, Any]] = []
+        relations: list[Relation] = []
+        re_structure_support = ExpertConstraints()
+
+        re_role_name = "re_agent" if relation_schema_present else "in_context_agent"
+        started = time.perf_counter()
+        self._agent_progress(re_role_name, "start", sample_id=sample_id)
+        relations, re_structure_support, cost, trace = self.re_agent.run(
+            text,
+            candidate_set,
+            self.schema,
+            memory_items,
+            allow_span_proposals=allow_span_proposals,
+        )
+        elapsed_ms = int((time.perf_counter() - started) * 1000)
+        _accumulate_cost(branch_cost, cost)
+        branch_traces["re"] = trace
+        self._agent_progress(
+            re_role_name,
+            "done",
+            sample_id=sample_id,
+            llm_calls=cost.calls,
+            relations=len(relations),
+            elapsed_ms=elapsed_ms,
+        )
+        communications.append(
+            {
+                "from": re_role_name,
+                "to": "pipeline",
+                "message_type": "relations_and_proposals"
+                if relation_schema_present
+                else "in_context_support",
+                "relations": len(relations),
+                "span_proposals": len(trace.get("span_proposals", []) or []),
+                "structure_supported_spans": len(re_structure_support.per_span),
+            }
+        )
+
+        return {
+            "cost": branch_cost,
+            "traces": branch_traces,
+            "communications": communications,
+            "relations": relations,
+            "re_structure_support": re_structure_support,
+        }
+
+    def _run_expert_ner_branch(
+        self,
+        *,
+        sample_id: str,
+        text: str,
+        use_expert: bool,
+        candidate_set: CandidateSet,
+        constraints: ExpertConstraints,
+        pre_augmentation_candidate_set: CandidateSet,
+        rerun_constraints_for_added: ExpertConstraints,
+        added_ids: list[str],
+        rerun_after_aug: bool,
+    ) -> dict[str, Any]:
+        branch_cost = UsageCost()
+        if not use_expert:
+            return {
+                "cost": branch_cost,
+                "trace": {"disabled": True},
+                "hypothesis": NERHypothesis(mentions=[], source="expert"),
+                "llm_calls": 0,
+            }
+        localize_augmented_ner = bool(
+            self.pipeline_cfg.get("localize_augmented_ner_inference", True)
+        )
+        should_localize_augmented_ner = bool(
+            localize_augmented_ner and added_ids and rerun_after_aug
+        )
+
+        started = time.perf_counter()
+        self._agent_progress("ner_agent_expert", "start", sample_id=sample_id)
+        if should_localize_augmented_ner:
+            added_id_set = set(added_ids)
+            base_candidate_subset = pre_augmentation_candidate_set
+            added_candidate_subset = _subset_candidate_set(candidate_set, added_id_set)
+            added_constraint_subset = _subset_constraints(
+                rerun_constraints_for_added,
+                added_id_set,
+            )
+
+            y_exp_base, cost_base, trace_base = self.ner_agent.run_with_expert(
+                text,
+                base_candidate_subset,
+                self.schema,
+                constraints,
+            )
+            _accumulate_cost(branch_cost, cost_base)
+            y_exp_added, cost_added, trace_added = self.ner_agent.run_with_expert(
+                text,
+                added_candidate_subset,
+                self.schema,
+                added_constraint_subset,
+            )
+            _accumulate_cost(branch_cost, cost_added)
+            y_exp = NERHypothesis(
+                mentions=_merge_mentions(y_exp_base.mentions + y_exp_added.mentions),
+                source="expert",
+            )
+            trace = {
+                "localized_augmented_inference": True,
+                "base_trace": trace_base,
+                "added_trace": trace_added,
+                "base_mentions": len(y_exp_base.mentions),
+                "added_mentions": len(y_exp_added.mentions),
+                "output_mentions": len(y_exp.mentions),
+                "added_span_ids": sorted(added_id_set),
+            }
+            llm_calls = cost_base.calls + cost_added.calls
+        else:
+            y_exp, cost, trace = self.ner_agent.run_with_expert(
+                text, candidate_set, self.schema, constraints
+            )
+            _accumulate_cost(branch_cost, cost)
+            llm_calls = cost.calls
+        elapsed_ms = int((time.perf_counter() - started) * 1000)
+        self._agent_progress(
+            "ner_agent_expert",
+            "done",
+            sample_id=sample_id,
+            llm_calls=llm_calls,
+            mentions=len(y_exp.mentions),
+            elapsed_ms=elapsed_ms,
+        )
+        return {
+            "cost": branch_cost,
+            "trace": trace,
+            "hypothesis": y_exp,
+            "llm_calls": llm_calls,
+        }
+
+    def _run_secondary_ner_branch(
+        self,
+        *,
+        sample_id: str,
+        text: str,
+        candidate_set: CandidateSet,
+        relation_schema_present: bool,
+        relations: list[Relation],
+        re_structure_support: ExpertConstraints,
+    ) -> dict[str, Any]:
+        branch_cost = UsageCost()
+        ner_secondary_name = "ner_agent_re" if relation_schema_present else "ner_agent_in_context"
+        started = time.perf_counter()
+        self._agent_progress(ner_secondary_name, "start", sample_id=sample_id)
+        if relation_schema_present:
+            y_re, cost, trace = self.ner_agent.run_with_re(
+                text, candidate_set, self.schema, relations
+            )
+        else:
+            y_re, cost, trace = self.ner_agent.run_with_context(
+                text, candidate_set, self.schema, re_structure_support
+            )
+        elapsed_ms = int((time.perf_counter() - started) * 1000)
+        _accumulate_cost(branch_cost, cost)
+        self._agent_progress(
+            ner_secondary_name,
+            "done",
+            sample_id=sample_id,
+            llm_calls=cost.calls,
+            mentions=len(y_re.mentions),
+            elapsed_ms=elapsed_ms,
+        )
+        return {
+            "cost": branch_cost,
+            "trace": trace,
+            "hypothesis": y_re,
+        }
 
     def run(self) -> list[dict[str, Any]]:
         outputs: list[dict[str, Any]] = []
@@ -249,8 +588,10 @@ class PipelineRunner:
         direct_seed_enabled = bool(self.pipeline_cfg.get("enable_direct_seed_ner", True))
         direct_seed_hyp = NERHypothesis(mentions=[], source="direct")
         if direct_seed_enabled:
+            started = time.perf_counter()
             self._agent_progress("ner_direct_agent", "start", sample_id=sample_id)
             direct_seed_hyp, cost, trace = self.ner_agent.run_direct(text, self.schema)
+            elapsed_ms = int((time.perf_counter() - started) * 1000)
             _accumulate_cost(total_cost, cost)
             traces["ner_direct"] = trace
             self._agent_progress(
@@ -259,16 +600,19 @@ class PipelineRunner:
                 sample_id=sample_id,
                 llm_calls=cost.calls,
                 mentions=len(direct_seed_hyp.mentions),
+                elapsed_ms=elapsed_ms,
             )
         else:
             traces["ner_direct"] = {"disabled": True}
 
+        started = time.perf_counter()
         self._agent_progress("candidate_agent", "start", sample_id=sample_id)
         candidate_set, cost, trace = self.candidate_agent.run(
             text,
             self.schema,
             seed_mentions=direct_seed_hyp.mentions,
         )
+        elapsed_ms = int((time.perf_counter() - started) * 1000)
         _accumulate_cost(total_cost, cost)
         traces["candidate"] = trace
         self._agent_progress(
@@ -277,6 +621,7 @@ class PipelineRunner:
             sample_id=sample_id,
             spans=len(candidate_set.spans),
             llm_calls=cost.calls,
+            elapsed_ms=elapsed_ms,
         )
         communications.append(
             {
@@ -362,8 +707,11 @@ class PipelineRunner:
         traces["memory_retrieve"] = memory_items
 
         use_expert = not bool(self.ablations.get("w_o_expert", False))
-        use_re = not bool(self.ablations.get("w_o_re", False))
+        use_re = True
         use_rag = not bool(self.ablations.get("w_o_rag", False))
+        parallelize_independent_branches = bool(
+            self.pipeline_cfg.get("parallelize_independent_branches", True)
+        )
         allow_expert_span_aug = bool(
             self.pipeline_cfg.get("allow_expert_span_augmentation", False)
         )
@@ -404,148 +752,79 @@ class PipelineRunner:
         else:
             augmentation_no_seed_sources = {"expert"}
 
+        relation_schema_present = bool(self.schema.relation_constraints)
         y_exp = NERHypothesis(mentions=[], source="expert")
-        y_re = NERHypothesis(mentions=[], source="re")
+        y_re = NERHypothesis(
+            mentions=[],
+            source="re" if relation_schema_present else "in_context",
+        )
         expert_retrieval_plan: dict[str, Any] = {}
         rag_handoff: dict[str, Any] = {}
         constraints = ExpertConstraints()
         relations: list[Relation] = []
         re_structure_support = ExpertConstraints()
+        traces["branch_parallelism"] = {
+            "enabled": parallelize_independent_branches,
+            "expert_branch_parallel": False,
+            "secondary_branch_parallel": False,
+            "ner_branch_parallel": False,
+        }
 
-        if use_rag and use_expert and candidate_set.spans:
-            self._agent_progress("expert_retrieval_agent", "start", sample_id=sample_id)
-            expert_retrieval_plan, cost, trace = self.expert_agent.plan_retrieval(
-                text=text,
-                candidate_set=candidate_set,
-                schema=self.schema,
-                memory_items=memory_items,
-            )
-            _accumulate_cost(total_cost, cost)
-            traces["expert_retrieval"] = trace
-            self._agent_progress(
-                "expert_retrieval_agent",
-                "done",
-                sample_id=sample_id,
-                llm_calls=cost.calls,
-                retrieval_requests=len(expert_retrieval_plan.get("retrieval_requests", []) or []),
-            )
-            communications.append(
-                {
-                    "from": "expert_agent",
-                    "to": "rag_agent",
-                    "message_type": "retrieval_requests",
-                    "request_count": len(expert_retrieval_plan.get("retrieval_requests", []) or []),
-                }
-            )
-            self._agent_progress("rag_agent", "start", sample_id=sample_id)
-            rag_handoff, cost, trace = self.rag_agent.run(
-                text=text,
-                candidate_set=candidate_set,
-                schema=self.schema,
-                memory_items=memory_items,
-                expert_retrieval_plan=expert_retrieval_plan,
-            )
-            _accumulate_cost(total_cost, cost)
-            traces["rag"] = trace
-            self._agent_progress(
-                "rag_agent",
-                "done",
-                sample_id=sample_id,
-                llm_calls=cost.calls,
-                hinted_spans=len((rag_handoff.get("per_span_hints", {}) or {})),
-            )
-            hinted = rag_handoff.get("per_span_hints", {}) or {}
-            hinted_count = len(hinted) if isinstance(hinted, dict) else 0
-            communications.append(
-                {
-                    "from": "rag_agent",
-                    "to": "expert_agent",
-                    "message_type": "rag_handoff",
-                    "handoff_id": str(rag_handoff.get("handoff_id", "")),
-                    "hinted_spans": hinted_count,
-                    "open_questions": len(rag_handoff.get("open_questions", []) or []),
-                }
-            )
-        elif use_rag and use_expert and not candidate_set.spans:
-            traces["expert_retrieval"] = {
-                "skipped": True,
-                "reason": "no_candidate_spans",
-            }
-            traces["rag"] = {
-                "skipped": True,
-                "reason": "no_candidate_spans",
-            }
+        if parallelize_independent_branches and use_expert and use_re:
+            with ThreadPoolExecutor(max_workers=2) as executor:
+                expert_future = executor.submit(
+                    self._run_expert_branch,
+                    sample_id=sample_id,
+                    text=text,
+                    candidate_set=candidate_set,
+                    memory_items=memory_items,
+                    use_expert=use_expert,
+                    use_rag=use_rag,
+                    allow_span_proposals=allow_expert_span_aug,
+                )
+                re_future = executor.submit(
+                    self._run_re_branch,
+                    sample_id=sample_id,
+                    text=text,
+                    candidate_set=candidate_set,
+                    memory_items=memory_items,
+                    relation_schema_present=relation_schema_present,
+                    allow_span_proposals=allow_re_span_aug,
+                )
+                expert_result = expert_future.result()
+                re_result = re_future.result()
+            traces["branch_parallelism"]["expert_branch_parallel"] = True
+            traces["branch_parallelism"]["secondary_branch_parallel"] = True
         else:
-            traces["expert_retrieval"] = {"disabled": True}
-            traces["rag"] = {"disabled": True}
-
-        if use_expert:
-            self._agent_progress("expert_agent", "start", sample_id=sample_id)
-            constraints, cost, trace = self.expert_agent.run(
+            expert_result = self._run_expert_branch(
+                sample_id=sample_id,
                 text=text,
                 candidate_set=candidate_set,
-                schema=self.schema,
                 memory_items=memory_items,
-                rag_handoff=rag_handoff,
+                use_expert=use_expert,
+                use_rag=use_rag,
                 allow_span_proposals=allow_expert_span_aug,
             )
-            _accumulate_cost(total_cost, cost)
-            traces["expert"] = trace
-            self._agent_progress(
-                "expert_agent",
-                "done",
+            re_result = self._run_re_branch(
                 sample_id=sample_id,
-                llm_calls=cost.calls,
-                constrained_spans=len(constraints.per_span),
-            )
-            communications.append(
-                {
-                    "from": "expert_agent",
-                    "to": "pipeline",
-                    "message_type": "expert_constraints",
-                    "constrained_spans": len(constraints.per_span),
-                    "span_proposals": len(trace.get("span_proposals", []) or []),
-                }
-            )
-            if use_rag and traces.get("rag", {}).get("disabled") is not True:
-                traces["rag_expert_alignment"] = _summarize_rag_expert_alignment(
-                    rag_handoff=rag_handoff,
-                    constraints=constraints,
-                )
-        else:
-            traces["expert"] = {"disabled": True}
-
-        relation_schema_present = bool(self.schema.relation_constraints)
-        if use_re:
-            self._agent_progress("re_agent", "start", sample_id=sample_id)
-            relations, re_structure_support, cost, trace = self.re_agent.run(
-                text,
-                candidate_set,
-                self.schema,
-                memory_items,
+                text=text,
+                candidate_set=candidate_set,
+                memory_items=memory_items,
+                relation_schema_present=relation_schema_present,
                 allow_span_proposals=allow_re_span_aug,
             )
-            _accumulate_cost(total_cost, cost)
-            traces["re"] = trace
-            self._agent_progress(
-                "re_agent",
-                "done",
-                sample_id=sample_id,
-                llm_calls=cost.calls,
-                relations=len(relations),
-            )
-            communications.append(
-                {
-                    "from": "re_agent",
-                    "to": "pipeline",
-                    "message_type": "relations_and_proposals",
-                    "relations": len(relations),
-                    "span_proposals": len(trace.get("span_proposals", []) or []),
-                    "structure_supported_spans": len(re_structure_support.per_span),
-                }
-            )
-        else:
-            traces["re"] = {"disabled": True}
+
+        _accumulate_cost(total_cost, expert_result["cost"])
+        _accumulate_cost(total_cost, re_result["cost"])
+        traces.update(expert_result["traces"])
+        traces.update(re_result["traces"])
+        communications.extend(expert_result["communications"])
+        communications.extend(re_result["communications"])
+        expert_retrieval_plan = expert_result["expert_retrieval_plan"]
+        rag_handoff = expert_result["rag_handoff"]
+        constraints = expert_result["constraints"]
+        relations = re_result["relations"]
+        re_structure_support = re_result["re_structure_support"]
 
         if (
             use_re
@@ -837,125 +1116,98 @@ class PipelineRunner:
             }
         traces["short_circuit"] = {"enabled": False}
 
-        if use_expert:
-            localize_augmented_ner = bool(
-                self.pipeline_cfg.get("localize_augmented_ner_inference", True)
-            )
-            should_localize_augmented_ner = bool(
-                localize_augmented_ner and added_ids and rerun_after_aug
-            )
-            self._agent_progress("ner_agent_expert", "start", sample_id=sample_id)
-            if should_localize_augmented_ner:
-                added_id_set = set(added_ids)
-                base_candidate_subset = pre_augmentation_candidate_set
-                added_candidate_subset = _subset_candidate_set(candidate_set, added_id_set)
-                added_constraint_subset = _subset_constraints(
-                    rerun_constraints_for_added,
-                    added_id_set,
-                )
-
-                y_exp_base, cost_base, trace_base = self.ner_agent.run_with_expert(
-                    text,
-                    base_candidate_subset,
-                    self.schema,
-                    base_constraints_for_ner,
-                )
-                _accumulate_cost(total_cost, cost_base)
-                y_exp_added, cost_added, trace_added = self.ner_agent.run_with_expert(
-                    text,
-                    added_candidate_subset,
-                    self.schema,
-                    added_constraint_subset,
-                )
-                _accumulate_cost(total_cost, cost_added)
-                y_exp = NERHypothesis(
-                    mentions=_merge_mentions(y_exp_base.mentions + y_exp_added.mentions),
-                    source="expert",
-                )
-                traces["ner_expert"] = {
-                    "localized_augmented_inference": True,
-                    "base_trace": trace_base,
-                    "added_trace": trace_added,
-                    "base_mentions": len(y_exp_base.mentions),
-                    "added_mentions": len(y_exp_added.mentions),
-                    "output_mentions": len(y_exp.mentions),
-                    "added_span_ids": sorted(added_id_set),
-                }
-                llm_calls = cost_base.calls + cost_added.calls
-            else:
-                y_exp, cost, trace = self.ner_agent.run_with_expert(
-                    text, candidate_set, self.schema, constraints
-                )
-                _accumulate_cost(total_cost, cost)
-                traces["ner_expert"] = trace
-                llm_calls = cost.calls
-            self._agent_progress(
-                "ner_agent_expert",
-                "done",
-                sample_id=sample_id,
-                llm_calls=llm_calls,
-                mentions=len(y_exp.mentions),
-            )
-        else:
-            traces["ner_expert"] = {"disabled": True}
-
-        if use_re and relation_schema_present:
-            self._agent_progress("ner_agent_re", "start", sample_id=sample_id)
-            y_re, cost, trace = self.ner_agent.run_with_re(
-                text, candidate_set, self.schema, relations
-            )
-            _accumulate_cost(total_cost, cost)
-            traces["ner_re"] = trace
-            self._agent_progress(
-                "ner_agent_re",
-                "done",
-                sample_id=sample_id,
-                llm_calls=cost.calls,
-                mentions=len(y_re.mentions),
-            )
-            if bool(self.pipeline_cfg.get("re_collab_filter_enabled", False)):
-                y_re, re_filter_trace = _filter_re_hypothesis_for_collaboration(
+        if parallelize_independent_branches and use_expert and use_re:
+            with ThreadPoolExecutor(max_workers=2) as executor:
+                expert_ner_future = executor.submit(
+                    self._run_expert_ner_branch,
+                    sample_id=sample_id,
                     text=text,
-                    y_re=y_re,
-                    y_exp=y_exp if use_expert else None,
-                    min_confidence=float(
-                        self.pipeline_cfg.get("re_collab_min_confidence", 0.0)
-                    ),
-                    require_evidence=bool(
-                        self.pipeline_cfg.get("re_collab_require_evidence", False)
-                    ),
-                    max_re_only_additions=int(
-                        self.pipeline_cfg.get("re_collab_max_re_only_additions", 9999)
-                    ),
-                    expert_override_margin=float(
-                        self.pipeline_cfg.get("re_collab_expert_override_margin", 0.0)
-                    ),
-                    require_type_agreement_on_shared_span=bool(
-                        self.pipeline_cfg.get(
-                            "re_collab_require_type_agreement_on_shared_span",
-                            False,
-                        )
-                    ),
+                    use_expert=use_expert,
+                    candidate_set=candidate_set,
+                    constraints=constraints,
+                    pre_augmentation_candidate_set=pre_augmentation_candidate_set,
+                    rerun_constraints_for_added=rerun_constraints_for_added,
+                    added_ids=added_ids,
+                    rerun_after_aug=rerun_after_aug,
                 )
-                traces["re_collab_filter"] = re_filter_trace
-            else:
-                traces["re_collab_filter"] = {
-                    "enabled": False,
-                    "input_count": len(y_re.mentions),
-                    "output_count": len(y_re.mentions),
-                    "dropped_low_conf": 0,
-                    "dropped_no_evidence": 0,
-                    "dropped_expert_override": 0,
-                    "dropped_re_only_cap": 0,
-                }
+                secondary_ner_future = executor.submit(
+                    self._run_secondary_ner_branch,
+                    sample_id=sample_id,
+                    text=text,
+                    candidate_set=candidate_set,
+                    relation_schema_present=relation_schema_present,
+                    relations=relations,
+                    re_structure_support=re_structure_support,
+                )
+                expert_ner_result = expert_ner_future.result()
+                secondary_ner_result = secondary_ner_future.result()
+            traces["branch_parallelism"]["ner_branch_parallel"] = True
         else:
-            traces["ner_re"] = {
-                "disabled": True,
-                "reason": "re_off" if not use_re else "structure_only_mode",
-            }
+            expert_ner_result = self._run_expert_ner_branch(
+                sample_id=sample_id,
+                text=text,
+                use_expert=use_expert,
+                candidate_set=candidate_set,
+                constraints=constraints,
+                pre_augmentation_candidate_set=pre_augmentation_candidate_set,
+                rerun_constraints_for_added=rerun_constraints_for_added,
+                added_ids=added_ids,
+                rerun_after_aug=rerun_after_aug,
+            )
+            secondary_ner_result = self._run_secondary_ner_branch(
+                sample_id=sample_id,
+                text=text,
+                candidate_set=candidate_set,
+                relation_schema_present=relation_schema_present,
+                relations=relations,
+                re_structure_support=re_structure_support,
+            )
+
+        _accumulate_cost(total_cost, expert_ner_result["cost"])
+        _accumulate_cost(total_cost, secondary_ner_result["cost"])
+        y_exp = expert_ner_result["hypothesis"]
+        y_re = secondary_ner_result["hypothesis"]
+        traces["ner_expert"] = expert_ner_result["trace"]
+        traces["ner_re"] = secondary_ner_result["trace"]
+
+        if relation_schema_present and bool(
+            self.pipeline_cfg.get("re_collab_filter_enabled", False)
+        ):
+            y_re, re_filter_trace = _filter_re_hypothesis_for_collaboration(
+                text=text,
+                y_re=y_re,
+                y_exp=y_exp if use_expert else None,
+                min_confidence=float(
+                    self.pipeline_cfg.get("re_collab_min_confidence", 0.0)
+                ),
+                require_evidence=bool(
+                    self.pipeline_cfg.get("re_collab_require_evidence", False)
+                ),
+                max_re_only_additions=int(
+                    self.pipeline_cfg.get("re_collab_max_re_only_additions", 9999)
+                ),
+                expert_override_margin=float(
+                    self.pipeline_cfg.get("re_collab_expert_override_margin", 0.0)
+                ),
+                require_type_agreement_on_shared_span=bool(
+                    self.pipeline_cfg.get(
+                        "re_collab_require_type_agreement_on_shared_span",
+                        False,
+                    )
+                ),
+            )
+            traces["re_collab_filter"] = re_filter_trace
+        else:
             traces["re_collab_filter"] = {
-                "enabled": False,
-                "reason": "re_off" if not use_re else "structure_only_mode",
+                "enabled": bool(relation_schema_present)
+                and bool(self.pipeline_cfg.get("re_collab_filter_enabled", False)),
+                "input_count": len(y_re.mentions),
+                "output_count": len(y_re.mentions),
+                "dropped_low_conf": 0,
+                "dropped_no_evidence": 0,
+                "dropped_expert_override": 0,
+                "dropped_re_only_cap": 0,
+                "reason": "relation_schema_absent" if not relation_schema_present else "",
             }
 
         mention_reject_negative_rationale = bool(
@@ -965,7 +1217,7 @@ class PipelineRunner:
             y_exp_mentions, dropped_exp = _drop_mentions_with_negative_rationale(y_exp.mentions)
             y_re_mentions, dropped_re = _drop_mentions_with_negative_rationale(y_re.mentions)
             y_exp = NERHypothesis(mentions=y_exp_mentions, source="expert")
-            y_re = NERHypothesis(mentions=y_re_mentions, source="re")
+            y_re = NERHypothesis(mentions=y_re_mentions, source=y_re.source)
             traces["mention_filter"] = {
                 "enabled": True,
                 "dropped_expert": dropped_exp,
@@ -976,7 +1228,7 @@ class PipelineRunner:
 
         final_mentions: list[Mention]
         cluster_count = 0
-        re_contributes_ner = use_re and relation_schema_present and bool(y_re.mentions)
+        re_contributes_ner = use_re and bool(y_re.mentions)
         adjudication_mentions: list[Mention] = []
 
         if use_expert:
@@ -1010,11 +1262,18 @@ class PipelineRunner:
                 "trace": conflict_trace,
             }
 
+            started = time.perf_counter()
+            self._agent_progress("adjudicator_agent", "start", sample_id=sample_id)
             decision, cost, adj_trace = self.adjudicator.run(
                 text=text,
                 clusters=clusters,
                 y_exp=y_exp,
-                y_re=y_re if re_contributes_ner else NERHypothesis(mentions=[], source="re"),
+                y_re=y_re
+                if re_contributes_ner
+                else NERHypothesis(
+                    mentions=[],
+                    source="re" if relation_schema_present else "in_context",
+                ),
                 debate_protocol=self.debate_protocol,
                 enable_debate=not bool(self.ablations.get("w_o_debate", False)),
                 l3_only=bool(self.pipeline_cfg.get("debate_l3_only", True)),
@@ -1031,16 +1290,24 @@ class PipelineRunner:
                     self.pipeline_cfg.get("adjudicator_singleton_require_entity_like", False)
                 ),
             )
+            elapsed_ms = int((time.perf_counter() - started) * 1000)
             _accumulate_cost(total_cost, cost)
             traces["adjudicator"] = adj_trace
             final_mentions = _merge_mentions(decision.final_mentions)
+            self._agent_progress(
+                "adjudicator_agent",
+                "done",
+                sample_id=sample_id,
+                llm_calls=cost.calls,
+                mentions=len(final_mentions),
+                clusters=cluster_count,
+                elapsed_ms=elapsed_ms,
+            )
         elif use_expert:
             final_mentions = _merge_mentions(y_exp.mentions)
             traces["conflict"] = {
                 "disabled": True,
-                "reason": "re_off"
-                if not use_re
-                else ("structure_only_mode" if not relation_schema_present else "re_empty"),
+                "reason": "secondary_empty",
             }
             traces["adjudicator"] = {
                 "clusters": [],
@@ -1050,7 +1317,7 @@ class PipelineRunner:
             final_mentions = _merge_mentions(y_re.mentions)
             traces["conflict"] = {
                 "disabled": True,
-                "reason": "expert_off" if relation_schema_present else "structure_only_mode",
+                "reason": "expert_off",
             }
             traces["adjudicator"] = {
                 "clusters": [],
@@ -1441,6 +1708,7 @@ class PipelineRunner:
                     else:
                         review_mentions.append(m)
 
+            started = time.perf_counter()
             self._agent_progress("disambiguation_agent", "start", sample_id=sample_id)
             protected_mentions, protected_trace, protected_cost = self.disambiguation_agent.run(
                 text=text,
@@ -1464,12 +1732,14 @@ class PipelineRunner:
             disamb_trace["protected_review_dropped"] = int(protected_trace.get("dropped", 0) or 0)
             disamb_trace["protected_review_adjusted"] = int(protected_trace.get("adjusted", 0) or 0)
             traces["disambiguation_agent"] = disamb_trace
+            elapsed_ms = int((time.perf_counter() - started) * 1000)
             self._agent_progress(
                 "disambiguation_agent",
                 "done",
                 sample_id=sample_id,
                 llm_calls=protected_cost.calls + disamb_cost.calls,
                 mentions=len(final_mentions),
+                elapsed_ms=elapsed_ms,
             )
             communications.append(
                 {
@@ -1515,13 +1785,24 @@ class PipelineRunner:
         traces["symbol_boundary_canonicalization"] = symbol_canon_trace
 
         if not bool(self.ablations.get("w_o_verifier", False)):
+            started = time.perf_counter()
+            self._agent_progress("verifier_agent", "start", sample_id=sample_id)
             verified_mentions, report, cost = self.verifier.verify_mentions(
                 text, final_mentions, self.schema
             )
+            elapsed_ms = int((time.perf_counter() - started) * 1000)
             _accumulate_cost(total_cost, cost)
             traces["verifier"] = report
             final_mentions = verified_mentions
             verifier_pass_for_memory = True
+            self._agent_progress(
+                "verifier_agent",
+                "done",
+                sample_id=sample_id,
+                llm_calls=cost.calls,
+                mentions=len(final_mentions),
+                elapsed_ms=elapsed_ms,
+            )
         else:
             traces["verifier"] = {"disabled": True}
             verifier_pass_for_memory = False

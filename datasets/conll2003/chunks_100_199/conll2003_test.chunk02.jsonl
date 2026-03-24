@@ -1,0 +1,20 @@
+{"id": "test-00120", "text": "C. Cairns b Saqlain 10", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "PER", "text": "C. Cairns"}, {"start": 12, "end": 19, "ent_type": "PER", "text": "Saqlain"}]}
+{"id": "test-00121", "text": "N. Astle c Ijaz Ahmad b Salim Malik 20", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "PER", "text": "N. Astle"}, {"start": 11, "end": 21, "ent_type": "PER", "text": "Ijaz Ahmad"}, {"start": 24, "end": 35, "ent_type": "PER", "text": "Salim Malik"}]}
+{"id": "test-00122", "text": "C. Harris lbw b Wasim 22", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "PER", "text": "C. Harris"}, {"start": 16, "end": 21, "ent_type": "PER", "text": "Wasim"}]}
+{"id": "test-00123", "text": "L. Germon lbw b Afridi 2", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "PER", "text": "L. Germon"}, {"start": 16, "end": 22, "ent_type": "PER", "text": "Afridi"}]}
+{"id": "test-00124", "text": "J. Vaughan c Moin Khan b Wasim 13", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "PER", "text": "J. Vaughan"}, {"start": 13, "end": 22, "ent_type": "PER", "text": "Moin Khan"}, {"start": 25, "end": 30, "ent_type": "PER", "text": "Wasim"}]}
+{"id": "test-00125", "text": "S. Doull c subs (M. Wasim) b Waqar 1", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "PER", "text": "S. Doull"}, {"start": 17, "end": 25, "ent_type": "PER", "text": "M. Wasim"}, {"start": 29, "end": 34, "ent_type": "PER", "text": "Waqar"}]}
+{"id": "test-00126", "text": "R. Kennedy not out 7", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "PER", "text": "R. Kennedy"}]}
+{"id": "test-00127", "text": "Extras (b-9 lb-3 w-12 nb-2) 26", "gold_mentions": []}
+{"id": "test-00128", "text": "Total (all out in 42.1 overs) 231", "gold_mentions": []}
+{"id": "test-00129", "text": "Fall of wickets: 1-3 2-7 3-125 4-146 5-170 6-190 7-195", "gold_mentions": []}
+{"id": "test-00130", "text": "8-213 9-216.", "gold_mentions": []}
+{"id": "test-00131", "text": "Bowling: Wasim Akram 8.1-0-43-3 (9w, 1nb), Waqar Younis", "gold_mentions": [{"start": 9, "end": 20, "ent_type": "PER", "text": "Wasim Akram"}, {"start": 43, "end": 55, "ent_type": "PER", "text": "Waqar Younis"}]}
+{"id": "test-00132", "text": "6-0-32-2 (2w, 1nb), Saqlain Mushtaq 8-0-54-2, Mushtaq Ahmad", "gold_mentions": [{"start": 20, "end": 35, "ent_type": "PER", "text": "Saqlain Mushtaq"}, {"start": 46, "end": 59, "ent_type": "PER", "text": "Mushtaq Ahmad"}]}
+{"id": "test-00133", "text": "10-0-42-0 (1w), Shahid Afridi 7-0-40-2, Salim Malik 2.5-0-8-1,", "gold_mentions": [{"start": 16, "end": 29, "ent_type": "PER", "text": "Shahid Afridi"}, {"start": 40, "end": 51, "ent_type": "PER", "text": "Salim Malik"}]}
+{"id": "test-00134", "text": "Ijaz Ahmad 0.1-0-0-0.", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "PER", "text": "Ijaz Ahmad"}]}
+{"id": "test-00135", "text": "Result: Pakistan won by 46 runs.", "gold_mentions": [{"start": 8, "end": 16, "ent_type": "LOC", "text": "Pakistan"}]}
+{"id": "test-00136", "text": "Third one-day match: December 8, in Karachi.", "gold_mentions": [{"start": 36, "end": 43, "ent_type": "LOC", "text": "Karachi"}]}
+{"id": "test-00137", "text": "SOCCER - ENGLISH F.A. CUP SECOND ROUND RESULT.", "gold_mentions": [{"start": 9, "end": 25, "ent_type": "MISC", "text": "ENGLISH F.A. CUP"}]}
+{"id": "test-00138", "text": "LONDON 1996-12-06", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "LONDON"}]}
+{"id": "test-00139", "text": "Result of an English F.A. Challenge", "gold_mentions": [{"start": 13, "end": 35, "ent_type": "MISC", "text": "English F.A. Challenge"}]}

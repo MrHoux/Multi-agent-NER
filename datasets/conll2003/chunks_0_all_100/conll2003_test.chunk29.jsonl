@@ -1,0 +1,100 @@
+{"id": "test-02800", "text": "LONDON 1996-12-07", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "LONDON"}]}
+{"id": "test-02801", "text": "Results of Northern Ireland premier", "gold_mentions": [{"start": 11, "end": 27, "ent_type": "LOC", "text": "Northern Ireland"}]}
+{"id": "test-02802", "text": "division matches on Saturday:", "gold_mentions": []}
+{"id": "test-02803", "text": "Ards 0 Crusaders 0", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "ORG", "text": "Ards"}, {"start": 7, "end": 16, "ent_type": "ORG", "text": "Crusaders"}]}
+{"id": "test-02804", "text": "Cliftonville 1 Portadown 1", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "Cliftonville"}, {"start": 15, "end": 24, "ent_type": "ORG", "text": "Portadown"}]}
+{"id": "test-02805", "text": "Glenavon 2 Linfield 1", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Glenavon"}, {"start": 11, "end": 19, "ent_type": "ORG", "text": "Linfield"}]}
+{"id": "test-02806", "text": "Glentoran 1 Coleraine 0", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Glentoran"}, {"start": 12, "end": 21, "ent_type": "ORG", "text": "Coleraine"}]}
+{"id": "test-02807", "text": "Standings (tabulated - played, won, drawn, lost, goals for,", "gold_mentions": []}
+{"id": "test-02808", "text": "goals against, points):", "gold_mentions": []}
+{"id": "test-02809", "text": "Coleraine 10 7 1 2 18 11 22", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Coleraine"}]}
+{"id": "test-02810", "text": "Linfield 10 4 3 3 13 10 15", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Linfield"}]}
+{"id": "test-02811", "text": "Crusaders 10 3 4 3 11 9 13", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Crusaders"}]}
+{"id": "test-02812", "text": "Glenavon 10 3 4 3 15 14 13", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Glenavon"}]}
+{"id": "test-02813", "text": "Glentoran 10 3 3 4 18 18 12", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Glentoran"}]}
+{"id": "test-02814", "text": "Portadown 9 3 3 3 11 12 12", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Portadown"}]}
+{"id": "test-02815", "text": "Ards 10 3 2 5 12 17 11", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "ORG", "text": "Ards"}]}
+{"id": "test-02816", "text": "Cliftonville 9 1 4 4 5 12 7", "gold_mentions": [{"start": 0, "end": 12, "ent_type": "ORG", "text": "Cliftonville"}]}
+{"id": "test-02817", "text": "RUGBY UNION - BRITISH RESULTS.", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "RUGBY UNION"}]}
+{"id": "test-02818", "text": "LONDON 1996-12-07", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "LONDON"}]}
+{"id": "test-02819", "text": "Results of British rugby union", "gold_mentions": [{"start": 11, "end": 18, "ent_type": "MISC", "text": "British"}]}
+{"id": "test-02820", "text": "matches on Saturday:", "gold_mentions": []}
+{"id": "test-02821", "text": "Pilkington Cup fourth round", "gold_mentions": [{"start": 0, "end": 14, "ent_type": "MISC", "text": "Pilkington Cup"}]}
+{"id": "test-02822", "text": "Reading 50 Widnes 3", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Reading"}, {"start": 11, "end": 17, "ent_type": "ORG", "text": "Widnes"}]}
+{"id": "test-02823", "text": "English division one", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "MISC", "text": "English"}]}
+{"id": "test-02824", "text": "Bath 35 Harlequins 20", "gold_mentions": [{"start": 0, "end": 4, "ent_type": "ORG", "text": "Bath"}, {"start": 8, "end": 18, "ent_type": "ORG", "text": "Harlequins"}]}
+{"id": "test-02825", "text": "Gloucester 29 London Irish 19", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Gloucester"}, {"start": 14, "end": 26, "ent_type": "ORG", "text": "London Irish"}]}
+{"id": "test-02826", "text": "Orrell 22 West Hartlepool 15", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "Orrell"}, {"start": 10, "end": 25, "ent_type": "ORG", "text": "West Hartlepool"}]}
+{"id": "test-02827", "text": "Wasps 15 Bristol 13", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "ORG", "text": "Wasps"}, {"start": 9, "end": 16, "ent_type": "ORG", "text": "Bristol"}]}
+{"id": "test-02828", "text": "Welsh division one", "gold_mentions": [{"start": 0, "end": 5, "ent_type": "MISC", "text": "Welsh"}]}
+{"id": "test-02829", "text": "Caerphilly 20 Cardiff 34", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Caerphilly"}, {"start": 14, "end": 21, "ent_type": "ORG", "text": "Cardiff"}]}
+{"id": "test-02830", "text": "Llanelli 97 Newbridge 10", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Llanelli"}, {"start": 12, "end": 21, "ent_type": "ORG", "text": "Newbridge"}]}
+{"id": "test-02831", "text": "Newport 45 Dunvant 22", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Newport"}, {"start": 11, "end": 18, "ent_type": "ORG", "text": "Dunvant"}]}
+{"id": "test-02832", "text": "Pontypridd 53 Bridgend 9", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Pontypridd"}, {"start": 14, "end": 22, "ent_type": "ORG", "text": "Bridgend"}]}
+{"id": "test-02833", "text": "Swansea 49 Neath 10", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Swansea"}, {"start": 11, "end": 16, "ent_type": "ORG", "text": "Neath"}]}
+{"id": "test-02834", "text": "Treorchy 13 Ebbw Vale 17", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Treorchy"}, {"start": 12, "end": 21, "ent_type": "ORG", "text": "Ebbw Vale"}]}
+{"id": "test-02835", "text": "Scottish division one", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "MISC", "text": "Scottish"}]}
+{"id": "test-02836", "text": "Boroughmuir 31 Watsonians 35", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Boroughmuir"}, {"start": 15, "end": 25, "ent_type": "ORG", "text": "Watsonians"}]}
+{"id": "test-02837", "text": "SOCCER - SCOTTISH PREMIER DIVISION SUMMARIES.", "gold_mentions": [{"start": 9, "end": 17, "ent_type": "MISC", "text": "SCOTTISH"}]}
+{"id": "test-02838", "text": "GLASGOW 1996-12-07", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "LOC", "text": "GLASGOW"}]}
+{"id": "test-02839", "text": "Summaries of Scottish premier division matches played on Saturday:", "gold_mentions": [{"start": 13, "end": 21, "ent_type": "MISC", "text": "Scottish"}]}
+{"id": "test-02840", "text": "Dunfermline 2 (Millar 43, 46 penalty) Aberdeen 3 (Miller 10, Rowson 55, Windass 78).", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Dunfermline"}, {"start": 15, "end": 21, "ent_type": "PER", "text": "Millar"}, {"start": 38, "end": 46, "ent_type": "ORG", "text": "Aberdeen"}, {"start": 50, "end": 56, "ent_type": "PER", "text": "Miller"}, {"start": 61, "end": 67, "ent_type": "PER", "text": "Rowson"}]}
+{"id": "test-02841", "text": "Halftime 1-1.", "gold_mentions": []}
+{"id": "test-02842", "text": "Attendance: 5,465", "gold_mentions": []}
+{"id": "test-02843", "text": "Hearts 0 Raith 0.", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "ORG", "text": "Hearts"}, {"start": 9, "end": 14, "ent_type": "ORG", "text": "Raith"}]}
+{"id": "test-02844", "text": "10,719", "gold_mentions": []}
+{"id": "test-02845", "text": "Kilmarnock 0 Dundee United 2 (Olafsson 22, 51).", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Kilmarnock"}, {"start": 13, "end": 26, "ent_type": "ORG", "text": "Dundee United"}, {"start": 30, "end": 38, "ent_type": "PER", "text": "Olafsson"}]}
+{"id": "test-02846", "text": "0-1.", "gold_mentions": []}
+{"id": "test-02847", "text": "5,812", "gold_mentions": []}
+{"id": "test-02848", "text": "Motherwell 2 (Davies 39, Ross 89) Celtic 1 (Hay 83).", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Motherwell"}, {"start": 14, "end": 20, "ent_type": "PER", "text": "Davies"}, {"start": 25, "end": 29, "ent_type": "PER", "text": "Ross"}, {"start": 34, "end": 40, "ent_type": "ORG", "text": "Celtic"}, {"start": 44, "end": 47, "ent_type": "PER", "text": "Hay"}]}
+{"id": "test-02849", "text": "1-0.", "gold_mentions": []}
+{"id": "test-02850", "text": "11,589", "gold_mentions": []}
+{"id": "test-02851", "text": "Rangers 4 (Ferguson 34, McCoist 71 74, Laudrup 83) Hibernian 3 (Wright 21, Jackson 41, McGinlay 86).", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Rangers"}, {"start": 11, "end": 19, "ent_type": "PER", "text": "Ferguson"}, {"start": 24, "end": 31, "ent_type": "PER", "text": "McCoist"}, {"start": 39, "end": 46, "ent_type": "PER", "text": "Laudrup"}, {"start": 51, "end": 60, "ent_type": "ORG", "text": "Hibernian"}, {"start": 64, "end": 70, "ent_type": "PER", "text": "Wright"}, {"start": 75, "end": 82, "ent_type": "PER", "text": "Jackson"}, {"start": 87, "end": 95, "ent_type": "PER", "text": "McGinlay"}]}
+{"id": "test-02852", "text": "1-2.", "gold_mentions": []}
+{"id": "test-02853", "text": "48,053.", "gold_mentions": []}
+{"id": "test-02854", "text": "RUGBY UNION - RETIRING CAMPESE WEIGHS UP OPTIONS.", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "RUGBY UNION"}, {"start": 23, "end": 30, "ent_type": "PER", "text": "CAMPESE"}]}
+{"id": "test-02855", "text": "LONDON 1996-12-07", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "LONDON"}]}
+{"id": "test-02856", "text": "David Campese will consider offers to play club rugby in England but looks more likely to spend the next year chasing business opportunities in Australia.", "gold_mentions": [{"start": 0, "end": 13, "ent_type": "PER", "text": "David Campese"}, {"start": 57, "end": 64, "ent_type": "LOC", "text": "England"}, {"start": 144, "end": 153, "ent_type": "LOC", "text": "Australia"}]}
+{"id": "test-02857", "text": "The 34-year-old winger played his final game in a Wallaby jersey on Saturday but is currently a target for clubs eager to match London side Saracens who have already snapped up Francois Pienaar, Michael Lynagh and Philippe Sella.", "gold_mentions": [{"start": 50, "end": 57, "ent_type": "ORG", "text": "Wallaby"}, {"start": 128, "end": 134, "ent_type": "LOC", "text": "London"}, {"start": 140, "end": 148, "ent_type": "ORG", "text": "Saracens"}, {"start": 177, "end": 193, "ent_type": "PER", "text": "Francois Pienaar"}, {"start": 195, "end": 209, "ent_type": "PER", "text": "Michael Lynagh"}, {"start": 214, "end": 228, "ent_type": "PER", "text": "Philippe Sella"}]}
+{"id": "test-02858", "text": "\"If the opportunity is there I'd obviously think about it but the thing that holds me back is business, \"said Campese.", "gold_mentions": [{"start": 110, "end": 117, "ent_type": "PER", "text": "Campese"}]}
+{"id": "test-02859", "text": "\"I'd like to come over but there are a lot of things happening at home.", "gold_mentions": []}
+{"id": "test-02860", "text": "I've also got a contract to play for New South Wales in the Super 12 next year. \"", "gold_mentions": [{"start": 37, "end": 52, "ent_type": "ORG", "text": "New South Wales"}]}
+{"id": "test-02861", "text": "Former Wallaby captain Nick Farr-Jones believes Campese may yet be tempted to England.", "gold_mentions": [{"start": 7, "end": 14, "ent_type": "ORG", "text": "Wallaby"}, {"start": 23, "end": 38, "ent_type": "PER", "text": "Nick Farr-Jones"}, {"start": 48, "end": 55, "ent_type": "PER", "text": "Campese"}, {"start": 78, "end": 85, "ent_type": "LOC", "text": "England"}]}
+{"id": "test-02862", "text": "\"I'm sure there are a few people in England who'd be delighted to have David Campese in their club's jersey, \"he said.", "gold_mentions": [{"start": 36, "end": 43, "ent_type": "LOC", "text": "England"}, {"start": 71, "end": 84, "ent_type": "PER", "text": "David Campese"}]}
+{"id": "test-02863", "text": "SOCCER - ENGLISH PREMIER LEAGUE SUMMARIES.", "gold_mentions": [{"start": 9, "end": 16, "ent_type": "MISC", "text": "ENGLISH"}]}
+{"id": "test-02864", "text": "LONDON 1996-12-07", "gold_mentions": [{"start": 0, "end": 6, "ent_type": "LOC", "text": "LONDON"}]}
+{"id": "test-02865", "text": "Summaries of English premier", "gold_mentions": [{"start": 13, "end": 20, "ent_type": "MISC", "text": "English"}]}
+{"id": "test-02866", "text": "lealgue matches on Saturday:", "gold_mentions": []}
+{"id": "test-02867", "text": "Arsenal 2 (Adams 45, Vieira 90) Derby 2 (Sturridge 62, Powell", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Arsenal"}, {"start": 11, "end": 16, "ent_type": "PER", "text": "Adams"}, {"start": 21, "end": 27, "ent_type": "PER", "text": "Vieira"}, {"start": 32, "end": 37, "ent_type": "ORG", "text": "Derby"}, {"start": 41, "end": 50, "ent_type": "PER", "text": "Sturridge"}, {"start": 55, "end": 61, "ent_type": "PER", "text": "Powell"}]}
+{"id": "test-02868", "text": "71).", "gold_mentions": []}
+{"id": "test-02869", "text": "Halftime 1-0.", "gold_mentions": []}
+{"id": "test-02870", "text": "Attendance: 38,018", "gold_mentions": []}
+{"id": "test-02871", "text": "Chelsea 2 (Zola 12, Vialli 55) Everton 2 (Branch 17,", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Chelsea"}, {"start": 11, "end": 15, "ent_type": "PER", "text": "Zola"}, {"start": 20, "end": 26, "ent_type": "PER", "text": "Vialli"}, {"start": 31, "end": 38, "ent_type": "ORG", "text": "Everton"}, {"start": 42, "end": 48, "ent_type": "PER", "text": "Branch"}]}
+{"id": "test-02872", "text": "Kanchelskis 28).", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "PER", "text": "Kanchelskis"}]}
+{"id": "test-02873", "text": "1-2.", "gold_mentions": []}
+{"id": "test-02874", "text": "28,418", "gold_mentions": []}
+{"id": "test-02875", "text": "Coventry 1 (Whelan 60) Tottenham 2 (Sheringham 27, Sinton 75).", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "ORG", "text": "Coventry"}, {"start": 12, "end": 18, "ent_type": "PER", "text": "Whelan"}, {"start": 23, "end": 32, "ent_type": "ORG", "text": "Tottenham"}, {"start": 36, "end": 46, "ent_type": "PER", "text": "Sheringham"}, {"start": 51, "end": 57, "ent_type": "PER", "text": "Sinton"}]}
+{"id": "test-02876", "text": "0-1.", "gold_mentions": []}
+{"id": "test-02877", "text": "19,675", "gold_mentions": []}
+{"id": "test-02878", "text": "Leicester 1 (Marshall 78) Blackburn 1 (Sutton 34).", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Leicester"}, {"start": 13, "end": 21, "ent_type": "PER", "text": "Marshall"}, {"start": 26, "end": 35, "ent_type": "ORG", "text": "Blackburn"}, {"start": 39, "end": 45, "ent_type": "PER", "text": "Sutton"}]}
+{"id": "test-02879", "text": "0-1.", "gold_mentions": []}
+{"id": "test-02880", "text": "19,306", "gold_mentions": []}
+{"id": "test-02881", "text": "Liverpool 0 Sheffield Wednesday 1 (Whittingham 22).", "gold_mentions": [{"start": 0, "end": 9, "ent_type": "ORG", "text": "Liverpool"}, {"start": 12, "end": 31, "ent_type": "ORG", "text": "Sheffield Wednesday"}, {"start": 35, "end": 46, "ent_type": "PER", "text": "Whittingham"}]}
+{"id": "test-02882", "text": "0-1.", "gold_mentions": []}
+{"id": "test-02883", "text": "39,507", "gold_mentions": []}
+{"id": "test-02884", "text": "Middlesbrough 0 Leeds 0.", "gold_mentions": [{"start": 0, "end": 13, "ent_type": "ORG", "text": "Middlesbrough"}, {"start": 16, "end": 21, "ent_type": "ORG", "text": "Leeds"}]}
+{"id": "test-02885", "text": "30,018", "gold_mentions": []}
+{"id": "test-02886", "text": "Southampton 0 Aston Villa 1 (Townsend 34).", "gold_mentions": [{"start": 0, "end": 11, "ent_type": "ORG", "text": "Southampton"}, {"start": 14, "end": 25, "ent_type": "ORG", "text": "Aston Villa"}, {"start": 29, "end": 37, "ent_type": "PER", "text": "Townsend"}]}
+{"id": "test-02887", "text": "0-1.", "gold_mentions": []}
+{"id": "test-02888", "text": "15,232", "gold_mentions": []}
+{"id": "test-02889", "text": "Sunderland 1 (Melville 83) Wimbledon 3 (Ekoku 8, 29, Holdsworth", "gold_mentions": [{"start": 0, "end": 10, "ent_type": "ORG", "text": "Sunderland"}, {"start": 14, "end": 22, "ent_type": "PER", "text": "Melville"}, {"start": 27, "end": 36, "ent_type": "LOC", "text": "Wimbledon"}, {"start": 40, "end": 45, "ent_type": "PER", "text": "Ekoku"}, {"start": 53, "end": 63, "ent_type": "PER", "text": "Holdsworth"}]}
+{"id": "test-02890", "text": "89).", "gold_mentions": []}
+{"id": "test-02891", "text": "0-2.", "gold_mentions": []}
+{"id": "test-02892", "text": "19,672.", "gold_mentions": []}
+{"id": "test-02893", "text": "SOCCER - SCOTTISH LEAGUE STANDINGS.", "gold_mentions": [{"start": 9, "end": 17, "ent_type": "MISC", "text": "SCOTTISH"}]}
+{"id": "test-02894", "text": "GLASGOW 1996-12-07", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "LOC", "text": "GLASGOW"}]}
+{"id": "test-02895", "text": "Scottish league standings after", "gold_mentions": [{"start": 0, "end": 8, "ent_type": "MISC", "text": "Scottish"}]}
+{"id": "test-02896", "text": "Saturday's matches (tabulated - played, won, drawn, lost, goals", "gold_mentions": []}
+{"id": "test-02897", "text": "for, goals against, points):", "gold_mentions": []}
+{"id": "test-02898", "text": "Premier division", "gold_mentions": []}
+{"id": "test-02899", "text": "Rangers 14 11 2 1 35 12 35", "gold_mentions": [{"start": 0, "end": 7, "ent_type": "ORG", "text": "Rangers"}]}
