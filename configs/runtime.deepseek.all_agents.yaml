@@ -3,7 +3,7 @@ seed: 42
 llm:
   provider: openai_compatible
   base_url: https://api.deepseek.com/v1
-  api_key: xxxxxxxx
+  api_key: xxxxxxxxxxx
   model: deepseek-chat
   timeout_s: 45
   max_retries: 2
@@ -45,9 +45,9 @@ pipeline:
     fallback_enable_list_context: true
     fallback_enable_schema_profile: true
 
-  allow_expert_span_augmentation: false
-  allow_re_span_augmentation: false
-  rerun_after_span_augmentation: false
+  allow_expert_span_augmentation: true
+  allow_re_span_augmentation: true
+  rerun_after_span_augmentation: true
   localize_augmented_ner_inference: true
   max_augmented_spans_per_sample: 20
   augmentation_requires_seed_candidate: true
@@ -69,7 +69,7 @@ pipeline:
   adjudicator_singleton_policy: legacy
   adjudicator_singleton_min_confidence: 0.9
   adjudicator_singleton_require_entity_like: false
-  adjudicator_review_all_mentions: true
+  adjudicator_review_all_mentions: false
   final_min_confidence: 0.22
 
   normalize_candidate_boundaries: true
@@ -110,12 +110,12 @@ pipeline:
   mention_blocklist: []
 
   enable_disambiguation_agent: true
-  disambiguation_lock_confidence: 1.1
+  disambiguation_lock_confidence: 0.85
   disambiguation_lock_if_non_pipeline: false
-  disambiguation_lock_if_direct_anchor: false
-  disambiguation_protect_direct_anchor_from_drop: false
-  disambiguation_direct_anchor_iou: 0.8
-  disambiguation_direct_anchor_min_confidence: 0.97
+  disambiguation_lock_if_direct_anchor: true
+  disambiguation_protect_direct_anchor_from_drop: true
+  disambiguation_direct_anchor_iou: 0.7
+  disambiguation_direct_anchor_min_confidence: 0.9
   disambiguation_allow_drop: true
 
 verifier:
